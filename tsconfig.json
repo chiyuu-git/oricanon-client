@@ -1,0 +1,62 @@
+{
+    "compilerOptions": {
+        // 基本配置
+        // 编译成哪个版本的 es
+        "target": "ES5",
+        // 指定生成哪个模块系统代码
+        "module": "ESNext",
+        // 编译过程中需要引入的库文件的列表
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        // 允许编译 js 文件
+        "allowJs": true,
+        "isolatedModules": true,
+        "jsx": "react",
+        // 启用所有严格类型检查选项
+        "strict": true,
+
+        // 模块解析选项
+        // 指定模块解析策略
+        "moduleResolution": "node",
+        // 支持 CommonJS 和 ES 模块之间的互操作性
+        "esModuleInterop": true,
+        // 支持导入 json 模块
+        "resolveJsonModule": true,
+        // 根路径
+        "baseUrl": "./",
+        // 路径映射，与 baseUrl 关联
+        "paths": {
+            "@src/*": [
+                "src/*"
+            ],
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@utils/*": [
+                "src/utils/*"
+            ]
+        },
+
+        // 实验性选项
+        // 启用实验性的ES装饰器
+        "experimentalDecorators": true,
+        // 给源码里的装饰器声明加上设计类型元数据
+        "emitDecoratorMetadata": true,
+
+        // 其他选项
+        // 禁止对同一个文件的不一致的引用
+        "forceConsistentCasingInFileNames": true,
+        // 忽略所有的声明文件（ *.d.ts）的类型检查
+        "skipLibCheck": true,
+        // 允许从没有设置默认导出的模块中默认导入
+        "allowSyntheticDefaultImports": true,
+        // 只想使用tsc的类型检查作为函数时（当其他工具（例如Babel实际编译）时）使用它
+        "noEmit": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

@@ -6,4 +6,4 @@ import { enhanceFetch } from './fetch';
  *
  * @returns
  */
-export const reqWeeklyData = () => enhanceFetch('/api/weekly');
+export const reqWeeklyInfo = () => enhanceFetch('/api/weekly/weekly_info');

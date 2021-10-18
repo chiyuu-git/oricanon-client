@@ -43,5 +43,10 @@
     },
     "[scss]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "jumpToAliasFile.alias": {
+        "@src": "/Users/pangjing02/myProject/oricanon-client/src",
+        "@components": "/Users/pangjing02/myProject/oricanon-client/src/components",
+        "@utils": "/Users/pangjing02/myProject/oricanon-client/src/utils"
     }
 }

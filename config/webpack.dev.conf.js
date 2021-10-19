@@ -47,6 +47,7 @@ module.exports = merge(baseWebpackConfig, {
             '@src': path.resolve(__dirname, '../src'),
             '@components': path.resolve(__dirname, '../src/components'),
             '@utils': path.resolve(__dirname, '../src/utils'),
+            '@constant': path.resolve(__dirname, '../src/constant'),
         },
     },
 });

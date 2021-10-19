@@ -6,7 +6,7 @@ import { WeeklyInfo } from './weekly.type';
 import IncreaseRank from './IncreaseRank';
 
 const Weekly = () => {
-    const [weeklyContext, setWeeklyContext] = useState({} as WeeklyInfo);
+    const [weeklyContext, setWeeklyContext] = useState<WeeklyInfo | null>(null);
 
     // 获取 weeklyInfo
     useEffect(() => {

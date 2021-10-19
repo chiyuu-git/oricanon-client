@@ -1,9 +1,4 @@
-enum ProjectName {
-    ll = 'lovelive',
-    lls = 'lovelive_sunshine',
-    llss = 'lovelive_superstar',
-    lln = 'lovelive_nijigasaki_high_school_idol_club',
-}
+import { ProjectName } from '@chiyu-bit/canon.root';
 
 interface ProjectInfo {
     projectName: ProjectName;
@@ -22,5 +17,7 @@ interface MemberWeekInfo {
 export interface ModuleInfo {
     projectInfo: ProjectInfo[];
     // TODO: 更准确的类型，难点在于处理函数返回值是联合类型
+    // 考虑 类型谓语 锁定类型
+    // 考虑 自然返回，不要限制类型，最终返回结果是啥就是啥？
     memberInfo: MemberWeekInfo[];
 }

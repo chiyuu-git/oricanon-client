@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 import { WeeklyContext } from './weekly-context-manager';
 import { WeeklyInfo } from './weekly.type';
-import IncreaseRank from './IncreaseRank';
+import CoupleCircle from './CoupleCircle';
 
 const Weekly = () => {
     const [weeklyContext, setWeeklyContext] = useState<WeeklyInfo | null>(null);
@@ -12,16 +12,16 @@ const Weekly = () => {
     useEffect(() => {
         async function getWeeklyInfo() {
             const weeklyInfo: WeeklyInfo = await reqWeeklyInfo();
-            console.log('weekly:', weeklyInfo);
+            console.log('weeklyContext:', weeklyInfo);
             setWeeklyContext(weeklyInfo);
         }
         getWeeklyInfo();
     }, []);
 
     return (
-        <WeeklyContext.Provider value={weeklyContext}>
+        <WeeklyContext.Provider value = {weeklyContext}>
             <div>Weekly</div>
-            <IncreaseRank />
+            <CoupleCircle />
         </WeeklyContext.Provider>
     );
 };

@@ -54,3 +54,5 @@ export const characterColorMap = {
     lanzhu: '#f69992',
     mia: '#a9a898',
 };
+
+export type CharacterColorRomaName = keyof typeof characterColorMap

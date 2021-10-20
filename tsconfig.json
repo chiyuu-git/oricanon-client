@@ -40,6 +40,9 @@
             ],
             "@constant/*": [
                 "src/constant/*"
+            ],
+            "@assets/*": [
+                "src/assets/*"
             ]
         },
 

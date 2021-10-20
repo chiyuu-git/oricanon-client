@@ -3,15 +3,16 @@ import ReactECharts from 'echarts-for-react';
 import { EChartsOption, GraphSeriesOption } from 'echarts';
 import { compose } from '@utils/index';
 
-import { characterColorMap } from '@src/constant';
-import { ModuleInfo } from '@chiyu-bit/canon.weekly';
+import { characterColorMap, CharacterColorRomaName } from '@src/constant';
+import { ModuleInfo } from '@chiyu-bit/canon.root/weekly';
+import { BasicType } from '@chiyu-bit/canon.root';
 import { WeeklyContext } from '../weekly-context-manager';
 
 /**
  * 根据 members 排列组合，返回一个二维数组
  * TODO: 从 lastData 获取 coupleList 不要自己生成了
  */
-function getCombinationMembers(members: readonly string[]) {
+function getCombinationMembers(members: readonly CharacterColorRomaName[]) {
     return members.map((member, i) => {
         // 计算出要与多少名成员组合
         const target = members.slice(i + 1);
@@ -79,8 +80,8 @@ function decorateWithColor(combinationMembers: ReturnType<typeof decorateWithCir
 
     return combinationMembers.map((combinationMember, i) => {
         const couple = combinationMember;
-        const sourceColor = characterColorMap[couple.source];
-        const targetColor = characterColorMap[couple.target];
+        const sourceColor = characterColorMap[couple.source as CharacterColorRomaName];
+        const targetColor = characterColorMap[couple.target as CharacterColorRomaName];
         if (couple.lineStyle) {
             couple.lineStyle.color = {
                 type: 'linear',
@@ -117,7 +118,7 @@ function decorateWithWidth(combinationMembers: ReturnType<typeof decorateWithCir
 
 function decorateWithDataLabel(
     combinationMembers: ReturnType<typeof decorateWithCircle>,
-    latestData: ModuleInfo['memberInfo'],
+    latestData: ModuleInfo<BasicType.couple>['memberInfo'],
 ) {
     return combinationMembers.map((combinationMember) => {
         const couple = combinationMember;
@@ -144,14 +145,14 @@ function decorateWithDataLabel(
 
 // echarts option shape 参考按需引入的 component 结构，拼接成最终的 option
 // 如何获取 echarts 暴露的 ts 接口？ 没必要我自己去拼接
-const IncreaseRank = () => {
+const CoupleCircle = () => {
     const weeklyInfo = useContext(WeeklyContext);
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
     // 获取 weeklyInfo
     useEffect(() => {
         if (weeklyInfo) {
             const latestData = weeklyInfo.coupleInfo.memberInfo;
-            console.log('latestData:', latestData);
+
             const memberList = ['kanon', 'keke', 'chisato', 'sumire', 'ren'] as const;
 
             const processMembers = compose(
@@ -165,12 +166,11 @@ const IncreaseRank = () => {
                 processMembers(memberList),
                 latestData,
             );
-            console.log('memberLinks:', memberLinks);
 
             const option: EChartsOption = {
                 title: {
                     text: 'pixiv标签-角色cp榜',
-                    subtext: '集计时间：10/15日',
+                    subtext: `集计时间：${weeklyInfo.range.split('至')[1]}日`,
                     left: 'left',
                     textStyle: {
                         fontSize: 24,
@@ -239,20 +239,74 @@ const IncreaseRank = () => {
         }
     }, [weeklyInfo]);
 
+    const imgCount = Array.from({ length: 5 });
+
+    const imgEl = imgCount.map((item, index) => {
+        const path = `src/assets/icon/hello/c0${index + 1}s.png`;
+        return (
+            <img
+                key = {path}
+                src = {require(`../../../assets/icon/hello/c0${index + 1}s.png`)}
+                alt = ''
+                style = {{
+                    borderColor: '#ff7f27',
+                }}
+            />
+        );
+    });
+
     return (
-        <div>
-            {chartOption
-                && (
+        <>
+            {chartOption && (
+                <>
+                    {imgEl}
+                    {/* <img
+                        src = 'src/assets/icon/hello/c01s.png'
+                        alt = ''
+                        style = {{
+                            borderColor: '#ff7f27',
+                        }}
+                    />
+                    <img
+                        src = 'src/assets/icon/hello/c02s.png'
+                        alt = ''
+                        style = {{
+                            borderColor: '#ff6e90',
+                        }}
+                    />
+                    <img
+                        src = 'src/assets/icon/hello/c03s.png'
+                        alt = ''
+                        style = {{
+                            borderColor: '#ff6e90',
+                        }}
+                    />
+                    <img
+                        src = 'src/assets/icon/hello/c04s.png'
+                        alt = ''
+                        style = {{
+                            borderColor: '#74f466',
+                        }}
+                    />
+                    <img
+                        src = 'src/assets/icon/hello/c05s.png'
+                        alt = ''
+                        style = {{
+                            borderColor: '#0000a0',
+                        }}
+                    /> */}
                     <ReactECharts
                         option = {chartOption}
                         style = {{
                             width: '800px',
                             height: '600px',
+                            margin: '0 auto',
                         }}
                     />
-                )}
-        </div>
+                </>
+            )}
+        </>
     );
 };
 
-export default IncreaseRank;
+export default CoupleCircle;

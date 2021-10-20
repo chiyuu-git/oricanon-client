@@ -1,1 +1,0 @@
-export { ProjectName } from './root';

@@ -10,7 +10,10 @@ module.exports = merge(baseWebpackConfig, {
     devtool: 'cheap-module-source-map',
     // 开发服务器
     devServer: {
-        static: false, // 默认 dev-server 会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录，设置为 false 禁用
+        // 默认 dev-server 会为根文件夹提供本地服务器，如果想为另外一个目录下的文件提供本地服务器，应该在这里设置其所在目录，设置为 false 禁用
+        static: [
+            { directory: path.join(__dirname, '../public') },
+        ],
         historyApiFallback: true, // 在开发单页应用时非常有用，它依赖于HTML5 history API，如果设置为true，所有的跳转将指向index.html
         open: true, // 自动打开浏览器
         compress: true, // 启用gzip压缩
@@ -48,6 +51,7 @@ module.exports = merge(baseWebpackConfig, {
             '@components': path.resolve(__dirname, '../src/components'),
             '@utils': path.resolve(__dirname, '../src/utils'),
             '@constant': path.resolve(__dirname, '../src/constant'),
+            '@assets': path.resolve(__dirname, '../src/assets'),
         },
     },
 });

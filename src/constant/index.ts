@@ -1,16 +1,61 @@
 import { ProjectName } from '@chiyu-bit/canon.root';
 
-export { ProjectName } from '@chiyu-bit/canon.root';
-
 export const ProjectColorMap = {
     [ProjectName.ll]: '#ee0088',
     [ProjectName.lls]: '#4fc4fe',
     [ProjectName.llss]: '#a6469d',
     [ProjectName.lln]: '#f39800',
 } as const;
+
+export const characterRomeMap = {
+    // muse
+    '高坂穂乃果': 'honoka',
+    '絢瀬絵里': 'eri',
+    '南ことり': 'kotori',
+    '園田海未': 'umi',
+    '星空凛': 'rin',
+    '西木野真姫': 'maki',
+    '東條希': 'nozomi',
+    '小泉花陽': 'hanayo',
+    '矢澤にこ': 'nico',
+    // aqours
+    '高海千歌': 'chika',
+    '桜内梨子': 'rico',
+    '松浦果南': 'kanan',
+    '黒澤ダイヤ': 'dia',
+    '渡辺曜': 'you',
+    '津島善子': 'yoshiko',
+    '国木田花丸': 'hanamaru',
+    '小原鞠莉': 'mari',
+    '黒澤ルビィ': 'ruby',
+    '鹿角聖良': 'seira',
+    '鹿角理亞': 'leah',
+    // hello
+    '澁谷かのん': 'kanon',
+    '唐可可': 'keke',
+    '嵐千砂都': 'chisato',
+    '平安名すみれ': 'sumire',
+    '葉月恋': 'ren',
+    // nijigasaki
+    '上原歩夢': 'ayumu',
+    '中須かすみ': 'kasumi',
+    '桜坂しずく': 'shizuku',
+    '朝香果林': 'karin',
+    '宮下愛': 'ai',
+    '近江彼方': 'kanata',
+    '優木せつ菜': 'setsuna',
+    'エマ・ヴェルデ': 'ema',
+    '天王寺璃奈': 'rina',
+    '高咲侑': 'me',
+    '三船栞子': 'shioriko',
+    'ミア・テイラー': 'mia',
+    '鐘嵐珠': 'lanzhu',
+};
+
+export type KeyofCharacterRomeMap = keyof typeof characterRomeMap
+
 // TODO: character 需要新增字段 代表色，企划没有明确的代表色，就不新增了
-// 这样新增角色的时候就只需要处理 memberList 就好了
-export const characterColorMap = {
+export const romaColorMap = {
     // ll
     honoka: '#ffae00',
     eri: '#00bbff',
@@ -55,4 +100,4 @@ export const characterColorMap = {
     mia: '#a9a898',
 };
 
-export type CharacterColorRomaName = keyof typeof characterColorMap
+export type KeyofRomaColorMap = keyof typeof romaColorMap

@@ -1,21 +1,25 @@
 import React, { useState, useEffect, useContext } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { EChartsOption, GraphSeriesOption } from 'echarts';
-import { compose } from '@utils/index';
 
-import { characterColorMap, CharacterColorRomaName } from '@src/constant';
+import { romaColorMap, KeyofRomaColorMap } from '@src/constant';
+import { MemberList, reqMemberList } from '@src/api';
 import { ModuleInfo } from '@chiyu-bit/canon.root/weekly';
-import { BasicType } from '@chiyu-bit/canon.root';
+import { BasicType, ProjectName } from '@chiyu-bit/canon.root';
+import { compose } from '@utils/index';
 import { WeeklyContext } from '../weekly-context-manager';
+
+import './index.less';
 
 /**
  * 根据 members 排列组合，返回一个二维数组
  * TODO: 从 lastData 获取 coupleList 不要自己生成了
  */
-function getCombinationMembers(members: readonly CharacterColorRomaName[]) {
+function getCombinationMembers(members: readonly KeyofRomaColorMap[]) {
     return members.map((member, i) => {
         // 计算出要与多少名成员组合
         const target = members.slice(i + 1);
+        // TODO: 最后的结果再赋值成这个接口
         const combination: NonNullable<GraphSeriesOption['links']> = [];
         if (target.length > 0) {
             for (const combineMember of target) {
@@ -80,8 +84,8 @@ function decorateWithColor(combinationMembers: ReturnType<typeof decorateWithCir
 
     return combinationMembers.map((combinationMember, i) => {
         const couple = combinationMember;
-        const sourceColor = characterColorMap[couple.source as CharacterColorRomaName];
-        const targetColor = characterColorMap[couple.target as CharacterColorRomaName];
+        const sourceColor = romaColorMap[couple.source as KeyofRomaColorMap];
+        const targetColor = romaColorMap[couple.target as KeyofRomaColorMap];
         if (couple.lineStyle) {
             couple.lineStyle.color = {
                 type: 'linear',
@@ -102,6 +106,9 @@ function decorateWithColor(combinationMembers: ReturnType<typeof decorateWithCir
     });
 }
 
+/**
+ * 有副作用，指定 lineStyle width
+ */
 function decorateWithWidth(combinationMembers: ReturnType<typeof decorateWithCircle>) {
     // 按照占比来划分好了，目前可香占比超过了50%
     // 前三名单独width，中间五名递减width，最后2名统一为10
@@ -116,6 +123,9 @@ function decorateWithWidth(combinationMembers: ReturnType<typeof decorateWithCir
     });
 }
 
+/**
+ * 有副作用，指定 lineStyle label 即数据
+ */
 function decorateWithDataLabel(
     combinationMembers: ReturnType<typeof decorateWithCircle>,
     latestData: ModuleInfo<BasicType.couple>['memberInfo'],
@@ -148,12 +158,30 @@ function decorateWithDataLabel(
 const CoupleCircle = () => {
     const weeklyInfo = useContext(WeeklyContext);
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
-    // 获取 weeklyInfo
+    const [memberList, setMemberList] = useState<MemberList<BasicType.character>| null>(null);
+
+    /**
+     * 获取 liella memberList
+     */
+    useEffect(() => {
+        async function getIconImg() {
+            const liellaMemberList = await reqMemberList({
+                projectName: ProjectName.llss,
+                type: BasicType.character,
+            });
+            setMemberList(liellaMemberList);
+        }
+        getIconImg();
+    }, []);
+
+    /**
+     * 获取 weeklyInfo 并 setOption
+     */
     useEffect(() => {
         if (weeklyInfo) {
             const latestData = weeklyInfo.coupleInfo.memberInfo;
 
-            const memberList = ['kanon', 'keke', 'chisato', 'sumire', 'ren'] as const;
+            const liellaMember = ['kanon', 'keke', 'chisato', 'sumire', 'ren'] as const;
 
             const processMembers = compose(
                 decorateWithWidth,
@@ -163,7 +191,7 @@ const CoupleCircle = () => {
             );
 
             const memberLinks = decorateWithDataLabel(
-                processMembers(memberList),
+                processMembers(liellaMember),
                 latestData,
             );
 
@@ -187,7 +215,7 @@ const CoupleCircle = () => {
                         type: 'graph',
                         layout: 'none',
                         symbolSize: 100,
-                        roam: true,
+                        roam: false,
                         label: {
                             show: true,
                         },
@@ -199,31 +227,11 @@ const CoupleCircle = () => {
                         //   },
                         // 写死五角星布局
                         data: [
-                            {
-                                name: 'kanon',
-                                x: 0,
-                                y: -951,
-                            },
-                            {
-                                name: 'keke',
-                                x: 1309,
-                                y: 0,
-                            },
-                            {
-                                name: 'chisato',
-                                x: 809,
-                                y: 1539,
-                            },
-                            {
-                                name: 'sumire',
-                                x: -809,
-                                y: 1539,
-                            },
-                            {
-                                name: 'ren',
-                                x: -1309,
-                                y: 0,
-                            },
+                            { name: 'kanon', x: 0, y: -951 },
+                            { name: 'keke', x: 1309, y: 0 },
+                            { name: 'chisato', x: 809, y: 1539 },
+                            { name: 'sumire', x: -809, y: 1539 },
+                            { name: 'ren', x: -1309, y: 0 },
                         ],
                         links: memberLinks,
                         lineStyle: {
@@ -239,73 +247,36 @@ const CoupleCircle = () => {
         }
     }, [weeklyInfo]);
 
-    const imgCount = Array.from({ length: 5 });
+    function renderIconImg(liellaMemberList: MemberList<BasicType.character>) {
+        const { projectName, list } = liellaMemberList;
 
-    const imgEl = imgCount.map((item, index) => {
-        const path = `src/assets/icon/hello/c0${index + 1}s.png`;
-        return (
-            <img
-                key = {path}
-                src = {require(`../../../assets/icon/hello/c0${index + 1}s.png`)}
-                alt = ''
-                style = {{
-                    borderColor: '#ff7f27',
-                }}
+        return list.map(({ name, supportColor }) => (
+            <div
+                key = { name }
+                className = 'icon'
+                style = { {
+                    backgroundImage: `url(/api/assets/icon/${projectName}/${name}.png)`,
+                    borderColor: supportColor,
+                } }
             />
-        );
-    });
+        ));
+    }
 
     return (
-        <>
-            {chartOption && (
+        <div className = 'couple-circle-wrap'>
+            { chartOption && (
                 <>
-                    {imgEl}
-                    {/* <img
-                        src = 'src/assets/icon/hello/c01s.png'
-                        alt = ''
-                        style = {{
-                            borderColor: '#ff7f27',
-                        }}
-                    />
-                    <img
-                        src = 'src/assets/icon/hello/c02s.png'
-                        alt = ''
-                        style = {{
-                            borderColor: '#ff6e90',
-                        }}
-                    />
-                    <img
-                        src = 'src/assets/icon/hello/c03s.png'
-                        alt = ''
-                        style = {{
-                            borderColor: '#ff6e90',
-                        }}
-                    />
-                    <img
-                        src = 'src/assets/icon/hello/c04s.png'
-                        alt = ''
-                        style = {{
-                            borderColor: '#74f466',
-                        }}
-                    />
-                    <img
-                        src = 'src/assets/icon/hello/c05s.png'
-                        alt = ''
-                        style = {{
-                            borderColor: '#0000a0',
-                        }}
-                    /> */}
                     <ReactECharts
-                        option = {chartOption}
-                        style = {{
+                        option = { chartOption }
+                        style = { {
                             width: '800px',
                             height: '600px',
-                            margin: '0 auto',
-                        }}
+                        } }
                     />
+                    { memberList && renderIconImg(memberList) }
                 </>
-            )}
-        </>
+            ) }
+        </div>
     );
 };
 

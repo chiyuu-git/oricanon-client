@@ -9,8 +9,8 @@ const Frame = () => (
     <BrowserRouter>
         <div>
             <Switch>
-                <Route exact path = '/' component = {Weekly} />
-                <Route path = '/detail/:id' component = {Detail} />
+                <Route exact path = '/' component = { Weekly } />
+                <Route path = '/detail/:id' component = { Detail } />
             </Switch>
             <Slide />
         </div>

@@ -1,0 +1,49 @@
+
+.couple-circle-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    // 控制 icon 的大小和位置
+
+    .icon {
+        // 绝对定位元素水平垂直居中
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        background-color: white;
+        background-position: center center;
+        background-size: 120%;
+        border: 2px solid;
+        border-radius: 50%;
+    }
+
+    .icon:nth-of-type(2) {
+        top: -481px;
+    }
+
+    .icon:nth-of-type(3) {
+        top: -114px;
+        left: 505.5px;
+    }
+
+    .icon:nth-of-type(4) {
+        top: 480px;
+        left: 312px;
+    }
+
+    .icon:nth-of-type(5) {
+        top: 480px;
+        left: -311px;
+    }
+
+    .icon:nth-of-type(6) {
+        top: -114px;
+        left: -505.5px;
+    }
+}

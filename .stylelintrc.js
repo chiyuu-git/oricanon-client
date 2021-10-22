@@ -11,5 +11,5 @@ module.exports = {
         'rule-empty-line-before': 'always',
         'indentation': 4
     },
-    ignoreFiles: ['node_modules/**/*', 'build/**/*', '.gitignore', 'LICENSE'],
+    ignoreFiles: ['node_modules/**/*', 'build/**/*', '**/*.tsx','.gitignore', 'LICENSE'],
 };

@@ -2,6 +2,9 @@
  * @file 对原生fetch进行包装 方便使用
  */
 
+type FetchMethod = 'GET' | 'POST';
+type FetchParam = Record<string | number | symbol, unknown>;
+
 /**
  * 返回一个promise，外部可以通过then在获取到数据后再继续操作
  *
@@ -12,8 +15,8 @@
  */
 export async function enhanceFetch(
     requestUrl = '',
-    method = 'GET',
-    params = {},
+    params: FetchParam = {},
+    method: FetchMethod = 'GET',
 ) {
     console.log(method, params, requestUrl);
 

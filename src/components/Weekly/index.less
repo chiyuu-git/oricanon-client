@@ -1,0 +1,25 @@
+.weekly-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    & > div {
+        margin-top: 50px; // 控制每张图的 margin top
+
+        &:last-child {
+            margin-bottom: 50px;
+        }
+    }
+
+    .compare-pie-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+
+        & > div:first-child {
+            border-right: 1px dashed;
+        }
+    }
+}

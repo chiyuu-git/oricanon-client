@@ -7,6 +7,8 @@ import ReactECharts from 'echarts-for-react';
 import {
     characterRomeMap,
     KeyofCharacterRomeMap,
+    characterRichMap,
+    projectRichMap,
     ProjectColorMap,
 } from '@src/constant';
 import { IncreaseRank } from './IncreaseRank.type';
@@ -23,17 +25,6 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
 
     useEffect(() => {
-        // 准备rich对象
-        const richMap: Record<string, unknown> = {};
-
-        for (const { romaName, supportColor } of increaseRank) {
-            richMap[romaName] = {
-                color: supportColor,
-                fontSize: 14,
-                fontWeight: 'bold',
-            };
-        }
-
         const option: EChartsOption = {
             title: {
                 text: title,
@@ -61,6 +52,9 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                 source: increaseRank,
             },
             xAxis: {
+                axisLine: {
+                    show: true,
+                },
                 splitLine: {
                     lineStyle: {
                         color: ['#eee'],
@@ -83,7 +77,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                             padding: [2, 4],
                             borderRadius: 2,
                         },
-                        ...richMap,
+                        ...characterRichMap,
                     },
                 },
             },
@@ -95,21 +89,21 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                         position: 'right',
                         formatter(param) {
                             const { dataIndex, data } = param;
-                            const { increase, increaseRate } = data;
-                            if (dataIndex === 37) {
-                                increaseRate = `先周比：${increaseRate}`;
-                            }
+                            const { increase, increaseRate, projectName } = data;
                             // TODO: 不知为啥 这段文字 没有了 颜色
-                            return `${increase} {rate|(${increaseRate})}`;
+                            const increaseStr = `{${projectName}|  ${increase}}`;
+                            const increaseRateStr = `{rate|  ${dataIndex === 37
+                                ? '\n(先周比：'
+                                : '('}${increaseRate})}`;
+                            return increaseStr + increaseRateStr;
                         },
                         fontSize: 16,
                         rich: {
                             rate: {
                                 fontSize: 12,
                                 fontWeight: 'bold',
-                                // padding: [2, 4],
-                                // borderRadius: 2
                             },
+                            ...projectRichMap,
                         },
                     },
                     itemStyle: {

@@ -7,10 +7,17 @@ export const ProjectColorMap = {
     [ProjectName.lln]: '#f39800',
 } as const;
 
+export const ProjectShorthandMap = {
+    [ProjectName.ll]: 'LL',
+    [ProjectName.lls]: 'LLS',
+    [ProjectName.llss]: 'LLSS',
+    [ProjectName.lln]: 'LLN',
+} as const;
+
 export const characterRomeMap = {
     // muse
     '高坂穂乃果': 'honoka',
-    '絢瀬絵里': 'eri',
+    '絢瀬絵里': 'eli',
     '南ことり': 'kotori',
     '園田海未': 'umi',
     '星空凛': 'rin',
@@ -28,7 +35,7 @@ export const characterRomeMap = {
     '国木田花丸': 'hanamaru',
     '小原鞠莉': 'mari',
     '黒澤ルビィ': 'ruby',
-    '鹿角聖良': 'seira',
+    '鹿角聖良': 'sarah',
     '鹿角理亞': 'leah',
     // hello
     '澁谷かのん': 'kanon',
@@ -42,11 +49,11 @@ export const characterRomeMap = {
     '桜坂しずく': 'shizuku',
     '朝香果林': 'karin',
     '宮下愛': 'ai',
-    '近江彼方': 'kanata',
+    '近江彼方': 'kanada',
     '優木せつ菜': 'setsuna',
     'エマ・ヴェルデ': 'ema',
     '天王寺璃奈': 'rina',
-    '高咲侑': 'me',
+    '高咲侑': 'yuu',
     '三船栞子': 'shioriko',
     'ミア・テイラー': 'mia',
     '鐘嵐珠': 'lanzhu',
@@ -58,7 +65,7 @@ export type KeyofCharacterRomeMap = keyof typeof characterRomeMap
 export const romaColorMap = {
     // ll
     honoka: '#ffae00',
-    eri: '#00bbff',
+    eli: '#00bbff',
     kotori: '#a8a8a8',
     umi: '#6d56ff',
     rin: '#fee155',
@@ -77,7 +84,7 @@ export const romaColorMap = {
     mari: '#a530e0',
     ruby: '#ee55b7',
     leah: '#bbbbbb',
-    seira: '#00ccff',
+    sarah: '#00ccff',
     // llss
     kanon: '#ff7f27',
     keke: '#a0fff9',
@@ -90,14 +97,34 @@ export const romaColorMap = {
     shizuku: '#01b7ed',
     karin: '#485ec6',
     ai: '#ff5800',
-    kanata: '#a664a0',
+    kanada: '#a664a0',
     setsuna: '#d81c2f',
     ema: '#84c36e',
     rina: '#9ca5b9',
-    me: '#1d1d1d',
+    yuu: '#1d1d1d',
     shioriko: '#37b484',
     lanzhu: '#f69992',
     mia: '#a9a898',
 };
 
 export type KeyofRomaColorMap = keyof typeof romaColorMap
+
+// 准备 rich 对象，以角色罗马音为 key，绑定应援色
+export const characterRichMap: Record<string, unknown> = {};
+for (const [romaName, supportColor] of Object.entries(romaColorMap)) {
+    characterRichMap[romaName] = {
+        color: supportColor,
+        fontSize: 14,
+        fontWeight: 'bold',
+    };
+}
+
+// 准备 rich 对象，以企划名为 key，绑定颜色
+export const projectRichMap: Record<string, unknown> = {};
+for (const [projectName, color] of Object.entries(ProjectColorMap)) {
+    projectRichMap[projectName] = {
+        color,
+        fontSize: 14,
+        fontWeight: 'bold',
+    };
+}

@@ -11,15 +11,9 @@
 {
     "root": {
         "scope": "chiyu-bit.canon",
-        "version": "0.0.1",
+        "version": "0.0.4",
         "mainFile": "index.ts",
         "rootDir": "canon/root"
-    },
-    "weekly": {
-        "scope": "chiyu-bit.canon",
-        "version": "0.0.2",
-        "mainFile": "index.ts",
-        "rootDir": "canon/weekly"
     },
     "$schema-version": "14.9.0"
 }

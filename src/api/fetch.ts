@@ -18,10 +18,8 @@ export async function enhanceFetch(
     params: FetchParam = {},
     method: FetchMethod = 'GET',
 ) {
-    console.log(method, params, requestUrl);
-
     let url = requestUrl;
-    const result = null;
+
     let response: Response;
 
     // 无论是GET还是POST都需要拼接参数
@@ -37,6 +35,8 @@ export async function enhanceFetch(
     if (method === 'GET' && query) {
         url += `?${query}`;
     }
+
+    console.log(method, params, url);
 
     // 不同的请求不同的fetch
     try {

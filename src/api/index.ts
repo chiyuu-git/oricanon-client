@@ -9,7 +9,7 @@ import { enhanceFetch } from './fetch';
  *
  * @returns
  */
-export const reqWeeklyInfo = () => enhanceFetch('/api/weekly/weekly_info');
+export const reqWeeklyInfo = (endDate = '') => enhanceFetch('/api/weekly/weekly_info', { endDate });
 
 // TODO: 类型提升到root，同时完善 service findOne 的类型
 interface QueryMemberListDto {

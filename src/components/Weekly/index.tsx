@@ -4,8 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { WeeklyContext } from './weekly-context-manager';
 import { WeeklyInfo } from './weekly.type';
 import CoupleCircle from './CoupleCircle';
-import PixivIllustIncreaseRank from './IncreaseRank/PixivIllustContainer';
-import TwitterFollowerIncreaseRank from './IncreaseRank/SeiyuuFollowerContainer';
+import PixivIllustIncreaseRank from './IncreaseRank/PixivIllustIncreaseRank';
+import TwitterFollowerIncreaseRank from './IncreaseRank/TwitterFollowerIncreaseRank';
+import PixivIllustTotalRank from './TotalRank/PixivIllustTotalRank';
+import TwitterFollowerTotalRank from './TotalRank/TwitterFollowerTotalRank';
+import BasicProjectPie from './ProjectPie/BasicProjectPie';
+import CompareProjectPie from './ProjectPie/CompareProjectPie';
+
+import './index.less';
 
 const Weekly = () => {
     const [weeklyContext, setWeeklyContext] = useState<WeeklyInfo | null>(null);
@@ -22,10 +28,18 @@ const Weekly = () => {
 
     return (
         <WeeklyContext.Provider value = { weeklyContext }>
-            <div>Weekly</div>
-            <PixivIllustIncreaseRank />
-            <TwitterFollowerIncreaseRank />
-            <CoupleCircle />
+            <div className = 'weekly-wrap'>
+                <PixivIllustIncreaseRank />
+                <div className = 'compare-pie-container'>
+                    <BasicProjectPie />
+                    <CompareProjectPie />
+                </div>
+                <PixivIllustTotalRank />
+                <CoupleCircle />
+                <TwitterFollowerIncreaseRank />
+                <TwitterFollowerTotalRank />
+                <BasicProjectPie />
+            </div>
         </WeeklyContext.Provider>
     );
 };

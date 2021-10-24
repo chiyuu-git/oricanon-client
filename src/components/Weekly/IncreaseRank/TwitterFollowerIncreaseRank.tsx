@@ -3,43 +3,42 @@ import { WeeklyContext } from '../weekly-context-manager';
 import { IncreaseRank } from './IncreaseRank.type';
 import RankBar from './RankBar';
 
-const PixivIllustIncreaseRank: FC<unknown> = () => {
+const TwitterFollowerIncreaseRank: FC<unknown> = () => {
     const weeklyInfo = useContext(WeeklyContext);
-    const [pixivIllustIncreaseRank, setPixivIllustIncreaseRank] = useState<IncreaseRank | null>(null);
+    const [twitterFollowerIncreaseRank, setTwitterFollowerIncreaseRank] = useState<IncreaseRank | null>(null);
 
     useEffect(() => {
         if (weeklyInfo) {
-            const characterMemberInfo = weeklyInfo.characterInfo.memberInfo;
+            const seiyuuMemberInfo = weeklyInfo.seiyuuInfo.memberInfo;
 
-            const increaseRank = characterMemberInfo
+            const increaseRank = [...seiyuuMemberInfo]
                 .sort((a, b) => a.weekIncrease - b.weekIncrease)
                 .map((memberInfo) => {
-                    const { name, romaName, weekIncrease, projectName, weekIncreaseRate, supportColor } = memberInfo;
+                    const { name, romaName, weekIncrease, projectName, weekIncreaseRate } = memberInfo;
                     return {
                         name,
                         romaName,
-                        supportColor,
                         increase: weekIncrease < 0 ? 0 : weekIncrease,
                         projectName,
                         increaseRate: weekIncreaseRate || '-',
                     };
                 });
 
-            setPixivIllustIncreaseRank(increaseRank);
+            setTwitterFollowerIncreaseRank(increaseRank);
         }
     }, [weeklyInfo]);
 
-    if (weeklyInfo && pixivIllustIncreaseRank) {
+    if (weeklyInfo && twitterFollowerIncreaseRank) {
         return (
             <RankBar
-                title = 'pixiv标签-角色周增榜'
+                title = '声优fo数-周增榜'
                 range = { weeklyInfo.range }
-                increaseRank = { pixivIllustIncreaseRank }
+                increaseRank = { twitterFollowerIncreaseRank }
             />
         );
     }
 
-    return <div>PixivIllustIncreaseRank</div>;
+    return <div>TwitterFollowerIncreaseRank</div>;
 };
 
-export default PixivIllustIncreaseRank;
+export default TwitterFollowerIncreaseRank;

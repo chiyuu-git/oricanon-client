@@ -1,0 +1,107 @@
+@tagWidth: 382.5px;
+@foWidth: 381.3px;
+
+/* 控制rank的标题和内容的布局 */
+
+.rank-table-wrap {
+    width: fit-content;
+
+    .table-title {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        width: 100%;
+        font-size: 24px;
+        line-height: 50px;
+
+        .describe {
+            margin-left: 10px;
+            font-size: 14px;
+        }
+
+        .range {
+            margin-right: 10px;
+            font-size: 14px;
+        }
+    }
+}
+
+/* 控制不同类型的rank的整体布局 */
+
+.pixiv-illust-total-table-content {
+    display: grid;
+    /* grid-auto-columns:350px; */
+    grid-auto-flow: column;
+    /* 通过grid-auto去控制textarea */
+    grid-template-columns: repeat(3, @tagWidth);
+    grid-template-rows: repeat(13, 50px);
+    border-top: 1px solid;
+}
+
+.twitter-follower-total-table-content {
+    display: grid;
+    grid-auto-columns: 350px;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(2, @foWidth);
+    grid-template-rows: repeat(9, 50px);
+    border-top: 1px solid;
+}
+/* 控制rank中每一个排名的样式 */
+
+.cell {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    font-size: 16px;
+
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+
+    .ranking {
+        width: 20px;
+        margin: 0 5px;
+        text-align: center;
+    }
+
+    img {
+        width: 48px;
+        border-radius: 50%;
+    }
+
+    .name {
+        flex-grow: 1;
+    }
+
+    .record {
+        width: 75px;
+        padding-right: 5px;
+        line-height: 50px;
+        text-align: end;
+    }
+
+    .increase {
+        width: 60px;
+        padding-right: 5px;
+        line-height: 50px;
+        text-align: end;
+    }
+}
+
+.lovelive {
+    background-color: rgba(#e08, 0.5);
+}
+
+.lovelive_sunshine {
+    background-color: rgba(#4fc4fe, 0.5);
+}
+
+.lovelive_superstar {
+    background-color: rgba(#a6469d, 0.5);
+}
+
+.lovelive_nijigasaki_high_school_idol_club {
+    background-color: rgba(#f39800, 0.5);
+}
+
+// .summary {
+// }

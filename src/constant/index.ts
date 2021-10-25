@@ -61,7 +61,6 @@ export const characterRomeMap = {
 
 export type KeyofCharacterRomeMap = keyof typeof characterRomeMap
 
-// TODO: character 需要新增字段 代表色，企划没有明确的代表色，就不新增了
 export const romaColorMap = {
     // ll
     honoka: '#ffae00',

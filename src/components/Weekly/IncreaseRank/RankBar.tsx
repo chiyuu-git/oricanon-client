@@ -67,7 +67,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                     margin: 14,
                     formatter(name: KeyofCharacterRomeMap) {
                         const roma = characterRomeMap[name];
-                        // TODO: 每个角色使用自己的代表色，试了几个使用 romaName 作为 key 可行
+                        // 试了几个 key 使用 romaName 作为 key 可行
                         return `{${roma}|${name}}`;
                     },
                     rich: {
@@ -90,7 +90,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                         formatter(param) {
                             const { dataIndex, data } = param;
                             const { increase, increaseRate, projectName } = data;
-                            // TODO: 不知为啥 这段文字 没有了 颜色
+
                             const increaseStr = `{${projectName}|  ${increase}}`;
                             const increaseRateStr = `{rate|  ${dataIndex === 37
                                 ? '\n(先周比：'

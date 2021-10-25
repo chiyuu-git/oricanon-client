@@ -1,4 +1,4 @@
-type UnknownFunction = (...params: unknown[]) => unknown;
+type UnknownFunction = (...args: unknown[]) => unknown;
 /**
  * 函数式编程，函数组合工具，按顺序传递返回值调用函数管道
  *
@@ -34,3 +34,31 @@ export function compose(...funcs: UnknownFunction[]): UnknownFunction {
     // a是累加器，最终返回的函数
     return funcs.reduce((a, b) => (...args) => a(b(...args)));
 }
+
+export function pipe<P>(): (arg: P) => P;
+export function pipe<T extends unknown[], V>(
+    ...funcs: readonly [
+        (...args: any[]) => V,
+        ...any[],
+        (...args: T) => any
+    ]
+): (...args: T) => V
+export function pipe(...funcs: UnknownFunction[]): UnknownFunction {
+    if (funcs.length === 0) return (arg) => arg;
+    if (funcs.length === 1) return funcs[0];
+    // a是累加器，最终返回的函数
+    return funcs.reduce((a, b) => (...args: unknown[]) => a(b(...args)));
+}
+
+type Test2 = `names.${number}.firstName.lastName.${number}`;
+type SplitTemplateStringTypeToTuple<T> =
+  T extends `${infer First}.${infer Rest}`
+  // 此分支表示需要继续递归
+      ? First extends `${number}`
+          ? [number, ...SplitTemplateStringTypeToTuple<Rest>] // 完全类似 JS 数组构造
+          : [First, ...SplitTemplateStringTypeToTuple<Rest>]
+  // 此分支表示抵达递归基，递归基不是 nubmer 就是 string
+      : T extends `${number}`
+          ? [number]
+          : [T];
+type TestSplitTemplateStringTypeToTuple = SplitTemplateStringTypeToTuple<Test2>;

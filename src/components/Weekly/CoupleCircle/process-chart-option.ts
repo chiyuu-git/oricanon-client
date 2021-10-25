@@ -1,7 +1,7 @@
 import { GraphSeriesOption } from 'echarts';
 
 import { romaColorMap, KeyofRomaColorMap } from '@src/constant';
-import { compose } from '@src/utils';
+import { compose, pipe } from '@src/utils';
 
 /**
  * 根据 members 排列组合，返回一个二维数组
@@ -115,7 +115,7 @@ function decorateWithWidth(combinationMembers: ReturnType<typeof decorateWithCir
     });
 }
 
-export const processMembers = compose(
+export const processMembers = pipe(
     decorateWithWidth,
     decorateWithColor,
     decorateWithCircle,

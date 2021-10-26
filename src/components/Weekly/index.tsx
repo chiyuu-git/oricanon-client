@@ -17,30 +17,30 @@ const Weekly = () => {
     const [weeklyContext, setWeeklyContext] = useState<WeeklyInfo | null>(null);
 
     // 获取 weeklyInfo
-    useEffect(() => {
-        async function getWeeklyInfo() {
-            const weeklyInfo: WeeklyInfo = await reqWeeklyInfo();
-            console.log('weeklyContext:', weeklyInfo);
-            setWeeklyContext(weeklyInfo);
-        }
-        getWeeklyInfo();
-    }, []);
+    // useEffect(() => {
+    //     async function getWeeklyInfo() {
+    //         const weeklyInfo: WeeklyInfo = await reqWeeklyInfo();
+    //         console.log('weeklyContext:', weeklyInfo);
+    //         setWeeklyContext(weeklyInfo);
+    //     }
+    //     getWeeklyInfo();
+    // }, []);
 
+    // <WeeklyContext.Provider value = { weeklyContext }>
+    // </WeeklyContext.Provider>
     return (
-        <WeeklyContext.Provider value = { weeklyContext }>
-            <div className = 'weekly-wrap'>
-                <PixivIllustIncreaseRank />
-                <div className = 'compare-pie-container'>
-                    <BasicProjectPie />
-                    <CompareProjectPie />
-                </div>
-                <PixivIllustTotalRank />
-                <CoupleCircle />
-                <TwitterFollowerIncreaseRank />
-                <TwitterFollowerTotalRank />
+        <div className = 'weekly-wrap'>
+            <PixivIllustIncreaseRank />
+            { /* <div className = 'compare-pie-container'>
                 <BasicProjectPie />
+                <CompareProjectPie />
             </div>
-        </WeeklyContext.Provider>
+            <PixivIllustTotalRank />
+            <CoupleCircle />
+            <TwitterFollowerIncreaseRank />
+            <TwitterFollowerTotalRank />
+            <BasicProjectPie /> */ }
+        </div>
     );
 };
 

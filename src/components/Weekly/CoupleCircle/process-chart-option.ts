@@ -1,7 +1,7 @@
 import { GraphSeriesOption } from 'echarts';
 
 import { romaColorMap, KeyofRomaColorMap } from '@src/constant';
-import { compose, pipe } from '@src/utils';
+import { pipe } from '@src/utils';
 
 /**
  * 根据 members 排列组合，返回一个二维数组

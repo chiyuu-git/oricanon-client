@@ -1,17 +1,18 @@
-import React, { FC, useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
 import { WeeklyContext } from '../weekly-context-manager';
 import { TotalRank } from './TotalRank.type';
 import RankTable from './RankTable';
 
 const PixivIllustTotalRank = () => {
-    const weeklyInfo = useContext(WeeklyContext);
+    const weeklyContext = useContext(WeeklyContext);
+    const [range, setRange] = useState('');
     const [pixivIllustTotalRank, setPixivIllustTotalRank] = useState<TotalRank | null>(null);
+    const pixivIllustWeeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
 
     useEffect(() => {
-        if (weeklyInfo) {
-            const characterMemberInfo = weeklyInfo.characterInfo.memberInfo;
-
-            const totalRank = [...characterMemberInfo]
+        if (pixivIllustWeeklyInfo) {
+            const totalRank = [...pixivIllustWeeklyInfo.memberInfo]
                 .sort((a, b) => b.record - a.record)
                 .map((memberInfo) => {
                     const { name, record, weekIncrease, projectName } = memberInfo;
@@ -23,15 +24,16 @@ const PixivIllustTotalRank = () => {
                     };
                 });
 
+            setRange(pixivIllustWeeklyInfo.range);
             setPixivIllustTotalRank(totalRank);
         }
-    }, [weeklyInfo]);
+    }, [pixivIllustWeeklyInfo]);
 
-    if (weeklyInfo && pixivIllustTotalRank) {
+    if (pixivIllustTotalRank) {
         return (
             <RankTable
                 title = 'pixiv标签-角色累计榜'
-                range = { weeklyInfo.range }
+                range = { range }
                 contentType = 'pixiv-illust-total'
                 totalRank = { pixivIllustTotalRank }
             />

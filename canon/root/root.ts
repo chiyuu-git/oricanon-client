@@ -26,17 +26,6 @@ export enum CharacterRecordType {
     fiveThousand = 'pixiv_5000',
     r18 = 'pixiv_r18'
 }
-// 遍历返回的联合类型索引，只保留 enum key？
-// type test<K extends string | number | symbol> = K extends BasicType.character
-//     ? K
-//     : never
-type test<K extends string | number | symbol> = K extends SeiyuuRecordType.twitterFollower
-    ? K
-    : never
-
-type A = test<SeiyuuRecordType>
-
-type B = Record<A, number>
 
 export enum SeiyuuRecordType {
     twitterFollower = 'twitter_follower',

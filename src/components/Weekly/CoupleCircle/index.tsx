@@ -4,19 +4,18 @@ import { EChartsOption } from 'echarts';
 
 import { MemberList, reqMemberList } from '@src/api';
 
-import { BasicType, ProjectName } from '@chiyu-bit/canon.root';
-import { ModuleInfo } from 'canon/root/weekly';
+import { BasicType, CharacterRecordType, ProjectName } from '@chiyu-bit/canon.root';
+import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { WeeklyContext } from '../weekly-context-manager';
 import { processMembers } from './process-chart-option';
 
 import './index.less';
-
 /**
  * 有副作用，指定 lineStyle label 即数据
  */
 function decorateWithDataLabel(
     combinationMembers: ReturnType<typeof processMembers>,
-    latestData: ModuleInfo<BasicType.couple>['memberInfo'],
+    latestData: RecordWeeklyInfo<BasicType.couple>['memberInfo'],
 ) {
     return combinationMembers.map((combinationMember) => {
         const couple = combinationMember;
@@ -30,7 +29,7 @@ function decorateWithDataLabel(
             verticalAlign: 'bottom',
             lineHeight: 0,
             formatter(params) {
-                const { data, dataIndex } = params;
+                const { dataIndex } = params;
                 const weekIncrease = latestData[dataIndex].weekIncrease >= 9
                     ? `(+${latestData[dataIndex].weekIncrease})`
                     : '';
@@ -44,9 +43,10 @@ function decorateWithDataLabel(
 // echarts option shape 参考按需引入的 component 结构，拼接成最终的 option
 // 如何获取 echarts 暴露的 ts 接口？ 没必要我自己去拼接
 const CoupleCircle = () => {
-    const weeklyInfo = useContext(WeeklyContext);
+    const weeklyContext = useContext(WeeklyContext);
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
-    const [memberList, setMemberList] = useState<MemberList<BasicType.character>| null>(null);
+    const [memberList, setMemberList] = useState<MemberList<BasicType.character> | null>(null);
+    const PixivIllustWeeklyInfo = weeklyContext[BasicType.couple][CharacterRecordType.illust];
 
     /**
      * 获取 liella memberList
@@ -66,8 +66,8 @@ const CoupleCircle = () => {
      * 获取 weeklyInfo 并 setOption
      */
     useEffect(() => {
-        if (weeklyInfo) {
-            const latestData = weeklyInfo.coupleInfo.memberInfo;
+        if (PixivIllustWeeklyInfo) {
+            const latestData = PixivIllustWeeklyInfo.memberInfo;
 
             const liellaMember = ['kanon', 'keke', 'chisato', 'sumire', 'ren'] as const;
 
@@ -79,7 +79,7 @@ const CoupleCircle = () => {
             const option: EChartsOption = {
                 title: {
                     text: 'pixiv标签-角色cp榜',
-                    subtext: `集计时间：${weeklyInfo.range.split('至')[1]}日`,
+                    subtext: `集计时间：${PixivIllustWeeklyInfo.range.split('至')[1]}日`,
                     left: 'left',
                     textStyle: {
                         fontSize: 24,
@@ -126,7 +126,7 @@ const CoupleCircle = () => {
 
             setChartOption(option);
         }
-    }, [weeklyInfo]);
+    }, [PixivIllustWeeklyInfo]);
 
     function renderIconImg(liellaMemberList: MemberList<BasicType.character>) {
         const { projectName, list } = liellaMemberList;

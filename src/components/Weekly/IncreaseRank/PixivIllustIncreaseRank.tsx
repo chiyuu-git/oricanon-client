@@ -1,28 +1,25 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useContext } from 'react';
 import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
-import { reqRecordWeeklyInfo } from '@src/api';
 import { getIncreaseRank, IncreaseRank } from './common';
 import RankBar from './RankBar';
+import { WeeklyContext } from '../weekly-context-manager';
 
 const CharaIllustIncreaseRank: FC<unknown> = () => {
+    const weeklyContext = useContext(WeeklyContext);
     const [range, setRange] = useState('');
     const [charaIllustIncreaseRank, setCharaIllustIncreaseRank] = useState<IncreaseRank | null>(null);
+    const PixivIllustWeeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
 
     useEffect(() => {
-        async function processWeeklyInfo() {
+        if (PixivIllustWeeklyInfo) {
             // TODO: 请求的类型有重复的，有交集，缓存？ 提升请求的位置然后 context 共享？直接使用 GET 的缓存就好了
-            const illustWeeklyInfo = await reqRecordWeeklyInfo({
-                basicType: BasicType.character,
-                infoType: CharacterRecordType.illust,
-            });
 
-            const increaseRank = getIncreaseRank(illustWeeklyInfo);
+            const increaseRank = getIncreaseRank(PixivIllustWeeklyInfo);
 
             setCharaIllustIncreaseRank(increaseRank);
-            setRange(illustWeeklyInfo.range);
+            setRange(PixivIllustWeeklyInfo.range);
         }
-        processWeeklyInfo();
-    }, []);
+    }, [PixivIllustWeeklyInfo]);
 
     if (charaIllustIncreaseRank) {
         return (

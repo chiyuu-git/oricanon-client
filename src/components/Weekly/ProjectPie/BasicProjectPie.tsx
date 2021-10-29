@@ -1,27 +1,23 @@
 import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
 import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
-import { reqRecordWeeklyInfo } from '@src/api';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { WeeklyContext } from '../weekly-context-manager';
 
 import NestPie from './NestPie';
 
 const BasicProjectPie = () => {
+    const weeklyContext = useContext(WeeklyContext);
     const [
         charaIllustWeeklyInfo,
         setCharaIllustWeeklyInfo,
     ] = useState<RecordWeeklyInfo<BasicType.character> | null>(null);
+    const pixivIllustWeeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
 
     useEffect(() => {
-        async function getWeeklyInfo() {
-            const illustWeeklyInfo = await reqRecordWeeklyInfo({
-                basicType: BasicType.character,
-                infoType: CharacterRecordType.illust,
-            });
-
-            setCharaIllustWeeklyInfo(illustWeeklyInfo);
+        if (pixivIllustWeeklyInfo) {
+            setCharaIllustWeeklyInfo(pixivIllustWeeklyInfo);
         }
-        getWeeklyInfo();
-    }, []);
+    }, [pixivIllustWeeklyInfo]);
 
     if (charaIllustWeeklyInfo) {
         const { range, projectInfo, memberInfo } = charaIllustWeeklyInfo;

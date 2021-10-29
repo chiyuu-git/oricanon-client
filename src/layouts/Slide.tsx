@@ -1,5 +1,4 @@
-import React, { useState, createContext, useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React, { useState, createContext } from 'react';
 
 export const ConnectionContext = createContext({});
 

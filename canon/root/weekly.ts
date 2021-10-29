@@ -15,7 +15,7 @@ interface MemberWeekInfo {
     weekIncreaseRate: string;
 }
 
-export type GetMemberInfo<Type extends BasicType> = Type extends BasicType.character
+export type MemberBasicInfo<Type extends BasicType> = Type extends BasicType.character
     ? CharacterInfo
     : Type extends BasicType.couple
         ? CoupleInfo
@@ -23,12 +23,12 @@ export type GetMemberInfo<Type extends BasicType> = Type extends BasicType.chara
             ? SeiyuuInfo
             : never
 
-type ModuleInfoMap<Type extends BasicType> = MemberWeekInfo & GetMemberInfo<Type>
+type MemberInfo<Type extends BasicType> = MemberWeekInfo & MemberBasicInfo<Type>
 
 export interface RecordWeeklyInfo<Type extends BasicType> {
     range: string;
     projectInfo: ProjectInfo[];
-    memberInfo: ModuleInfoMap<Type>[];
+    memberInfo: MemberInfo<Type>[];
 }
 
 export type CharaRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo<BasicType.character>>

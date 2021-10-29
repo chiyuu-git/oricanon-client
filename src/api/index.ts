@@ -1,5 +1,5 @@
 import { BasicType, InfoType, ProjectName } from '@chiyu-bit/canon.root';
-import { GetMemberInfo, RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
+import { MemberBasicInfo, RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { enhanceFetch } from './fetch';
 
 interface QueryRecordTypeWeeklyInfo {
@@ -9,24 +9,25 @@ interface QueryRecordTypeWeeklyInfo {
 }
 
 // TODO: 两个ResXXX是否有办法合成一个？泛型函数没法透传，使用的时候必须传值
-type ResWeeklyInfo<T extends QueryRecordTypeWeeklyInfo> = T extends { basicType: infer R; }
-    ? R extends BasicType
-        ? RecordWeeklyInfo<R>
-        : never
-    : never
+// TODO: 对象解构没办法返回精确的泛型
+// type ResWeeklyInfo<T extends QueryRecordTypeWeeklyInfo> = T extends { basicType: infer R; }
+//     ? R extends BasicType
+//         ? RecordWeeklyInfo<R>
+//         : never
+//     : never
 
-export function reqRecordWeeklyInfo<T extends QueryRecordTypeWeeklyInfo>({
-    basicType,
-    infoType,
-    endDate = '',
-}: T): Promise<ResWeeklyInfo<T>> {
-    return enhanceFetch(
-        '/api/weekly/weekly_info_of_record_type',
-        { basicType, infoType, endDate },
-    );
-}
+// export function reqRecordWeeklyInfo<T extends QueryRecordTypeWeeklyInfo>({
+//     basicType,
+//     infoType,
+//     endDate = '',
+// }: T): Promise<ResWeeklyInfo<T>> {
+//     return enhanceFetch(
+//         '/api/weekly/weekly_info_of_record_type',
+//         { basicType, infoType, endDate },
+//     );
+// }
 
-export function reqRecordWeeklyInfoTest<Type extends BasicType>(
+export function reqRecordWeeklyInfo<Type extends BasicType>(
     basicType: Type,
     infoType: InfoType,
     endDate = '',
@@ -44,7 +45,7 @@ interface QueryMemberList {
 }
 export interface MemberList<Type extends BasicType> {
     projectName: ProjectName;
-    list: GetMemberInfo<Type>[];
+    list: MemberBasicInfo<Type>[];
 }
 type ResMemberList<T extends QueryMemberList> = T extends { type: infer R; }
     ? R extends BasicType

@@ -13,11 +13,11 @@ const CompareProjectPie = () => {
 
     useEffect(() => {
         async function getWeeklyInfo() {
-            const illustWeeklyInfo = await reqRecordWeeklyInfo({
-                basicType: BasicType.character,
-                infoType: CharacterRecordType.illust,
-                endDate: '2021-01-01',
-            });
+            const illustWeeklyInfo = await reqRecordWeeklyInfo(
+                BasicType.character,
+                CharacterRecordType.illust,
+                '2021-01-01',
+            );
 
             setCharaIllustWeeklyInfo(illustWeeklyInfo);
         }

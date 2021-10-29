@@ -1,41 +1,39 @@
-import { BasicType, ProjectName, RecordType } from '@chiyu-bit/canon.root';
-import { CharacterInfo, CoupleInfo, SeiyuuInfo } from '@chiyu-bit/canon.root/member-list';
-import { GetMemberInfo, ModuleInfo } from '@chiyu-bit/canon.root/weekly';
+import { BasicType, InfoType, ProjectName } from '@chiyu-bit/canon.root';
+import { GetMemberInfo, RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { enhanceFetch } from './fetch';
 
-/**
- * 查询周榜所需的数据
- * 不需要任何参数，后端直接返回周榜所需要的全部数据
- *
- * @returns
- */
-export const reqWeeklyInfo = (endDate = '') => enhanceFetch('/api/weekly/weekly_info', { endDate });
-
-interface QueryWeeklyInfoOfRecordType {
+interface QueryRecordTypeWeeklyInfo {
     basicType: BasicType;
-    recordType: RecordType;
+    infoType: InfoType;
     endDate?: string;
 }
-export interface WeeklyInfo<Type extends BasicType> {
-    range: string;
-    recordWeekInfo: ModuleInfo<Type>;
-}
 
-// TODO: 两个ResXXX是否有办法合成一个？
-type ResWeeklyInfo<T extends QueryWeeklyInfoOfRecordType> = T extends { basicType: infer R; }
+// TODO: 两个ResXXX是否有办法合成一个？泛型函数没法透传，使用的时候必须传值
+type ResWeeklyInfo<T extends QueryRecordTypeWeeklyInfo> = T extends { basicType: infer R; }
     ? R extends BasicType
-        ? WeeklyInfo<R>
+        ? RecordWeeklyInfo<R>
         : never
     : never
 
-export function reqWeeklyInfoOfRecordType<T extends QueryWeeklyInfoOfRecordType>({
+export function reqRecordWeeklyInfo<T extends QueryRecordTypeWeeklyInfo>({
     basicType,
-    recordType,
+    infoType,
     endDate = '',
 }: T): Promise<ResWeeklyInfo<T>> {
     return enhanceFetch(
         '/api/weekly/weekly_info_of_record_type',
-        { basicType, recordType, endDate },
+        { basicType, infoType, endDate },
+    );
+}
+
+export function reqRecordWeeklyInfoTest<Type extends BasicType>(
+    basicType: Type,
+    infoType: InfoType,
+    endDate = '',
+): Promise<RecordWeeklyInfo<Type>> {
+    return enhanceFetch(
+        '/api/weekly/weekly_info_of_record_type',
+        { basicType, infoType, endDate },
     );
 }
 

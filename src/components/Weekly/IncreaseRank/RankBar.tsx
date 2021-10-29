@@ -11,7 +11,7 @@ import {
     projectRichMap,
     ProjectColorMap,
 } from '@src/constant';
-import { IncreaseRank } from './IncreaseRank.type';
+import { IncreaseRank } from './common';
 
 import './RankBar.less';
 

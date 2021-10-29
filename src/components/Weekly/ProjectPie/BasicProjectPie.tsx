@@ -1,30 +1,30 @@
-import { BasicType, RecordType } from '@chiyu-bit/canon.root';
-import { reqWeeklyInfoOfRecordType, WeeklyInfo } from '@src/api';
+import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
+import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
+import { reqRecordWeeklyInfo } from '@src/api';
 import React, { useState, useEffect } from 'react';
 
 import NestPie from './NestPie';
 
 const BasicProjectPie = () => {
     const [
-        characterIllustWeeklyInfo,
-        setCharacterIllustWeeklyInfo,
-    ] = useState<WeeklyInfo<BasicType.character> | null>(null);
+        charaIllustWeeklyInfo,
+        setCharaIllustWeeklyInfo,
+    ] = useState<RecordWeeklyInfo<BasicType.character> | null>(null);
 
     useEffect(() => {
         async function getWeeklyInfo() {
-            const illustWeeklyInfo = await reqWeeklyInfoOfRecordType({
+            const illustWeeklyInfo = await reqRecordWeeklyInfo({
                 basicType: BasicType.character,
-                recordType: RecordType.illust,
+                infoType: CharacterRecordType.illust,
             });
 
-            setCharacterIllustWeeklyInfo(illustWeeklyInfo);
+            setCharaIllustWeeklyInfo(illustWeeklyInfo);
         }
         getWeeklyInfo();
     }, []);
 
-    if (characterIllustWeeklyInfo) {
-        const { range, recordWeekInfo } = characterIllustWeeklyInfo;
-        const { projectInfo, memberInfo } = recordWeekInfo;
+    if (charaIllustWeeklyInfo) {
+        const { range, projectInfo, memberInfo } = charaIllustWeeklyInfo;
         return (
             <NestPie
                 title = 'pixiv标签-企划周增榜'

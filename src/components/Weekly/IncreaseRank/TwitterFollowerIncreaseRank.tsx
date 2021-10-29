@@ -1,38 +1,33 @@
 import React, { FC, useState, useEffect, useContext } from 'react';
-import { WeeklyContext } from '../weekly-context-manager';
-import { IncreaseRank } from './IncreaseRank.type';
+import { reqRecordWeeklyInfo } from '@src/api';
+import { BasicType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
+import { getIncreaseRank, IncreaseRank } from './common';
 import RankBar from './RankBar';
 
 const TwitterFollowerIncreaseRank: FC<unknown> = () => {
-    const weeklyInfo = useContext(WeeklyContext);
+    const [range, setRange] = useState('');
     const [twitterFollowerIncreaseRank, setTwitterFollowerIncreaseRank] = useState<IncreaseRank | null>(null);
 
     useEffect(() => {
-        if (weeklyInfo) {
-            const seiyuuMemberInfo = weeklyInfo.seiyuuInfo.memberInfo;
+        async function processWeeklyInfo() {
+            const twitterFollowerWeeklyInfo = await reqRecordWeeklyInfo({
+                basicType: BasicType.seiyuu,
+                infoType: SeiyuuRecordType.twitterFollower,
+            });
 
-            const increaseRank = [...seiyuuMemberInfo]
-                .sort((a, b) => a.weekIncrease - b.weekIncrease)
-                .map((memberInfo) => {
-                    const { name, romaName, weekIncrease, projectName, weekIncreaseRate } = memberInfo;
-                    return {
-                        name,
-                        romaName,
-                        increase: weekIncrease < 0 ? 0 : weekIncrease,
-                        projectName,
-                        increaseRate: weekIncreaseRate || '-',
-                    };
-                });
+            const increaseRank = getIncreaseRank(twitterFollowerWeeklyInfo);
 
             setTwitterFollowerIncreaseRank(increaseRank);
+            setRange(twitterFollowerWeeklyInfo.range);
         }
-    }, [weeklyInfo]);
+        processWeeklyInfo();
+    }, []);
 
-    if (weeklyInfo && twitterFollowerIncreaseRank) {
+    if (twitterFollowerIncreaseRank) {
         return (
             <RankBar
                 title = '声优fo数-周增榜'
-                range = { weeklyInfo.range }
+                range = { range }
                 increaseRank = { twitterFollowerIncreaseRank }
             />
         );

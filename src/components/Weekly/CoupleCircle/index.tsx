@@ -4,7 +4,7 @@ import { EChartsOption } from 'echarts';
 
 import { MemberList, reqMemberList } from '@src/api';
 
-import { BasicType, CharacterRecordType, ProjectName } from '@chiyu-bit/canon.root';
+import { AggregationType, BasicType, ProjectName } from '@chiyu-bit/canon.root';
 import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { WeeklyContext } from '../weekly-context-manager';
 import { processMembers } from './process-chart-option';
@@ -46,7 +46,7 @@ const CoupleCircle = () => {
     const weeklyContext = useContext(WeeklyContext);
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
     const [memberList, setMemberList] = useState<MemberList<BasicType.character> | null>(null);
-    const PixivIllustWeeklyInfo = weeklyContext[BasicType.couple][CharacterRecordType.illust];
+    const PixivUnionIllustWeeklyInfo = weeklyContext[BasicType.couple][AggregationType.coupleUnionIllust];
 
     /**
      * 获取 liella memberList
@@ -66,8 +66,8 @@ const CoupleCircle = () => {
      * 获取 weeklyInfo 并 setOption
      */
     useEffect(() => {
-        if (PixivIllustWeeklyInfo) {
-            const latestData = PixivIllustWeeklyInfo.memberInfo;
+        if (PixivUnionIllustWeeklyInfo) {
+            const latestData = PixivUnionIllustWeeklyInfo.memberInfo;
 
             const liellaMember = ['kanon', 'keke', 'chisato', 'sumire', 'ren'] as const;
 
@@ -79,7 +79,7 @@ const CoupleCircle = () => {
             const option: EChartsOption = {
                 title: {
                     text: 'pixiv标签-角色cp榜',
-                    subtext: `集计时间：${PixivIllustWeeklyInfo.range.split('至')[1]}日`,
+                    subtext: `集计时间：${PixivUnionIllustWeeklyInfo.range.split('至')[1]}日`,
                     left: 'left',
                     textStyle: {
                         fontSize: 24,
@@ -126,7 +126,7 @@ const CoupleCircle = () => {
 
             setChartOption(option);
         }
-    }, [PixivIllustWeeklyInfo]);
+    }, [PixivUnionIllustWeeklyInfo]);
 
     function renderIconImg(liellaMemberList: MemberList<BasicType.character>) {
         const { projectName, list } = liellaMemberList;

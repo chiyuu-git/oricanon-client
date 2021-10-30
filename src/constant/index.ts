@@ -27,7 +27,7 @@ export const characterRomeMap = {
     '矢澤にこ': 'nico',
     // aqours
     '高海千歌': 'chika',
-    '桜内梨子': 'rico',
+    '桜内梨子': 'riko',
     '松浦果南': 'kanan',
     '黒澤ダイヤ': 'dia',
     '渡辺曜': 'you',
@@ -74,7 +74,7 @@ export const romaColorMap = {
     nico: '#ff62dd',
     // lls
     chika: '#ff791b',
-    rico: '#ff7777',
+    riko: '#ff7777',
     kanan: '#00d29e',
     dia: '#f43232',
     you: '#2aa4db',

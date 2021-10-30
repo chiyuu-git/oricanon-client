@@ -3,7 +3,7 @@ import ReactECharts from 'echarts-for-react';
 import { EChartsOption } from 'echarts';
 
 import { ProjectShorthandMap, ProjectColorMap, characterRichMap } from '@src/constant';
-import { ModuleInfo } from '@chiyu-bit/canon.root/weekly';
+import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { BasicType, ProjectName } from '@chiyu-bit/canon.root';
 
 import './NestPie.less';
@@ -16,7 +16,7 @@ type NestPipeProps = {
         width: string;
         height: string;
     };
-} & ModuleInfo<BasicType.character>
+} & RecordWeeklyInfo<BasicType.character>
 
 const NestPie: FC<NestPipeProps> = (props) => {
     const { projectInfo, memberInfo, title, range, showWidget, size } = props;

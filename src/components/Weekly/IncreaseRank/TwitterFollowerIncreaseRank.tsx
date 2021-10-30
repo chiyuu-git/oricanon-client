@@ -22,7 +22,7 @@ const TwitterFollowerIncreaseRank: FC<unknown> = () => {
     if (twitterFollowerIncreaseRank) {
         return (
             <RankBar
-                title = '声优fo数-周增榜'
+                title = '推特fo数-周增榜'
                 range = { range }
                 increaseRank = { twitterFollowerIncreaseRank }
             />

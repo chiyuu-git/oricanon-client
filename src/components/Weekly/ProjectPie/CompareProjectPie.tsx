@@ -16,7 +16,7 @@ const CompareProjectPie = () => {
             const illustWeeklyInfo = await reqRecordWeeklyInfo(
                 BasicType.character,
                 CharacterRecordType.illust,
-                '2021-01-01',
+                '2021-01-08',
             );
 
             setCharaIllustWeeklyInfo(illustWeeklyInfo);

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 
 import { AggregationType, BasicType, CharacterRecordType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
 import {
@@ -6,6 +6,7 @@ import {
     WeeklyInfo,
 } from '@chiyu-bit/canon.root/weekly';
 import { reqRecordWeeklyInfo } from '@src/api';
+import { html2Image } from '@src/utils/html-to-image';
 import { WeeklyContext, initWeeklyContext } from './weekly-context-manager';
 
 import CoupleCircle from './CoupleCircle';
@@ -109,26 +110,9 @@ const SEIYUU_WEEKLY_INFO_LIST = {
 
 const Weekly = () => {
     const [weeklyContext, dispatchWeeklyContext] = useReducer(weeklyContextReducer, initWeeklyContext);
+    const weeklyWrap = useRef<HTMLDivElement>(null);
 
-    // // TODO: 获取 weeklyInfo
-    // useEffect(() => {
-    //     for (const { basicType, infoTypeList } of WEEKLY_INFO_LIST) {
-    //         for (const infoType of infoTypeList) {
-    //             reqRecordWeeklyInfoTest(basicType, infoType)
-    //                 .then((recordWeeklyInfo) => {
-    //                     dispatchWeeklyContext({
-    //                         basicType,
-    //                         payload: {
-    //                             infoType,
-    //                             recordWeeklyInfo,
-    //                         },
-    //                     });
-    //                     return true;
-    //                 })
-    //                 .catch((error) => console.log(error));
-    //         }
-    //     }
-    // }, []);
+    // // TODO: 遍历获取 weeklyInfo
 
     // 获取 character weeklyInfo
     useEffect(() => {
@@ -187,10 +171,22 @@ const Weekly = () => {
         }
     }, []);
 
-    return (
+    async function downloadAll() {
+        if (weeklyWrap.current) {
+            const chartNodes = weeklyWrap.current.children;
+            // 跳过第一个下载 button
+            for (let i = 1; i < chartNodes.length; i++) {
+                const childNode = chartNodes[i];
+                // eslint-disable-next-line no-await-in-loop
+                await html2Image(childNode as HTMLElement, childNode.className);
+            }
+        }
+    }
 
+    return (
         <WeeklyContext.Provider value = { weeklyContext }>
-            <div className = 'weekly-wrap'>
+            <div className = 'weekly-wrap' ref = { weeklyWrap }>
+                <button type = 'button' onClick = { downloadAll }> 下载所有图片 </button>
                 <CharaIllustIncreaseRank />
                 <div className = 'compare-pie-container'>
                     <BasicProjectPie />

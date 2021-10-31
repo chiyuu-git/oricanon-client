@@ -36,8 +36,6 @@ export async function enhanceFetch(
         url += `?${query}`;
     }
 
-    console.log(method, params, url);
-
     // 不同的请求不同的fetch
     try {
         switch (method) {

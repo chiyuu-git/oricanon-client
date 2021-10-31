@@ -51,6 +51,8 @@
         "experimentalDecorators": true,
         // 给源码里的装饰器声明加上设计类型元数据
         "emitDecoratorMetadata": true,
+        // 允许遍历器遍历类数组对象，方便做转换
+        "downlevelIteration": true,
 
         // 其他选项
         // 禁止对同一个文件的不一致的引用

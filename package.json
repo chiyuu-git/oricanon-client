@@ -67,10 +67,12 @@
   },
   "dependencies": {
     "@chiyu-bit/canon.root": "^0.0.8",
+    "canvas2image": "^1.0.5",
     "core-js": "^3.18.1",
     "echarts": "^5.2.1",
     "echarts-for-react": "^3.0.1",
     "html-webpack-plugin": "^5.3.2",
+    "html2canvas": "^1.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.3.0"

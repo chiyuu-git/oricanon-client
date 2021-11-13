@@ -3,8 +3,7 @@ import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 
 export type IncreaseRank = {
     projectName: ProjectName;
-    name: string;
-    romaName: string;
+    nameAndRoma: string;
     supportColor?: string;
     increase: number;
     increaseRate: string;
@@ -18,8 +17,7 @@ export function getIncreaseRank(recordWeeklyInfo: RecordWeeklyInfo<BasicType.cha
         .map((memberInfo) => {
             const { name, romaName, weekIncrease, projectName, weekIncreaseRate } = memberInfo;
             return {
-                name,
-                romaName,
+                nameAndRoma: `${name}-${romaName}`,
                 increase: weekIncrease < 0 ? 0 : weekIncrease,
                 projectName,
                 increaseRate: weekIncreaseRate || '-',

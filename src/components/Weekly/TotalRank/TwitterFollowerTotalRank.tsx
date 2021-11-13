@@ -33,8 +33,11 @@ const TwitterFollowerTotalRank = () => {
             <RankTable
                 title = '推特fo数-累计榜'
                 range = { range }
-                contentType = 'twitter-follower-total'
                 totalRank = { twitterFollowerTotalRank }
+                layoutOption = { {
+                    contentType: 'seiyuu-total-rank',
+                    increaseNodeWidth: '4em',
+                } }
             />
         );
     }

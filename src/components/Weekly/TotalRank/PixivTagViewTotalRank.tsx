@@ -4,15 +4,15 @@ import { WeeklyContext } from '../weekly-context-manager';
 import { TotalRank } from './TotalRank.type';
 import RankTable from './RankTable';
 
-const PixivIllustTotalRank = () => {
+const PixivTagViewTotalRank = () => {
     const weeklyContext = useContext(WeeklyContext);
     const [range, setRange] = useState('');
-    const [pixivIllustTotalRank, setPixivIllustTotalRank] = useState<TotalRank | null>(null);
-    const pixivIllustWeeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
+    const [pixivTagViewTotalRank, setPixivIllustTotalRank] = useState<TotalRank | null>(null);
+    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.tagView];
 
     useEffect(() => {
-        if (pixivIllustWeeklyInfo) {
-            const totalRank = [...pixivIllustWeeklyInfo.memberInfo]
+        if (weeklyInfo) {
+            const totalRank = [...weeklyInfo.memberInfo]
                 .sort((a, b) => b.record - a.record)
                 .map((memberInfo) => {
                     const { name, record, weekIncrease, projectName } = memberInfo;
@@ -24,26 +24,26 @@ const PixivIllustTotalRank = () => {
                     };
                 });
 
-            setRange(pixivIllustWeeklyInfo.range);
+            setRange(weeklyInfo.range);
             setPixivIllustTotalRank(totalRank);
         }
-    }, [pixivIllustWeeklyInfo]);
+    }, [weeklyInfo]);
 
-    if (pixivIllustTotalRank) {
+    if (pixivTagViewTotalRank) {
         return (
             <RankTable
-                title = 'pixiv标签创作数-角色累计榜'
+                title = 'pixiv标签阅览数-角色累计榜'
                 range = { range }
-                totalRank = { pixivIllustTotalRank }
+                totalRank = { pixivTagViewTotalRank }
                 layoutOption = { {
                     contentType: 'chara-total-rank',
-                    increaseNodeWidth: '3em',
+                    increaseNodeWidth: '5.5em',
                 } }
             />
         );
     }
 
-    return <div>PixivIllustIncreaseRank</div>;
+    return <div>PixivTagViewTotalRank</div>;
 };
 
-export default PixivIllustTotalRank;
+export default PixivTagViewTotalRank;

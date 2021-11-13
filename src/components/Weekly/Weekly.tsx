@@ -17,7 +17,9 @@ import TwitterFollowerTotalRank from './TotalRank/TwitterFollowerTotalRank';
 import BasicProjectPie from './ProjectPie/BasicProjectPie';
 import CompareProjectPie from './ProjectPie/CompareProjectPie';
 
-import './index.less';
+import './Weekly.less';
+import PixivTagViewIncreaseRank from './IncreaseRank/PixivTagViewIncreaseRank';
+import PixivTagViewTotalRank from './TotalRank/PixivTagViewTotalRank';
 
 type WeeklyActionInfoMap = {
     [BasicType.character]: {
@@ -82,6 +84,7 @@ const CHARA_WEEKLY_INFO_LIST = {
     infoTypeList: [
         CharacterRecordType.illust,
         CharacterRecordType.novel,
+        CharacterRecordType.tagView,
         AggregationType.illustWithNovel,
     ],
 } as const;
@@ -178,7 +181,7 @@ const Weekly = () => {
             for (let i = 1; i < chartNodes.length; i++) {
                 const childNode = chartNodes[i];
                 // eslint-disable-next-line no-await-in-loop
-                await html2Image(childNode as HTMLElement, childNode.className);
+                await html2Image(childNode as HTMLElement, `0${i}-${childNode.className}`);
             }
         }
     }
@@ -190,13 +193,15 @@ const Weekly = () => {
                 <CharaIllustIncreaseRank />
                 <div className = 'compare-pie-container'>
                     <BasicProjectPie />
-                    <CompareProjectPie />
+                    { /* <CompareProjectPie /> */ }
                 </div>
                 <PixivIllustTotalRank />
+                <PixivTagViewIncreaseRank />
                 <CoupleCircle />
+                { /* <PixivTagViewTotalRank /> */ }
                 <TwitterFollowerIncreaseRank />
                 <TwitterFollowerTotalRank />
-                <BasicProjectPie />
+                { /* <BasicProjectPie /> */ }
             </div>
         </WeeklyContext.Provider>
     );

@@ -1,12 +1,8 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// TODO:
 import React, { FC, useState, useEffect } from 'react';
 import { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
+import { ProjectName } from '@chiyu-bit/canon.root';
 import {
-    characterRomeMap,
-    KeyofCharacterRomeMap,
     characterRichMap,
     projectRichMap,
     ProjectColorMap,
@@ -48,7 +44,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                 // 默认把第一个维度映射到 X 轴上，第二个维度映射到 Y 轴上。
                 // 如果不指定 dimensions，也可以通过指定 series.encode
                 // 完成映射，参见后文。
-                dimensions: ['name', 'increase'],
+                dimensions: ['nameAndRoma', 'increase'],
                 source: increaseRank,
             },
             xAxis: {
@@ -65,10 +61,11 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                 type: 'category',
                 axisLabel: {
                     margin: 14,
-                    formatter(name: KeyofCharacterRomeMap) {
-                        const roma = characterRomeMap[name];
+                    formatter(nameAndRoma: string) {
+                        const [name, romaName] = nameAndRoma.split('-');
+                        // TODO: 执行次数过多
                         // 试了几个 key 使用 romaName 作为 key 可行
-                        return `{${roma}|${name}}`;
+                        return `{${romaName}|${name}}`;
                     },
                     rich: {
                         per: {
@@ -89,7 +86,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                         position: 'right',
                         formatter(param) {
                             const { dataIndex, data } = param;
-                            const { increase, increaseRate, projectName } = data;
+                            const { increase, increaseRate, projectName } = data as unknown as IncreaseRank[number];
 
                             const increaseStr = `{${projectName}|  ${increase}}`;
                             const increaseRateStr = `{rate|  ${dataIndex === 37
@@ -108,7 +105,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                     },
                     itemStyle: {
                         color(params) {
-                            return ProjectColorMap[params.data.projectName];
+                            return ProjectColorMap[(params.data as IncreaseRank[number]).projectName as ProjectName];
                         },
                     },
                 },

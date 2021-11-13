@@ -23,7 +23,7 @@ const BasicProjectPie = () => {
         const { range, projectInfo, memberInfo } = charaIllustWeeklyInfo;
         return (
             <NestPie
-                title = 'pixiv标签-企划周增榜'
+                title = 'pixiv标签创作数-企划周增榜'
                 range = { range }
                 projectInfo = { projectInfo }
                 memberInfo = { memberInfo }

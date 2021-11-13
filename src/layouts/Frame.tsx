@@ -1,7 +1,7 @@
 // src/layouts/Frame.js
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import Weekly from '@src/components/Weekly';
+import Weekly from '@src/components/Weekly/Weekly';
 import Detail from '@src/components/Detail';
 import Slide from './Slide';
 

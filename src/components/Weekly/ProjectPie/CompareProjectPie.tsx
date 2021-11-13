@@ -29,7 +29,7 @@ const CompareProjectPie = () => {
 
         return (
             <NestPie
-                title = '同期对比-企划周增榜'
+                title = '创作数对比-企划周增榜'
                 range = { range }
                 projectInfo = { projectInfo }
                 memberInfo = { memberInfo }

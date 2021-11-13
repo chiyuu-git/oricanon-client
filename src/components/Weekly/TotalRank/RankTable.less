@@ -1,5 +1,4 @@
-@tagWidth: 382.5px;
-@foWidth: 381.3px;
+@cellWidth: 382.5px;
 
 /* 控制rank的标题和内容的布局 */
 
@@ -28,21 +27,21 @@
 
 /* 控制不同类型的rank的整体布局 */
 
-.pixiv-illust-total-table-content {
+.chara-total-rank-table-content {
     display: grid;
     /* grid-auto-columns:350px; */
     grid-auto-flow: column;
     /* 通过grid-auto去控制textarea */
-    grid-template-columns: repeat(3, @tagWidth);
+    grid-template-columns: repeat(3, @cellWidth);
     grid-template-rows: repeat(13, 50px);
     border-top: 1px solid;
 }
 
-.twitter-follower-total-table-content {
+.seiyuu-total-rank-table-content {
     display: grid;
     grid-auto-columns: 350px;
     grid-auto-flow: column;
-    grid-template-columns: repeat(2, @foWidth);
+    grid-template-columns: repeat(2, @cellWidth);
     grid-template-rows: repeat(9, 50px);
     border-top: 1px solid;
 }
@@ -73,14 +72,12 @@
     }
 
     .record {
-        width: 75px;
         padding-right: 5px;
         line-height: 50px;
-        text-align: end;
+        text-align: start;
     }
 
     .increase {
-        width: 60px;
         padding-right: 5px;
         line-height: 50px;
         text-align: end;

@@ -12,8 +12,6 @@ const CharaIllustIncreaseRank: FC<unknown> = () => {
 
     useEffect(() => {
         if (PixivIllustWeeklyInfo) {
-            // TODO: 请求的类型有重复的，有交集，缓存？ 提升请求的位置然后 context 共享？直接使用 GET 的缓存就好了
-
             const increaseRank = getIncreaseRank(PixivIllustWeeklyInfo);
 
             setCharaIllustIncreaseRank(increaseRank);
@@ -24,7 +22,7 @@ const CharaIllustIncreaseRank: FC<unknown> = () => {
     if (charaIllustIncreaseRank) {
         return (
             <RankBar
-                title = 'pixiv标签-角色周增榜'
+                title = 'pixiv标签创作数-角色周增榜'
                 range = { range }
                 increaseRank = { charaIllustIncreaseRank }
             />

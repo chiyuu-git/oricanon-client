@@ -50,15 +50,10 @@ export function pipe(...funcs: UnknownFunction[]): UnknownFunction {
     return funcs.reduce((a, b) => (...args: unknown[]) => a(b(...args)));
 }
 
-type Test2 = `names.${number}.firstName.lastName.${number}`;
-type SplitTemplateStringTypeToTuple<T> =
-  T extends `${infer First}.${infer Rest}`
-  // 此分支表示需要继续递归
-      ? First extends `${number}`
-          ? [number, ...SplitTemplateStringTypeToTuple<Rest>] // 完全类似 JS 数组构造
-          : [First, ...SplitTemplateStringTypeToTuple<Rest>]
-  // 此分支表示抵达递归基，递归基不是 nubmer 就是 string
-      : T extends `${number}`
-          ? [number]
-          : [T];
-type TestSplitTemplateStringTypeToTuple = SplitTemplateStringTypeToTuple<Test2>;
+/**
+ * 数字转换成千分位字符串
+ */
+export function thousandSplit(number: number) {
+    const thousandRegex = /(?!^)(?=(\d{3})+$)/g;
+    return `${number}`.replace(thousandRegex, ',');
+}

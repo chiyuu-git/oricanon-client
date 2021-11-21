@@ -15,7 +15,7 @@ import './index.less';
  */
 function decorateWithDataLabel(
     combinationMembers: ReturnType<typeof processMembers>,
-    latestData: RecordWeeklyInfo<BasicType.couple>['memberInfo'],
+    latestData: RecordWeeklyInfo<BasicType.couple>['memberInfoList'],
 ) {
     return combinationMembers.map((combinationMember) => {
         const couple = combinationMember;
@@ -30,10 +30,10 @@ function decorateWithDataLabel(
             lineHeight: 0,
             formatter(params) {
                 const { dataIndex } = params;
-                const weekIncrease = latestData[dataIndex].weekIncrease >= 9
-                    ? `(+${latestData[dataIndex].weekIncrease})`
+                const weekIncrement = latestData[dataIndex].weekIncrement >= 9
+                    ? `(+${latestData[dataIndex].weekIncrement})`
                     : '';
-                return `\n${latestData[dataIndex].record}${weekIncrease}`;
+                return `\n${latestData[dataIndex].record}${weekIncrement}`;
             },
         };
         return couple;
@@ -46,7 +46,7 @@ const CoupleCircle = () => {
     const weeklyContext = useContext(WeeklyContext);
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
     const [memberList, setMemberList] = useState<MemberList<BasicType.character> | null>(null);
-    const PixivUnionIllustWeeklyInfo = weeklyContext[BasicType.couple][AggregationType.coupleUnionIllust];
+    const weeklyInfo = weeklyContext[BasicType.couple][AggregationType.coupleUnionIllust];
 
     /**
      * 获取 liella memberList
@@ -66,8 +66,8 @@ const CoupleCircle = () => {
      * 获取 weeklyInfo 并 setOption
      */
     useEffect(() => {
-        if (PixivUnionIllustWeeklyInfo) {
-            const latestData = PixivUnionIllustWeeklyInfo.memberInfo;
+        if (weeklyInfo) {
+            const latestData = weeklyInfo.memberInfoList;
 
             const liellaMember = ['kanon', 'keke', 'chisato', 'sumire', 'ren'] as const;
 
@@ -78,8 +78,8 @@ const CoupleCircle = () => {
 
             const option: EChartsOption = {
                 title: {
-                    text: 'pixiv标签-角色cp榜',
-                    subtext: `集计时间：${PixivUnionIllustWeeklyInfo.range.split('至')[1]}日`,
+                    text: 'pixiv-illust-角色cp榜',
+                    subtext: `集计时间：${weeklyInfo.range.split('至')[1]}日`,
                     left: 'left',
                     textStyle: {
                         fontSize: 24,
@@ -126,7 +126,7 @@ const CoupleCircle = () => {
 
             setChartOption(option);
         }
-    }, [PixivUnionIllustWeeklyInfo]);
+    }, [weeklyInfo]);
 
     function renderIconImg(liellaMemberList: MemberList<BasicType.character>) {
         const { projectName, list } = liellaMemberList;

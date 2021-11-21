@@ -1,38 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
 import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
-import { reqRecordWeeklyInfo } from '@src/api';
+import { reqInfoTypeWeekly } from '@src/api';
 
 import NestPie from './NestPie';
 
 const CompareProjectPie = () => {
     const [
-        charaIllustWeeklyInfo,
-        setCharaIllustWeeklyInfo,
+        weeklyInfo,
+        setWeeklyInfo,
     ] = useState<RecordWeeklyInfo<BasicType.character> | null>(null);
 
     useEffect(() => {
         async function getWeeklyInfo() {
-            const illustWeeklyInfo = await reqRecordWeeklyInfo(
+            const charaPixivIllustWeeklyInfo = await reqInfoTypeWeekly(
                 BasicType.character,
                 CharacterRecordType.illust,
                 '2021-01-08',
             );
 
-            setCharaIllustWeeklyInfo(illustWeeklyInfo);
+            setWeeklyInfo(charaPixivIllustWeeklyInfo);
         }
         getWeeklyInfo();
     }, []);
 
-    if (charaIllustWeeklyInfo) {
-        const { range, projectInfo, memberInfo } = charaIllustWeeklyInfo;
+    if (weeklyInfo) {
+        const { range, projectInfoList: projectInfo, memberInfoList: memberInfo } = weeklyInfo;
 
         return (
             <NestPie
                 title = '创作数对比-企划周增榜'
                 range = { range }
-                projectInfo = { projectInfo }
-                memberInfo = { memberInfo }
+                projectInfoList = { projectInfo }
+                memberInfoList = { memberInfo }
                 showWidget = { false }
                 size = { {
                     width: '640px',

@@ -19,24 +19,24 @@ type NestPipeProps = {
 } & RecordWeeklyInfo<BasicType.character>
 
 const NestPie: FC<NestPipeProps> = (props) => {
-    const { projectInfo, memberInfo, title, range, showWidget, size } = props;
+    const { projectInfoList: projectInfo, memberInfoList: memberInfo, title, range, showWidget, size } = props;
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
     // const [memberList, setMemberList] = useState<MemberList<BasicType.character> | null>(null);
 
     useEffect(() => {
         // 处理legend，总结先周比
         const projectLegend: Record<string, string> = {};
-        for (const { projectName, projectWeekIncreaseRate } of projectInfo) {
+        for (const { projectName, projectWeekIncrementRate } of projectInfo) {
             const key = ProjectShorthandMap[projectName];
-            projectLegend[key] = `${key} - (${projectWeekIncreaseRate})`;
+            projectLegend[key] = `${key} - (${projectWeekIncrementRate})`;
         }
 
         // 处理内圆的数据
         const projectPie = projectInfo.map((project) => {
-            const { projectName, projectWeekIncrease } = project;
+            const { projectName, projectWeekIncrement } = project;
             return {
                 name: projectName,
-                value: projectWeekIncrease,
+                value: projectWeekIncrement,
             };
         });
 
@@ -45,14 +45,14 @@ const NestPie: FC<NestPipeProps> = (props) => {
             .sort((a, b) => {
                 // 企划内部内先排一个序，才能和内圆吻合
                 if (a.projectName === b.projectName) {
-                    return b.weekIncrease - a.weekIncrease;
+                    return b.weekIncrement - a.weekIncrement;
                 }
                 return 1;
             })
-            .map(({ name, romaName, weekIncrease, projectName }) => ({
+            .map(({ name, romaName, weekIncrement, projectName }) => ({
                 name,
                 romaName,
-                value: weekIncrease < 0 ? 0 : weekIncrease,
+                value: weekIncrement < 0 ? 0 : weekIncrement,
                 projectName,
             }));
 

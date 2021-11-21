@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { thousandSplit } from '@src/utils';
-import { TotalRank } from './TotalRank.type';
+import { TotalRank } from './common';
 
 import './RankTable.less';
 
@@ -10,21 +10,21 @@ interface RankTableProps {
     totalRank: TotalRank;
     layoutOption: {
         contentType: string;
-        increaseNodeWidth: string;
+        incrementNodeWidth: string;
     };
 }
 
 const RankTable: FC<RankTableProps> = ({ title, range, layoutOption, totalRank }) => {
     function renderTable() {
-        const { contentType, increaseNodeWidth } = layoutOption;
-        const cell = totalRank.map(({ name, projectName, record, increase }, index) => (
+        const { contentType, incrementNodeWidth } = layoutOption;
+        const cell = totalRank.map(({ name, projectName, record, increment }, index) => (
             <li className = { `cell ${projectName}` } key = { name }>
                 <span className = 'ranking'>{ index + 1 }</span>
                 <img src = { `/api/assets/icon/${projectName}/${name}.png` } alt = { name } />
                 <span className = 'name'>{ name }</span>
                 <span className = 'record'>{ thousandSplit(record) }</span>
-                <span className = 'increase' style = { { width: increaseNodeWidth } }>
-                    ({ thousandSplit(increase) })
+                <span className = 'increment' style = { { width: incrementNodeWidth } }>
+                    ({ thousandSplit(increment) })
                 </span>
             </li>
         ));

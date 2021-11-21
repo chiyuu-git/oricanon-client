@@ -8,25 +8,25 @@ import NestPie from './NestPie';
 const BasicProjectPie = () => {
     const weeklyContext = useContext(WeeklyContext);
     const [
-        charaIllustWeeklyInfo,
-        setCharaIllustWeeklyInfo,
+        weeklyInfo,
+        setWeeklyInfo,
     ] = useState<RecordWeeklyInfo<BasicType.character> | null>(null);
-    const pixivIllustWeeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
+    const charaPixivIllustWeeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
 
     useEffect(() => {
-        if (pixivIllustWeeklyInfo) {
-            setCharaIllustWeeklyInfo(pixivIllustWeeklyInfo);
+        if (charaPixivIllustWeeklyInfo) {
+            setWeeklyInfo(charaPixivIllustWeeklyInfo);
         }
-    }, [pixivIllustWeeklyInfo]);
+    }, [charaPixivIllustWeeklyInfo]);
 
-    if (charaIllustWeeklyInfo) {
-        const { range, projectInfo, memberInfo } = charaIllustWeeklyInfo;
+    if (weeklyInfo) {
+        const { range, projectInfoList: projectInfo, memberInfoList: memberInfo } = weeklyInfo;
         return (
             <NestPie
-                title = 'pixiv标签创作数-企划周增榜'
+                title = 'pixiv-illust-企划周增榜'
                 range = { range }
-                projectInfo = { projectInfo }
-                memberInfo = { memberInfo }
+                projectInfoList = { projectInfo }
+                memberInfoList = { memberInfo }
                 showWidget
                 size = { {
                     width: '800px',

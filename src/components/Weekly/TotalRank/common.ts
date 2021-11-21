@@ -4,5 +4,5 @@ export type TotalRank = {
     name: string;
     projectName: ProjectName;
     record: number;
-    increase: number;
+    increment: number;
 }[];

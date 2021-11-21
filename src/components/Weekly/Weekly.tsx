@@ -5,21 +5,21 @@ import {
     RecordWeeklyInfo,
     WeeklyInfo,
 } from '@chiyu-bit/canon.root/weekly';
-import { reqRecordWeeklyInfo } from '@src/api';
+import { reqInfoTypeWeekly } from '@src/api';
 import { html2Image } from '@src/utils/html-to-image';
 import { WeeklyContext, initWeeklyContext } from './weekly-context-manager';
 
 import CoupleCircle from './CoupleCircle';
-import CharaIllustIncreaseRank from './IncreaseRank/PixivIllustIncreaseRank';
-import TwitterFollowerIncreaseRank from './IncreaseRank/TwitterFollowerIncreaseRank';
-import PixivIllustTotalRank from './TotalRank/PixivIllustTotalRank';
-import TwitterFollowerTotalRank from './TotalRank/TwitterFollowerTotalRank';
+import CharaPixivIllustWeekIncrementRank from './IncrementRank/CharaPixivIllust';
+import TwitterFollowerIncrementRank from './IncrementRank/TwitterFollower';
+import CharaPixivIllustTotalRank from './TotalRank/CharaPixivIllust';
+import TwitterFollowerTotalRank from './TotalRank/TwitterFollower';
 import BasicProjectPie from './ProjectPie/BasicProjectPie';
 import CompareProjectPie from './ProjectPie/CompareProjectPie';
 
 import './Weekly.less';
-import PixivTagViewIncreaseRank from './IncreaseRank/PixivTagViewIncreaseRank';
-import PixivTagViewTotalRank from './TotalRank/PixivTagViewTotalRank';
+import CharaPixivTagViewWeekIncrementRank from './IncrementRank/CharaPixivTagView';
+import CharaPixivTagViewTotalRank from './TotalRank/CharaPixivTagView';
 
 type WeeklyActionInfoMap = {
     [BasicType.character]: {
@@ -121,7 +121,7 @@ const Weekly = () => {
     useEffect(() => {
         const { basicType, infoTypeList } = CHARA_WEEKLY_INFO_LIST;
         for (const infoType of infoTypeList) {
-            reqRecordWeeklyInfo(basicType, infoType)
+            reqInfoTypeWeekly(basicType, infoType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
                         basicType: BasicType.character,
@@ -140,7 +140,7 @@ const Weekly = () => {
     useEffect(() => {
         const { basicType, infoTypeList } = COUPLE_WEEKLY_INFO_LIST;
         for (const infoType of infoTypeList) {
-            reqRecordWeeklyInfo(basicType, infoType)
+            reqInfoTypeWeekly(basicType, infoType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
                         basicType: BasicType.couple,
@@ -159,7 +159,7 @@ const Weekly = () => {
     useEffect(() => {
         const { basicType, infoTypeList } = SEIYUU_WEEKLY_INFO_LIST;
         for (const infoType of infoTypeList) {
-            reqRecordWeeklyInfo(basicType, infoType)
+            reqInfoTypeWeekly(basicType, infoType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
                         basicType: BasicType.seiyuu,
@@ -181,7 +181,7 @@ const Weekly = () => {
             for (let i = 1; i < chartNodes.length; i++) {
                 const childNode = chartNodes[i];
                 // eslint-disable-next-line no-await-in-loop
-                await html2Image(childNode as HTMLElement, `0${i}-${childNode.className}`);
+                await html2Image(childNode as HTMLElement, `0${i}-${childNode.id}`);
             }
         }
     }
@@ -190,16 +190,16 @@ const Weekly = () => {
         <WeeklyContext.Provider value = { weeklyContext }>
             <div className = 'weekly-wrap' ref = { weeklyWrap }>
                 <button type = 'button' onClick = { downloadAll }> 下载所有图片 </button>
-                <CharaIllustIncreaseRank />
+                <CharaPixivIllustWeekIncrementRank />
                 <div className = 'compare-pie-container'>
                     <BasicProjectPie />
                     { /* <CompareProjectPie /> */ }
                 </div>
-                <PixivIllustTotalRank />
-                <PixivTagViewIncreaseRank />
+                <CharaPixivIllustTotalRank />
+                <CharaPixivTagViewWeekIncrementRank />
                 <CoupleCircle />
                 { /* <PixivTagViewTotalRank /> */ }
-                <TwitterFollowerIncreaseRank />
+                <TwitterFollowerIncrementRank />
                 <TwitterFollowerTotalRank />
                 { /* <BasicProjectPie /> */ }
             </div>

@@ -7,17 +7,17 @@ import {
     projectRichMap,
     ProjectColorMap,
 } from '@src/constant';
-import { IncreaseRank } from './common';
+import { IncrementRank } from './common';
 
 import './RankBar.less';
 
 interface RankBarProps {
     title: string;
     range: string;
-    increaseRank: IncreaseRank;
+    incrementRank: IncrementRank;
 }
 
-const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
+const RankBar: FC<RankBarProps> = ({ title, range, incrementRank }) => {
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
 
     useEffect(() => {
@@ -44,18 +44,20 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                 // 默认把第一个维度映射到 X 轴上，第二个维度映射到 Y 轴上。
                 // 如果不指定 dimensions，也可以通过指定 series.encode
                 // 完成映射，参见后文。
-                dimensions: ['nameAndRoma', 'increase'],
-                source: increaseRank,
+                dimensions: ['nameAndRoma', 'increment'],
+                source: incrementRank,
             },
             xAxis: {
                 axisLine: {
                     show: true,
                 },
                 splitLine: {
+                    interval: 1,
                     lineStyle: {
                         color: ['#eee'],
                     },
                 },
+                boundaryGap: ['0', '0.05'],
             },
             yAxis: {
                 type: 'category',
@@ -63,9 +65,13 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                     margin: 14,
                     formatter(nameAndRoma: string) {
                         const [name, romaName] = nameAndRoma.split('-');
-                        // TODO: 执行次数过多
-                        // 试了几个 key 使用 romaName 作为 key 可行
-                        return `{${romaName}|${name}}`;
+
+                        if (name && romaName) {
+                            // TODO: 执行次数过多
+                            // 试了几个 key 使用 romaName 作为 key 可行
+                            return `{${romaName}|${name}}`;
+                        }
+                        return '';
                     },
                     rich: {
                         per: {
@@ -86,13 +92,19 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                         position: 'right',
                         formatter(param) {
                             const { dataIndex, data } = param;
-                            const { increase, increaseRate, projectName } = data as unknown as IncreaseRank[number];
+                            const {
+                                increment,
+                                incrementRateStr,
+                                projectName,
+                            } = data as unknown as IncrementRank[number];
 
-                            const increaseStr = `{${projectName}|  ${increase}}`;
-                            const increaseRateStr = `{rate|  ${dataIndex === 37
-                                ? '\n(先周比：'
-                                : '('}${increaseRate})}`;
-                            return increaseStr + increaseRateStr;
+                            if (projectName) {
+                                return `{${projectName}|  ${increment}}{rate| ${incrementRateStr}}`;
+                            }
+                            const splitLine = '———————————————————————————';
+                            // 分位线文本及补充分割线的样式
+                            // eslint-disable-next-line max-len
+                            return `{percentile|${splitLine} ${incrementRateStr}：${increment} ${splitLine}}`;
                         },
                         fontSize: 16,
                         rich: {
@@ -100,12 +112,44 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
                                 fontSize: 12,
                                 fontWeight: 'bold',
                             },
+                            percentile: {
+                                fontSize: 14,
+                                fontWeight: 'bold',
+                            },
                             ...projectRichMap,
                         },
                     },
+                    labelLayout(params) {
+                        if (params.text.includes('分位')) {
+                            return {
+                                // 从 item 的起点开启布局
+                                x: params.rect.x,
+                                y: params.rect.y + params.rect.height / 2,
+                                verticalAlign: 'middle',
+                                align: 'left',
+                            };
+                        }
+                        // 返回 空对象 则取 label.position
+                        return {};
+                    },
                     itemStyle: {
                         color(params) {
-                            return ProjectColorMap[(params.data as IncreaseRank[number]).projectName as ProjectName];
+                            const projectName = (params.data as IncrementRank[number]).projectName as ProjectName;
+                            // 隐藏默认的item样式，全部采用 label 的样式
+                            if (!projectName) {
+                                return {
+                                    type: 'linear',
+                                    x: 0,
+                                    y: 0,
+                                    x2: 0,
+                                    y2: 1,
+                                    colorStops: [
+                                        { offset: 0, color: 'rgba(0, 0, 0, 0)' },
+                                        { offset: 1, color: 'rgba(0, 0, 0, 0)' },
+                                    ],
+                                };
+                            }
+                            return ProjectColorMap[projectName];
                         },
                     },
                 },
@@ -113,7 +157,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, increaseRank }) => {
         };
 
         setChartOption(option);
-    }, [title, range, increaseRank]);
+    }, [title, range, incrementRank]);
     return (
         <div className = 'rank-bar-wrap'>
             { chartOption && (

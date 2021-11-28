@@ -1,13 +1,11 @@
 import React, { useEffect, useReducer, useRef } from 'react';
 
-import { AggregationType, BasicType, CharacterRecordType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
-import {
-    RecordWeeklyInfo,
-    WeeklyInfo,
-} from '@chiyu-bit/canon.root/weekly';
+import { BasicType, AggregationType, CharacterRecordType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
+import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { reqInfoTypeWeekly } from '@src/api';
 import { html2Image } from '@src/utils/html-to-image';
-import { WeeklyContext, initWeeklyContext } from './weekly-context-manager';
+
+import { WeeklyContext, initWeeklyContext, WeeklyInfo } from './weekly-context-manager';
 
 import CoupleCircle from './CoupleCircle';
 import CharaPixivIllustWeekIncrementRank from './IncrementRank/CharaPixivIllust';
@@ -16,10 +14,10 @@ import CharaPixivIllustTotalRank from './TotalRank/CharaPixivIllust';
 import TwitterFollowerTotalRank from './TotalRank/TwitterFollower';
 import BasicProjectPie from './ProjectPie/BasicProjectPie';
 import CompareProjectPie from './ProjectPie/CompareProjectPie';
-
-import './Weekly.less';
 import CharaPixivTagViewWeekIncrementRank from './IncrementRank/CharaPixivTagView';
 import CharaPixivTagViewTotalRank from './TotalRank/CharaPixivTagView';
+
+import './Weekly.less';
 
 type WeeklyActionInfoMap = {
     [BasicType.character]: {

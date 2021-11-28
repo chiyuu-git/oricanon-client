@@ -1,13 +1,23 @@
 import React, { createContext } from 'react';
-import { BasicType } from '@chiyu-bit/canon.root';
-import {
-    CharaRecordWeeklyInfo,
-    CoupleRecordWeeklyInfo,
-    SeiyuuRecordWeeklyInfo,
-    WeeklyInfo,
-} from '@chiyu-bit/canon.root/weekly';
+import { BasicType, CharacterRecordType, SeiyuuRecordType, AggregationType } from '@chiyu-bit/canon.root';
 
-export const initWeeklyContext = {
+import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
+
+type CharaRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo<BasicType.character>>
+& Record<AggregationType, RecordWeeklyInfo<BasicType.character>>
+
+type CoupleRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo<BasicType.couple>>
+& Record<AggregationType, RecordWeeklyInfo<BasicType.couple>>
+
+type SeiyuuRecordWeeklyInfo = Record<SeiyuuRecordType, RecordWeeklyInfo<BasicType.seiyuu>>;
+
+export type WeeklyInfo = {
+    [BasicType.character]: CharaRecordWeeklyInfo;
+    [BasicType.couple]: CoupleRecordWeeklyInfo;
+    [BasicType.seiyuu]: SeiyuuRecordWeeklyInfo;
+};
+
+export const initWeeklyContext: WeeklyInfo = {
     [BasicType.character]: {} as CharaRecordWeeklyInfo,
     [BasicType.couple]: {} as CoupleRecordWeeklyInfo,
     [BasicType.seiyuu]: {} as SeiyuuRecordWeeklyInfo,
@@ -15,3 +25,4 @@ export const initWeeklyContext = {
 // createContext 参考
 // https://stackoverflow.com/questions/61333188/react-typescript-avoid-context-default-value
 export const WeeklyContext = createContext<WeeklyInfo>(initWeeklyContext);
+

@@ -3,8 +3,9 @@ import ReactECharts from 'echarts-for-react';
 import { EChartsOption } from 'echarts';
 
 import { ProjectShorthandMap, ProjectColorMap, characterRichMap } from '@src/constant';
-import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { BasicType, ProjectName } from '@chiyu-bit/canon.root';
+import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
+import { MemberInfoMap } from '@chiyu-bit/canon.root/member-list';
 
 import './NestPie.less';
 
@@ -16,23 +17,35 @@ type NestPipeProps = {
         width: string;
         height: string;
     };
+    memberInfoMap: MemberInfoMap<BasicType.character>;
 } & RecordWeeklyInfo<BasicType.character>
 
 const NestPie: FC<NestPipeProps> = (props) => {
-    const { projectInfoList: projectInfo, memberInfoList: memberInfo, title, range, showWidget, size } = props;
+    const {
+        memberInfoMap,
+        projectInfoList,
+        memberInfoList,
+        title, range, showWidget, size,
+    } = props;
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
     // const [memberList, setMemberList] = useState<MemberList<BasicType.character> | null>(null);
 
     useEffect(() => {
         // 处理legend，总结先周比
         const projectLegend: Record<string, string> = {};
-        for (const { projectName, projectWeekIncrementRate } of projectInfo) {
+        for (const { projectName, projectWeekIncrementRate } of projectInfoList) {
             const key = ProjectShorthandMap[projectName];
-            projectLegend[key] = `${key} - (${projectWeekIncrementRate})`;
+            // 修饰先周比
+            let rateStr = projectWeekIncrementRate;
+            if (projectName === ProjectName.ll) {
+                rateStr = `先周比：${projectWeekIncrementRate}`;
+            }
+
+            projectLegend[key] = `${key} - (${rateStr})`;
         }
 
         // 处理内圆的数据
-        const projectPie = projectInfo.map((project) => {
+        const projectPie = projectInfoList.map((project) => {
             const { projectName, projectWeekIncrement } = project;
             return {
                 name: projectName,
@@ -41,7 +54,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
         });
 
         // 处理外环的 pie
-        const memberPie = [...memberInfo]
+        const memberPie = [...memberInfoList]
             .sort((a, b) => {
                 // 企划内部内先排一个序，才能和内圆吻合
                 if (a.projectName === b.projectName) {
@@ -49,12 +62,15 @@ const NestPie: FC<NestPipeProps> = (props) => {
                 }
                 return 1;
             })
-            .map(({ name, romaName, weekIncrement, projectName }) => ({
-                name,
-                romaName,
-                value: weekIncrement < 0 ? 0 : weekIncrement,
-                projectName,
-            }));
+            .map(({ romaName, weekIncrement }) => {
+                const { name, projectName } = memberInfoMap[romaName];
+                return {
+                    name,
+                    romaName,
+                    value: weekIncrement < 0 ? 0 : weekIncrement,
+                    projectName,
+                };
+            });
 
         const option: EChartsOption = {
             title: {
@@ -182,7 +198,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
         }
 
         setChartOption(option);
-    }, [projectInfo, memberInfo, title, range, showWidget]);
+    }, [memberInfoMap, projectInfoList, memberInfoList, title, range, showWidget]);
     return (
         <div className = 'nest-pie-wrap'>
             { chartOption && (

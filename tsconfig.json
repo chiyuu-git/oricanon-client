@@ -62,7 +62,8 @@
         // 允许从没有设置默认导出的模块中默认导入
         "allowSyntheticDefaultImports": true,
         // 只想使用tsc的类型检查作为函数时（当其他工具（例如Babel实际编译）时）使用它
-        "noEmit": true
+        "noEmit": true,
+        "noEmitOnError": true
     },
     "exclude": [
         "node_modules"

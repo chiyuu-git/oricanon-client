@@ -1,10 +1,10 @@
 import { BasicType, ProjectName } from '@chiyu-bit/canon.root';
-import { HistoricalIncrementRank, MemberIncrementInfo, MemberInfo, MemberWeekInfo } from '@chiyu-bit/canon.root/weekly';
+import { MemberInfoMap } from '@chiyu-bit/canon.root/member-list';
+import { HistoricalIncrementRank, MemberIncrementInfo, MemberWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 
 export type IncrementRank = {
     projectName: ProjectName;
     nameAndRoma: string;
-    supportColor?: string;
     increment: number;
     incrementRateStr: string;
 }[];
@@ -35,37 +35,43 @@ function getHistoricalIncrementRankPercentile(incrementRank: MemberIncrementInfo
     return getPercentile(incrementArray, percentile);
 }
 
-export function getWeekIncrementRank(
-    memberInfoList: MemberInfo<BasicType.character | BasicType.seiyuu>[],
+export function getWeekIncrementRank<Type extends BasicType>(
+    memberInfoMap: MemberInfoMap<Type>,
+    memberWeeklyInfoList: MemberWeeklyInfo<BasicType.character | BasicType.seiyuu>[],
     historicalIncrementRank?: HistoricalIncrementRank,
 ) {
     // TODO: remove any
-    let eightyPercentile = {} as MemberInfo<BasicType.character>;
+    let eightyPercentile = {} as MemberWeeklyInfo<BasicType.character>;
     if (historicalIncrementRank) {
         // 长草期，参考历史分位
         // 与历史 80分位 做对比，历史 80分位 属于表现良好，历史 95分位，表现优异
         const historical80 = getHistoricalIncrementRankPercentile(historicalIncrementRank.historical, 0.8);
         eightyPercentile = {
-            projectName: '' as ProjectName,
-            name: '',
-            record: 0,
-            pixivTag: '',
-            supportColor: '',
-            romaName: '',
             weekIncrement: historical80,
-            weekIncrementRate: '年内全企划周增量80分位',
-        };
+        } as MemberWeeklyInfo<BasicType.character>;
     }
 
     // 返回值只是普通的 incrementRank
-    const weekIncrementRank = [...memberInfoList, eightyPercentile]
+    const weekIncrementRank = [...memberWeeklyInfoList, eightyPercentile]
         .sort((a, b) => a.weekIncrement - b.weekIncrement)
-        .map((memberInfo, index) => {
-            const { name, romaName, weekIncrement, projectName, weekIncrementRate } = memberInfo;
+        .map((memberWeeklyInfo, index) => {
+            const { romaName, weekIncrement, weekIncrementRate } = memberWeeklyInfo;
+            const memberBasicInfo = memberInfoMap[romaName];
+            // 百分位没有对应的 basicInfo
+            if (!memberBasicInfo) {
+                return {
+                    nameAndRoma: '',
+                    increment: weekIncrement < 0 ? 0 : weekIncrement,
+                    projectName: '' as ProjectName,
+                    incrementRateStr: '年内全企划周增量80分位',
+                };
+            }
+            const { name, projectName } = memberBasicInfo;
+
             // 第一位注释为先周比
             let rateStr = weekIncrementRate || '-';
             // 比 memberInfoList 多了一个百分位元素
-            if (index === memberInfoList.length) {
+            if (index === memberWeeklyInfoList.length) {
                 rateStr = `先周比：${rateStr}`;
             }
 

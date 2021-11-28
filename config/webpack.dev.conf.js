@@ -21,7 +21,9 @@ module.exports = merge(baseWebpackConfig, {
         host: '127.0.0.1', // 设置默认监听域名，如果省略，默认为“localhost”
         port: 8080, // 设置默认监听端口，如果省略，默认为“8080”
         devMiddleware: {
-            stats: 'errors-only', // 控制终端仅打印 error
+            // 控制终端信息输出
+            // "none" | "summary" | "errors-only" | "errors-warnings" | "minimal" | "normal" | "detailed" | "verbose"
+            stats: 'errors-warnings',
         },
         client: {
             logging: 'error', // 控制浏览器控制台显示的信息

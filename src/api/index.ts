@@ -1,5 +1,6 @@
 import { BasicType, InfoType, ProjectName, DateString } from '@chiyu-bit/canon.root';
-import { MemberBasicInfo, RecordWeeklyInfo, HistoricalIncrementRank } from '@chiyu-bit/canon.root/weekly';
+import { MemberBasicInfo, MemberInfoMap } from '@chiyu-bit/canon.root/member-list';
+import { RecordWeeklyInfo, HistoricalIncrementRank } from '@chiyu-bit/canon.root/weekly';
 import { enhanceFetch } from './fetch';
 
 export function reqIncrementRankOfTypeInRange(
@@ -14,30 +15,6 @@ export function reqIncrementRankOfTypeInRange(
     );
 }
 
-// TODO: 两个ResXXX是否有办法合成一个？泛型函数没法透传，使用的时候必须传值
-// TODO: 对象解构没办法返回精确的泛型
-// interface QueryRecordTypeWeeklyInfo {
-//     basicType: BasicType;
-//     infoType: InfoType;
-//     endDate?: string;
-// }
-// type ResWeeklyInfo<T extends QueryRecordTypeWeeklyInfo> = T extends { basicType: infer R; }
-//     ? R extends BasicType
-//         ? RecordWeeklyInfo<R>
-//         : never
-//     : never
-
-// export function reqRecordWeeklyInfo<T extends QueryRecordTypeWeeklyInfo>({
-//     basicType,
-//     infoType,
-//     endDate = '',
-// }: T): Promise<ResWeeklyInfo<T>> {
-//     return enhanceFetch(
-//         '/api/weekly/weekly_info_of_record_type',
-//         { basicType, infoType, endDate },
-//     );
-// }
-
 export function reqInfoTypeWeekly<Type extends BasicType>(
     basicType: Type,
     infoType: InfoType,
@@ -49,7 +26,13 @@ export function reqInfoTypeWeekly<Type extends BasicType>(
     );
 }
 
-// TODO: 类型提升到root，同时完善 service findOne 的类型
+export function reqMemberInfoMapOfType<Type extends BasicType>(type: Type): Promise<MemberInfoMap<Type>> {
+    return enhanceFetch(
+        '/api/member_list/member_info_map',
+        { type },
+    );
+}
+
 interface QueryMemberList {
     projectName: ProjectName;
     type: BasicType;

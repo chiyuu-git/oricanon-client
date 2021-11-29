@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useContext } from 'react';
+import React, { FC, useState, useEffect, useContext, useMemo } from 'react';
 import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
 import { HistoricalIncrementRank } from '@chiyu-bit/canon.root/weekly';
 import { reqIncrementRankOfTypeInRange } from '@src/api';
@@ -15,11 +15,12 @@ import RankBar from './RankBar';
 const CharaPixivIllustWeekIncrementRank: FC<unknown> = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
+    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
+    const charaInfoMap = memberInfoContext.character;
+
     const [range, setRange] = useState('');
     const [weekIncrementRank, setWeekIncrementRank] = useState<IncrementRank | null>(null);
     const [historicalIncrementRank, setHistoricalIncrementRank] = useState<HistoricalIncrementRank | null>(null);
-    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
-    const charaInfoMap = memberInfoContext.character;
 
     useEffect(() => {
         async function getHistoricalIncrementRank() {
@@ -40,24 +41,25 @@ const CharaPixivIllustWeekIncrementRank: FC<unknown> = () => {
                 weeklyInfo.memberInfoList,
                 historicalIncrementRank,
             );
-            console.log('invoke 1');
+
             setWeekIncrementRank(weekRank);
             setRange(weeklyInfo.range);
         }
     }, [weeklyInfo, historicalIncrementRank, charaInfoMap]);
 
-    if (weekIncrementRank) {
-        console.log('invoke 2');
-        return (
-            <RankBar
-                title = 'pixiv-illust-角色周增榜'
-                range = { range }
-                incrementRank = { weekIncrementRank }
-            />
-        );
-    }
+    return useMemo(() => {
+        if (weekIncrementRank) {
+            return (
+                <RankBar
+                    title = 'pixiv-illust-角色周增榜'
+                    range = { range }
+                    incrementRank = { weekIncrementRank }
+                />
+            );
+        }
 
-    return <div>CharaPixivIllustWeekIncrementRank</div>;
+        return <div>CharaPixivIllustWeekIncrementRank</div>;
+    }, [range, weekIncrementRank]);
 };
 
 export default CharaPixivIllustWeekIncrementRank;

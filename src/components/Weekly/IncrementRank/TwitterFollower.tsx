@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useContext } from 'react';
+import React, { FC, useState, useEffect, useContext, useMemo } from 'react';
 import { BasicType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
 import { HistoricalIncrementRank } from 'canon/root/weekly';
 import { reqIncrementRankOfTypeInRange } from '@src/api';
@@ -10,11 +10,12 @@ import RankBar from './RankBar';
 const TwitterFollowerWeekIncrementRank: FC<unknown> = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
+    const weeklyInfo = weeklyContext[BasicType.seiyuu][SeiyuuRecordType.twitterFollower];
+    const seiyuuInfoMap = memberInfoContext.seiyuu;
+
     const [range, setRange] = useState('');
     const [weekIncrementRank, setWeekIncrementRank] = useState<IncrementRank | null>(null);
     const [historicalIncrementRank, setHistoricalIncrementRank] = useState<HistoricalIncrementRank | null>(null);
-    const weeklyInfo = weeklyContext[BasicType.seiyuu][SeiyuuRecordType.twitterFollower];
-    const seiyuuInfoMap = memberInfoContext.seiyuu;
 
     useEffect(() => {
         async function getHistoricalIncrementRank() {
@@ -40,17 +41,19 @@ const TwitterFollowerWeekIncrementRank: FC<unknown> = () => {
         }
     }, [weeklyInfo, historicalIncrementRank, seiyuuInfoMap]);
 
-    if (weekIncrementRank) {
-        return (
-            <RankBar
-                title = '推特fo数-周增榜'
-                range = { range }
-                incrementRank = { weekIncrementRank }
-            />
-        );
-    }
+    return useMemo(() => {
+        if (weekIncrementRank) {
+            return (
+                <RankBar
+                    title = '推特fo数-周增榜'
+                    range = { range }
+                    incrementRank = { weekIncrementRank }
+                />
+            );
+        }
 
-    return <div>TwitterFollowerWeekIncrementRank</div>;
+        return <div>TwitterFollowerWeekIncrementRank</div>;
+    }, [range, weekIncrementRank]);
 };
 
 export default TwitterFollowerWeekIncrementRank;

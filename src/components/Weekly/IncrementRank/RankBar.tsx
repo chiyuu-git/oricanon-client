@@ -158,6 +158,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, incrementRank }) => {
 
         setChartOption(option);
     }, [title, range, incrementRank]);
+
     return (
         <div className = 'rank-bar-wrap'>
             { chartOption && (

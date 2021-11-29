@@ -37,18 +37,18 @@ function getHistoricalIncrementRankPercentile(incrementRank: MemberIncrementInfo
 
 export function getWeekIncrementRank<Type extends BasicType>(
     memberInfoMap: MemberInfoMap<Type>,
-    memberWeeklyInfoList: MemberWeeklyInfo<BasicType.character | BasicType.seiyuu>[],
+    memberWeeklyInfoList: MemberWeeklyInfo[],
     historicalIncrementRank?: HistoricalIncrementRank,
 ) {
     // TODO: remove any
-    let eightyPercentile = {} as MemberWeeklyInfo<BasicType.character>;
+    let eightyPercentile = {} as MemberWeeklyInfo;
     if (historicalIncrementRank) {
         // 长草期，参考历史分位
         // 与历史 80分位 做对比，历史 80分位 属于表现良好，历史 95分位，表现优异
         const historical80 = getHistoricalIncrementRankPercentile(historicalIncrementRank.historical, 0.8);
         eightyPercentile = {
             weekIncrement: historical80,
-        } as MemberWeeklyInfo<BasicType.character>;
+        } as MemberWeeklyInfo;
     }
 
     // 返回值只是普通的 incrementRank

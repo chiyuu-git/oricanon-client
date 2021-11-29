@@ -40,13 +40,14 @@ const CharaPixivIllustWeekIncrementRank: FC<unknown> = () => {
                 weeklyInfo.memberInfoList,
                 historicalIncrementRank,
             );
-
+            console.log('invoke 1');
             setWeekIncrementRank(weekRank);
             setRange(weeklyInfo.range);
         }
     }, [weeklyInfo, historicalIncrementRank, charaInfoMap]);
 
     if (weekIncrementRank) {
+        console.log('invoke 2');
         return (
             <RankBar
                 title = 'pixiv-illust-角色周增榜'

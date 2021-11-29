@@ -19,7 +19,7 @@ export function reqInfoTypeWeekly<Type extends BasicType>(
     basicType: Type,
     infoType: InfoType,
     endDate = '',
-): Promise<RecordWeeklyInfo<Type>> {
+): Promise<RecordWeeklyInfo> {
     return enhanceFetch(
         '/api/weekly/info_type_weekly',
         { basicType, infoType, endDate },

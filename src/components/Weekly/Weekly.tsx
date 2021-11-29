@@ -22,15 +22,15 @@ import './Weekly.less';
 type WeeklyActionInfoMap = {
     [BasicType.character]: {
         infoType: CharacterRecordType | AggregationType;
-        recordWeeklyInfo: RecordWeeklyInfo<BasicType.character>;
+        recordWeeklyInfo: RecordWeeklyInfo;
     };
     [BasicType.couple]: {
         infoType: CharacterRecordType | AggregationType;
-        recordWeeklyInfo: RecordWeeklyInfo<BasicType.couple>;
+        recordWeeklyInfo: RecordWeeklyInfo;
     };
     [BasicType.seiyuu]: {
         infoType: SeiyuuRecordType;
-        recordWeeklyInfo: RecordWeeklyInfo<BasicType.seiyuu>;
+        recordWeeklyInfo: RecordWeeklyInfo;
     };
 }
 

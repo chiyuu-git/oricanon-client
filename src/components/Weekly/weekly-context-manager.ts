@@ -3,13 +3,13 @@ import { BasicType, CharacterRecordType, SeiyuuRecordType, AggregationType } fro
 
 import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 
-type CharaRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo<BasicType.character>>
-& Record<AggregationType, RecordWeeklyInfo<BasicType.character>>
+type CharaRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo>
+& Record<AggregationType, RecordWeeklyInfo>
 
-type CoupleRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo<BasicType.couple>>
-& Record<AggregationType, RecordWeeklyInfo<BasicType.couple>>
+type CoupleRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo>
+& Record<AggregationType, RecordWeeklyInfo>
 
-type SeiyuuRecordWeeklyInfo = Record<SeiyuuRecordType, RecordWeeklyInfo<BasicType.seiyuu>>;
+type SeiyuuRecordWeeklyInfo = Record<SeiyuuRecordType, RecordWeeklyInfo>;
 
 export type WeeklyInfo = {
     [BasicType.character]: CharaRecordWeeklyInfo;

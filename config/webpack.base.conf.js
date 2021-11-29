@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
     // 入口起点，从项目的根目录开始读取路径，而不是配置文件所在的config目录
@@ -94,5 +95,14 @@ module.exports = {
             inject: 'body', // inject
         }),
         new MiniCssExtractPlugin(),
+        new ForkTsCheckerWebpackPlugin({
+            typescript: {
+                diagnosticOptions: {
+                    semantic: true,
+                    syntactic: true,
+                },
+                mode: 'write-references',
+            },
+        }),
     ],
 };

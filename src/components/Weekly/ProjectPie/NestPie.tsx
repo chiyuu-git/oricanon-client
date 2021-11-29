@@ -18,7 +18,14 @@ type NestPipeProps = {
         height: string;
     };
     memberInfoMap: MemberInfoMap<BasicType.character>;
-} & RecordWeeklyInfo<BasicType.character>
+} & RecordWeeklyInfo
+
+interface PieDataItem {
+    name: string;
+    romaName: string;
+    value: number;
+    projectName: ProjectName;
+}
 
 const NestPie: FC<NestPipeProps> = (props) => {
     const {
@@ -54,10 +61,13 @@ const NestPie: FC<NestPipeProps> = (props) => {
         });
 
         // 处理外环的 pie
-        const memberPie = [...memberInfoList]
+        const memberPie: PieDataItem[] = [...memberInfoList]
             .sort((a, b) => {
                 // 企划内部内先排一个序，才能和内圆吻合
-                if (a.projectName === b.projectName) {
+                const aProjectName = memberInfoMap[a.romaName].projectName;
+                const bProjectName = memberInfoMap[b.romaName].projectName;
+
+                if (aProjectName === bProjectName) {
                     return b.weekIncrement - a.weekIncrement;
                 }
                 return 1;
@@ -119,7 +129,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
                         formatter(param) {
                             const { name, value, percent, data } = param;
                             // 每个角色使用自己的代表色
-                            return `\n {${data.romaName}|${name}: ${value} }{per|${percent}%} \n`;
+                            return `\n {${(data as PieDataItem).romaName}|${name}: ${value} }{per|${percent}%} \n`;
                         },
                         rich: {
                             per: {
@@ -134,7 +144,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
                     itemStyle: {
                         // 依照组合给item设置颜色
                         color(param) {
-                            const { projectName } = param.data;
+                            const { projectName } = param.data as PieDataItem;
                             return ProjectColorMap[projectName as ProjectName];
                         },
                         borderColor: 'white',

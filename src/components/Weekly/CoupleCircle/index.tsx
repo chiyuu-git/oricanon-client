@@ -15,7 +15,7 @@ import './index.less';
  */
 function decorateWithDataLabel(
     combinationMembers: ReturnType<typeof processMembers>,
-    latestData: RecordWeeklyInfo<BasicType.couple>['memberInfoList'],
+    latestData: RecordWeeklyInfo['memberInfoList'],
 ) {
     return combinationMembers.map((combinationMember) => {
         const couple = combinationMember;

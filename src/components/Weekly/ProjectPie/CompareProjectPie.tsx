@@ -10,7 +10,7 @@ const CompareProjectPie = () => {
     const [
         weeklyInfo,
         setWeeklyInfo,
-    ] = useState<RecordWeeklyInfo<BasicType.character> | null>(null);
+    ] = useState<RecordWeeklyInfo | null>(null);
     const memberInfoContext = useContext(MemberInfoContext);
     const memberCharaInfoMap = memberInfoContext.character;
 

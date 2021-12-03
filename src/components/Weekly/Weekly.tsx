@@ -195,11 +195,10 @@ const Weekly = () => {
                 </div>
                 <CharaPixivIllustTotalRank />
                 <CharaPixivTagViewWeekIncrementRank />
+                <CharaPixivTagViewTotalRank />
                 <CoupleCircle />
-                { /* <PixivTagViewTotalRank /> */ }
                 <TwitterFollowerIncrementRank />
                 <TwitterFollowerTotalRank />
-                { /* <BasicProjectPie /> */ }
             </div>
         </WeeklyContext.Provider>
     );

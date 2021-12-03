@@ -6,10 +6,7 @@ import { reqIncrementRankOfTypeInRange } from '@src/api';
 import { MemberInfoContext } from '@components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';
 
-import {
-    getWeekIncrementRank,
-    IncrementRank,
-} from './common';
+import { getWeekIncrementRank, IncrementRank } from './common';
 import RankBar from './RankBar';
 
 const CharaPixivIllustWeekIncrementRank: FC<unknown> = () => {

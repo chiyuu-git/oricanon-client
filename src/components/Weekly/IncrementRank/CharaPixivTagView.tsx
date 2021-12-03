@@ -2,8 +2,10 @@ import React, { FC, useState, useEffect, useContext, useMemo } from 'react';
 import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
 import { HistoricalIncrementRank } from '@chiyu-bit/canon.root/weekly';
 import { reqIncrementRankOfTypeInRange } from '@src/api';
+
 import { MemberInfoContext } from '@components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';
+
 import { getWeekIncrementRank, IncrementRank } from './common';
 import RankBar from './RankBar';
 

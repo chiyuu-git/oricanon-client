@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { BasicType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';
@@ -32,21 +32,23 @@ const TwitterFollowerTotalRank = () => {
         }
     }, [weeklyInfo, seiyuuInfoMap]);
 
-    if (totalRank) {
-        return (
-            <RankTable
-                title = '推特fo数-累计榜'
-                range = { range }
-                totalRank = { totalRank }
-                layoutOption = { {
-                    contentType: 'seiyuu-total-rank',
-                    incrementNodeWidth: '4em',
-                } }
-            />
-        );
-    }
+    return useMemo(() => {
+        if (totalRank) {
+            return (
+                <RankTable
+                    title = '推特fo数-累计榜'
+                    range = { range }
+                    totalRank = { totalRank }
+                    layoutOption = { {
+                        contentType: 'seiyuu-total-rank',
+                        incrementNodeWidth: '4em',
+                    } }
+                />
+            );
+        }
 
-    return <div>TwitterFollowerTotalRank</div>;
+        return <div>TwitterFollowerTotalRank</div>;
+    }, [range, totalRank]);
 };
 
 export default TwitterFollowerTotalRank;

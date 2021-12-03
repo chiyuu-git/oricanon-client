@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';
@@ -33,21 +33,23 @@ const CharaPixivIllustTotalRank = () => {
         }
     }, [weeklyInfo, charaInfoMap]);
 
-    if (totalRank) {
-        return (
-            <RankTable
-                title = 'pixiv-illust-角色累计榜'
-                range = { range }
-                totalRank = { totalRank }
-                layoutOption = { {
-                    contentType: 'chara-total-rank',
-                    incrementNodeWidth: '3em',
-                } }
-            />
-        );
-    }
+    return useMemo(() => {
+        if (totalRank) {
+            return (
+                <RankTable
+                    title = 'pixiv-illust-角色累计榜'
+                    range = { range }
+                    totalRank = { totalRank }
+                    layoutOption = { {
+                        contentType: 'chara-total-rank',
+                        incrementNodeWidth: '3em',
+                    } }
+                />
+            );
+        }
 
-    return <div>CharaPixivIllustTotalRank</div>;
+        return <div>CharaPixivIllustTotalRank</div>;
+    }, [range, totalRank]);
 };
 
 export default CharaPixivIllustTotalRank;

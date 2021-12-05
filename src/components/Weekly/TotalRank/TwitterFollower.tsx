@@ -36,7 +36,7 @@ const TwitterFollowerTotalRank = () => {
         if (totalRank) {
             return (
                 <RankTable
-                    title = '推特fo数-累计榜'
+                    title = 'twitter-follower-累计榜'
                     range = { range }
                     totalRank = { totalRank }
                     layoutOption = { {

@@ -9,10 +9,10 @@ import { WeeklyContext } from '../weekly-context-manager';
 import { getWeekIncrementRank, IncrementRank } from './common';
 import RankBar from './RankBar';
 
-const CharaPixivIllustWeekIncrementRank: FC<unknown> = () => {
+const CharaPixivNovelWeekIncrementRank: FC<unknown> = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
+    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.novel];
     const charaInfoMap = memberInfoContext.character;
 
     const [range, setRange] = useState('');
@@ -23,9 +23,9 @@ const CharaPixivIllustWeekIncrementRank: FC<unknown> = () => {
         async function getHistoricalIncrementRank() {
             const rank = await reqIncrementRankOfTypeInRange(
                 BasicType.character,
-                CharacterRecordType.illust,
+                CharacterRecordType.novel,
             );
-            console.log('historicalIncrementRank:', rank);
+            console.log('novel historicalIncrementRank:', rank);
             setHistoricalIncrementRank(rank);
         }
         getHistoricalIncrementRank();
@@ -48,17 +48,17 @@ const CharaPixivIllustWeekIncrementRank: FC<unknown> = () => {
         if (weekIncrementRank) {
             return (
                 <RankBar
-                    title = 'pixiv-illust-角色周增榜'
+                    title = 'pixiv-novel-角色周增榜'
                     range = { range }
-                    linearGradient = 'rgb(255,175,175)'
-                    icon = 'icon-pixiv-illust'
+                    linearGradient = 'rgb(255,213,133)'
+                    icon = 'icon-pixiv-novel'
                     incrementRank = { weekIncrementRank }
                 />
             );
         }
 
-        return <div>CharaPixivIllustWeekIncrementRank</div>;
+        return <div>CharaPixivNovelWeekIncrementRank</div>;
     }, [range, weekIncrementRank]);
 };
 
-export default CharaPixivIllustWeekIncrementRank;
+export default CharaPixivNovelWeekIncrementRank;

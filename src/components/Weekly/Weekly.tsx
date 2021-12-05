@@ -12,12 +12,16 @@ import CharaPixivIllustWeekIncrementRank from './IncrementRank/CharaPixivIllust'
 import TwitterFollowerIncrementRank from './IncrementRank/TwitterFollower';
 import CharaPixivIllustTotalRank from './TotalRank/CharaPixivIllust';
 import TwitterFollowerTotalRank from './TotalRank/TwitterFollower';
-import BasicProjectPie from './ProjectPie/BasicProjectPie';
+import CharaPixivIllustProjectPie from './ProjectPie/CharaPixivIllust';
 import CompareProjectPie from './ProjectPie/CompareProjectPie';
 import CharaPixivTagViewWeekIncrementRank from './IncrementRank/CharaPixivTagView';
 import CharaPixivTagViewTotalRank from './TotalRank/CharaPixivTagView';
 
 import './Weekly.less';
+import CharaPixivNovelWeekIncrementRank from './IncrementRank/CharaPixivNovel';
+import CharaPixivNovelTotalRank from './TotalRank/CharaPixivNovel';
+import CharaPixivNovelProjectPie from './ProjectPie/CharaPixivNovel';
+import CharaPixivTagViewProjectPie from './ProjectPie/CharaPixivTagView';
 
 type WeeklyActionInfoMap = {
     [BasicType.character]: {
@@ -190,15 +194,21 @@ const Weekly = () => {
                 <button type = 'button' onClick = { downloadAll }> 下载所有图片 </button>
                 <CharaPixivIllustWeekIncrementRank />
                 <div className = 'compare-pie-container'>
-                    <BasicProjectPie />
+                    <CharaPixivIllustProjectPie />
                     { /* <CompareProjectPie /> */ }
                 </div>
                 <CharaPixivIllustTotalRank />
-                <CharaPixivTagViewWeekIncrementRank />
-                <CharaPixivTagViewTotalRank />
                 <CoupleCircle />
                 <TwitterFollowerIncrementRank />
                 <TwitterFollowerTotalRank />
+
+                <CharaPixivNovelWeekIncrementRank />
+                <CharaPixivNovelProjectPie />
+                <CharaPixivNovelTotalRank />
+
+                <CharaPixivTagViewWeekIncrementRank />
+                <CharaPixivTagViewProjectPie />
+                <CharaPixivTagViewTotalRank />
             </div>
         </WeeklyContext.Provider>
     );

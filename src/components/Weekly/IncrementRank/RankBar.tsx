@@ -14,10 +14,12 @@ import './RankBar.less';
 interface RankBarProps {
     title: string;
     range: string;
+    linearGradient: string;
+    icon: string;
     incrementRank: IncrementRank;
 }
 
-const RankBar: FC<RankBarProps> = ({ title, range, incrementRank }) => {
+const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, incrementRank }) => {
     const chartOption: EChartsOption = {
         title: {
             text: title,
@@ -31,8 +33,9 @@ const RankBar: FC<RankBarProps> = ({ title, range, incrementRank }) => {
             },
         },
         grid: {
-            left: '3%',
+            left: '1%',
             right: '4%',
+            bottom: '2%',
             top: 80,
             containLabel: true,
         },
@@ -51,7 +54,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, incrementRank }) => {
             splitLine: {
                 interval: 1,
                 lineStyle: {
-                    color: ['#eee'],
+                    color: ['rgb(250,69,69, 10%)'],
                 },
             },
             boundaryGap: ['0', '0.05'],
@@ -152,7 +155,12 @@ const RankBar: FC<RankBarProps> = ({ title, range, incrementRank }) => {
     };
 
     return (
-        <div className = 'rank-bar-wrap'>
+        <div
+            className = 'rank-bar-wrap'
+            style = { {
+                background: `linear-gradient(-45deg, ${linearGradient} 50px, white 50%, white)`,
+            } }
+        >
             <ReactECharts
                 className = 'rank-bar'
                 option = { chartOption }
@@ -161,6 +169,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, incrementRank }) => {
                     height: '1000px',
                 } }
             />
+            <i className = { `iconfont ${icon}` } />
         </div>
     );
 };

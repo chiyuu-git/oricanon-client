@@ -5,12 +5,12 @@ import { WeeklyContext } from '../weekly-context-manager';
 import { TotalRank } from './common';
 import RankTable from './RankTable';
 
-const CharaPixivTagViewTotalRank = () => {
+const CharaPixivNovelTotalRank = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
     const [range, setRange] = useState('');
     const [totalRank, setTotalRank] = useState<TotalRank | null>(null);
-    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.tagView];
+    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.novel];
     const charaInfoMap = memberInfoContext.character;
 
     useEffect(() => {
@@ -37,19 +37,19 @@ const CharaPixivTagViewTotalRank = () => {
         if (totalRank) {
             return (
                 <RankTable
-                    title = 'pixiv-标签阅览数-角色累计榜'
+                    title = 'pixiv-novel-角色累计榜'
                     range = { range }
                     totalRank = { totalRank }
                     layoutOption = { {
                         contentType: 'chara-total-rank',
-                        incrementNodeWidth: '5.5em',
+                        incrementNodeWidth: '3em',
                     } }
                 />
             );
         }
 
-        return <div>CharaPixivTagViewTotalRank</div>;
+        return <div>CharaPixivNovelTotalRank</div>;
     }, [range, totalRank]);
 };
 
-export default CharaPixivTagViewTotalRank;
+export default CharaPixivNovelTotalRank;

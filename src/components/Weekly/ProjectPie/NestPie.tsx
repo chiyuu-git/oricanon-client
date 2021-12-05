@@ -48,9 +48,21 @@ const NestPie: FC<NestPipeProps> = (props) => {
         projectLegend[key] = `${key} - (${rateStr})`;
     }
 
+    type MemberShow = Record<ProjectName, boolean>;
+
+    const projectMemberShow: MemberShow = Object.values(ProjectName).reduce((map, val) => ({
+        ...map,
+        [val]: true,
+    }), {} as MemberShow);
+
     // 处理内圆的数据
     const projectPie = projectInfoList.map((project) => {
         const { projectName, projectWeekIncrement } = project;
+        // 周增小于0，内环外环都不应该展示
+        if (projectWeekIncrement < 0) {
+            projectMemberShow[projectName] = false;
+        }
+
         return {
             name: projectName,
             value: projectWeekIncrement,
@@ -74,7 +86,8 @@ const NestPie: FC<NestPipeProps> = (props) => {
             return {
                 name,
                 romaName,
-                value: weekIncrement < 0 ? 0 : weekIncrement,
+                // 值为复数，或者企划整体周增小0，则过滤掉
+                value: weekIncrement < 0 || !projectMemberShow[projectName] ? 0 : weekIncrement,
                 projectName,
             };
         });

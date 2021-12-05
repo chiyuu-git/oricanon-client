@@ -1,25 +1,24 @@
 import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
-import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
-import React, { useState, useEffect, useContext, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { WeeklyContext } from '../weekly-context-manager';
 
 import NestPie from './NestPie';
 
-const BasicProjectPie = () => {
+const CharaPixivNovelProjectPie = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const charaPixivIllustWeeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
-    const memberCharaInfoMap = memberInfoContext.character;
+    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.novel];
+    const charaInfoMap = memberInfoContext.character;
 
     return useMemo(() => {
-        if (charaPixivIllustWeeklyInfo && memberCharaInfoMap) {
-            const { range, projectInfoList, memberInfoList } = charaPixivIllustWeeklyInfo;
+        if (weeklyInfo && charaInfoMap) {
+            const { range, projectInfoList, memberInfoList } = weeklyInfo;
             return (
                 <NestPie
-                    title = 'pixiv-illust-企划周增榜'
+                    title = 'pixiv-novel-企划周增榜'
                     range = { range }
-                    memberInfoMap = { memberCharaInfoMap }
+                    memberInfoMap = { charaInfoMap }
                     projectInfoList = { projectInfoList }
                     memberInfoList = { memberInfoList }
                     showWidget
@@ -31,8 +30,8 @@ const BasicProjectPie = () => {
             );
         }
 
-        return <div>BasicProjectPie</div>;
-    }, [charaPixivIllustWeeklyInfo, memberCharaInfoMap]);
+        return <div>CharaPixivNovelProjectPie</div>;
+    }, [weeklyInfo, charaInfoMap]);
 };
 
-export default BasicProjectPie;
+export default CharaPixivNovelProjectPie;

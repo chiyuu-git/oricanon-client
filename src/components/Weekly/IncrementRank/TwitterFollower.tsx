@@ -45,8 +45,10 @@ const TwitterFollowerWeekIncrementRank: FC<unknown> = () => {
         if (weekIncrementRank) {
             return (
                 <RankBar
-                    title = '推特fo数-周增榜'
+                    title = 'twitter-follower-周增榜'
                     range = { range }
+                    linearGradient = 'rgb(136,141,255)'
+                    icon = 'icon-twitter-follower'
                     incrementRank = { weekIncrementRank }
                 />
             );

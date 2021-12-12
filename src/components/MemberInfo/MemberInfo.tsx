@@ -6,6 +6,7 @@ import { MemberInfoMap } from '@chiyu-bit/canon.root/member-list';
 import { MemberInfoContext, initMemberInfoContext, MemberInfoTypeMap } from './member-info-context-manager';
 
 import Weekly from '../Weekly/Weekly';
+import Summary from '../Summary/Summary';
 
 type MemberInfoActionInfoMap = {
     [BasicType.character]: {
@@ -75,6 +76,7 @@ const MemberInfo: FC<unknown> = () => {
 
     return (
         <MemberInfoContext.Provider value = { memberInfoContext }>
+            <Summary />
             <Weekly />
         </MemberInfoContext.Provider>
     );

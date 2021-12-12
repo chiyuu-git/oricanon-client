@@ -1,16 +1,36 @@
-import { BasicType, InfoType, ProjectName, DateString } from '@chiyu-bit/canon.root';
+import { BasicType, InfoType, ProjectName, DateString, Record } from '@chiyu-bit/canon.root';
 import { MemberBasicInfo, MemberInfoMap } from '@chiyu-bit/canon.root/member-list';
-import { RecordWeeklyInfo, HistoricalIncrementRank } from '@chiyu-bit/canon.root/weekly';
+import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
+import { HistoricalIncrementRank } from '@chiyu-bit/canon.root/summary';
 import { enhanceFetch } from './fetch';
 
-export function reqIncrementRankOfTypeInRange(
+export function reqRelativeIncrementOfTypeInRange(
+    basicType: BasicType,
+    recordType: InfoType,
+    projectName: ProjectName,
+    from?: DateString,
+    to?: DateString,
+): Promise<Record[]> {
+    return enhanceFetch(
+        '/api/summary/relative_increment_of_type_in_range',
+        {
+            basicType,
+            recordType,
+            projectName,
+            from,
+            to,
+        },
+    );
+}
+
+export function reqWeekIncrementRankOfTypeInRange(
     basicType: BasicType,
     infoType: InfoType,
     from?: DateString,
     to?: DateString,
 ): Promise<HistoricalIncrementRank> {
     return enhanceFetch(
-        '/api/weekly/increment_rank_of_type_in_range',
+        '/api/summary/week_increment_rank_of_type_in_range',
         { basicType, recordType: infoType },
     );
 }

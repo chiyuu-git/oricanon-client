@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, useContext, useMemo } from 'react';
 import { BasicType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
-import { HistoricalIncrementRank } from 'canon/root/weekly';
-import { reqIncrementRankOfTypeInRange } from '@src/api';
+import { HistoricalIncrementRank } from '@chiyu-bit/canon.root/summary';
+import { reqWeekIncrementRankOfTypeInRange } from '@src/api';
 import { MemberInfoContext } from '@components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';
 import { getWeekIncrementRank, IncrementRank } from './common';
@@ -19,10 +19,11 @@ const TwitterFollowerWeekIncrementRank: FC<unknown> = () => {
 
     useEffect(() => {
         async function getHistoricalIncrementRank() {
-            const rank = await reqIncrementRankOfTypeInRange(
+            const rank = await reqWeekIncrementRankOfTypeInRange(
                 BasicType.seiyuu,
                 SeiyuuRecordType.twitterFollower,
             );
+            console.log('follower historicalIncrementRank:', rank);
             setHistoricalIncrementRank(rank);
         }
         getHistoricalIncrementRank();

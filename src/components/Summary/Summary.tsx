@@ -5,6 +5,7 @@ import { reqMemberList, reqRelativeIncrementOfTypeInRange } from '@src/api';
 import * as echarts from 'echarts';
 import { characterRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
 import TwitterFollowerBarRace from './BarRace/TwitterFollower';
+import GroupedBar from './GroupedBar/GroupedBar';
 
 const Summary = () => {
     const lineRace = useRef(null);
@@ -136,7 +137,9 @@ const Summary = () => {
 
     return (
         <div>
-            <div
+            <GroupedBar />
+            <TwitterFollowerBarRace />
+            { /* <div
                 ref = { lineRace }
                 style = { {
                     width: '100vw',
@@ -144,8 +147,7 @@ const Summary = () => {
                 } }
             >
                 lineRace
-            </div>
-            <TwitterFollowerBarRace />
+            </div> */ }
         </div>
     );
 };

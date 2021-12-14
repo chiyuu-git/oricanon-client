@@ -2,6 +2,7 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 
 import * as echarts from 'echarts';
 import { characterRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
+import { shadeRGBColor } from '@src/utils';
 import { BarRaceDataSource } from './common';
 
 import { newsList } from './news';
@@ -110,7 +111,20 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
                     itemStyle: {
                         color(params: any) {
                             const [name, romaName] = params.name.split('-');
-                            return romaColorMap[romaName as KeyofRomaColorMap];
+                            const col = romaColorMap[romaName as KeyofRomaColorMap];
+
+                            return {
+                                type: 'linear',
+                                x: 1,
+                                y: 0,
+                                x2: 0,
+                                y2: 0,
+                                colorStops: [
+                                    { offset: 0, color: col },
+                                    { offset: 0.6, color: col },
+                                    { offset: 1, color: shadeRGBColor(col, 60) },
+                                ],
+                            };
                         },
                     },
                 },

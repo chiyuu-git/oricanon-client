@@ -37,7 +37,6 @@ const Summary = () => {
                     seiyuuRecordData.push([date, ...records] as const);
                 }
             }
-            console.log('seiyuuRecordData:', seiyuuRecordData);
 
             const seiyuuList = liellaMemberList.list.map(({ name, romaName }) => `${name}-${romaName}`);
 
@@ -137,7 +136,7 @@ const Summary = () => {
 
     return (
         <div>
-            <GroupedBar />
+            { /* <GroupedBar /> */ }
             <TwitterFollowerBarRace />
             { /* <div
                 ref = { lineRace }

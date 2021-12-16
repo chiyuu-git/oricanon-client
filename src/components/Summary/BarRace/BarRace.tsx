@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 
 import * as echarts from 'echarts';
+import { useSpring, animated, useTransition, config } from 'react-spring';
 import { characterRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
 import { shadeRGBColor } from '@src/utils';
 import { BarRaceDataSource } from './common';
@@ -12,13 +13,22 @@ interface BarRaceProps {
 }
 
 // 每 3s 更新一次数据
-const DATA_UPDATE_INTERVAL = 500;
+const DATA_UPDATE_INTERVAL = 1000;
 // 排序动画持续时间
 const SORT_DURATION = 300;
 
 const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
     const barRace = useRef(null);
     const [news, setNews] = useState<any>(null);
+    const [show, setShow] = useState(false);
+    const transitions = useTransition(show, {
+        from: { opacity: 0 },
+        enter: { opacity: 1 },
+        leave: { opacity: 0 },
+        config: {
+            duration: 100,
+        },
+    });
 
     useEffect(() => {
         if (!barRace.current) {
@@ -178,12 +188,17 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
                     title: null,
                 });
             }
+            setShow(true);
 
             const delay = index >= 45
                 ? (newsOfDate
                     ? DATA_UPDATE_INTERVAL / 2
                     : DATA_UPDATE_INTERVAL / 7)
                 : DATA_UPDATE_INTERVAL;
+
+            setTimeout(() => {
+                setShow(false);
+            }, DATA_UPDATE_INTERVAL - 100);
 
             timerId = setTimeout(() => {
                 // 更新到下一项数据，echarts 会采取合适的动画进行 过渡
@@ -192,14 +207,14 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
                 if (!record) {
                     return;
                 }
-                myChart.setOption({
-                    series: [
-                        {
-                            type: 'bar',
-                            data: record,
-                        },
-                    ],
-                });
+                // myChart.setOption({
+                //     series: [
+                //         {
+                //             type: 'bar',
+                //             data: record,
+                //         },
+                //     ],
+                // });
 
                 // 递归调用自身
                 renderInterval();
@@ -239,27 +254,32 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
                     } }
                 >{ title }
                 </p>
-                <div
-                    className = 'news-image'
-                    style = { {
-                        display: 'flex',
-                        flex: 1,
-                        flexDirection: 'column',
-                        justifyItems: 'center',
-                    } }
-                >
-                    { title
-                            && (
-                                <img
-                                    src = { `/api/assets/news/${date}/${1}.jfif` }
-                                    style = { {
-                                        width: '100%',
-                                        margin: 'auto',
-                                    } }
-                                    alt = { title }
-                                />
-                            ) }
-                </div>
+                {
+                    transitions((styles, items) => (
+                        <animated.div
+                            className = 'news-image'
+                            style = { {
+                                display: 'flex',
+                                flex: 1,
+                                flexDirection: 'column',
+                                justifyItems: 'center',
+                                ...styles,
+                            } }
+                        >
+                            { title && items
+                                        && (
+                                            <img
+                                                src = { `/api/assets/news/${date}/${1}.jfif` }
+                                                style = { {
+                                                    width: '100%',
+                                                    margin: 'auto',
+                                                } }
+                                                alt = { title }
+                                            />
+                                        ) }
+                        </animated.div>
+                    ))
+                }
             </div>
         );
     }

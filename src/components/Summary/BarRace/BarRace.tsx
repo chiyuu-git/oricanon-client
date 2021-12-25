@@ -13,7 +13,7 @@ interface BarRaceProps {
 }
 
 // 每 3s 更新一次数据
-const DATA_UPDATE_INTERVAL = 1000;
+const DATA_UPDATE_INTERVAL = 300;
 // 排序动画持续时间
 const SORT_DURATION = 300;
 
@@ -25,9 +25,9 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
         from: { opacity: 0 },
         enter: { opacity: 1 },
         leave: { opacity: 0 },
-        config: {
-            duration: 100,
-        },
+        // config: {
+        //     duration: 250,
+        // },
     });
 
     useEffect(() => {
@@ -56,14 +56,16 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
             title: {
                 text: 'Liella 成员推特关注数增量 since 2020-12-14',
                 left: 'left',
+                top: 20,
                 textStyle: {
                     fontSize: 32,
                 },
             },
             grid: {
+                top: '10%',
                 left: '1%',
-                right: '5%',
                 bottom: '2%',
+                right: '5%',
                 containLabel: true,
             },
             xAxis: {
@@ -198,23 +200,20 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
 
             setTimeout(() => {
                 setShow(false);
-            }, DATA_UPDATE_INTERVAL - 100);
+            }, delay - 100);
 
             timerId = setTimeout(() => {
                 // 更新到下一项数据，echarts 会采取合适的动画进行 过渡
                 record = recordArray[index];
 
-                if (!record) {
-                    return;
-                }
-                // myChart.setOption({
-                //     series: [
-                //         {
-                //             type: 'bar',
-                //             data: record,
-                //         },
-                //     ],
-                // });
+                myChart.setOption({
+                    series: [
+                        {
+                            type: 'bar',
+                            data: record,
+                        },
+                    ],
+                });
 
                 // 递归调用自身
                 renderInterval();
@@ -250,34 +249,36 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
                     className = 'news-title'
                     style = { {
                         fontSize: '32px',
-                        marginTop: '32px',
+                        height: '80px',
+                        marginTop: '10px',
                     } }
                 >{ title }
                 </p>
                 {
                     transitions((styles, items) => (
-                        <animated.div
+                        <div
                             className = 'news-image'
                             style = { {
-                                display: 'flex',
-                                flex: 1,
-                                flexDirection: 'column',
-                                justifyItems: 'center',
-                                ...styles,
+                                marginBottom: '20px',
+                                // backgroundColor: 'pink',
+                                // display: 'flex',
+                                // flexDirection: 'column',
+                                // justifyContent: 'center',
+                                // alignItems: 'center',
                             } }
                         >
                             { title && items
                                         && (
-                                            <img
+                                            <animated.img
                                                 src = { `/api/assets/news/${date}/${1}.jfif` }
                                                 style = { {
                                                     width: '100%',
-                                                    margin: 'auto',
+                                                    ...styles,
                                                 } }
                                                 alt = { title }
                                             />
                                         ) }
-                        </animated.div>
+                        </div>
                     ))
                 }
             </div>

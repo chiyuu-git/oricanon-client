@@ -161,7 +161,7 @@ const Weekly = () => {
     useEffect(() => {
         const { basicType, infoTypeList } = SEIYUU_WEEKLY_INFO_LIST;
         for (const infoType of infoTypeList) {
-            reqInfoTypeWeekly(basicType, infoType)
+            reqInfoTypeWeekly(basicType, infoType, '2021-12-24')
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
                         basicType: BasicType.seiyuu,

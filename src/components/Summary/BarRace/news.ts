@@ -1,3 +1,4 @@
+// TODO: ins photo
 export const newsList = {
     '2020-12-25': {
         date: '2020-12-14',
@@ -7,7 +8,7 @@ export const newsList = {
         },
     },
     '2021-01-01': {
-        date: '2021-01-01',
+        date: '2020-12-14',
         title: 'Liella 声优公布',
         content: {
             articleUrl: ['https://www.lovelive-anime.jp/yuigaoka/news/?id=7183'],
@@ -130,7 +131,7 @@ export const newsList = {
     },
     '2021-07-11': {
         date: '2021-07-11',
-        title: 'TVアニメ『ラブライブ！スーパースター!!』第1話「まだ名もないキモチ」',
+        title: 'TVアニメ 第1話「まだ名もないキモチ」',
         content: {
             articleUrl: [
                 'https://twitter.com/LoveLive_staff/status/1414170006108008459',
@@ -139,7 +140,7 @@ export const newsList = {
     },
     '2021-07-18': {
         date: '2021-07-18',
-        title: '『ラブライブ！スーパースター!!』ＴＶアニメ第2話「スクールアイドル禁止！？」',
+        title: 'ＴＶアニメ第2話「スクールアイドル禁止！？」',
         content: {
             articleUrl: [
                 'https://twitter.com/LoveLive_staff/status/1416706583149506562',
@@ -159,7 +160,7 @@ export const newsList = {
     },
     '2021-08-08': {
         date: '2021-08-08',
-        title: '『ラブライブ！スーパースター!!』ＴＶアニメ第3話「クーカー」',
+        title: 'ＴＶアニメ第3話「クーカー」',
         content: {
             articleUrl: [
                 'https://twitter.com/LoveLive_staff/status/1424316598337163270',
@@ -225,7 +226,7 @@ export const newsList = {
     },
     '2021-10-03': {
         date: '2021-10-03',
-        title: '『ラブライブ！スーパースター!!』ＴＶアニメ第10話「チェケラッ!!」',
+        title: 'ＴＶアニメ第10話「チェケラッ!!」',
         content: {
             articleUrl: [
                 'https://twitter.com/LoveLive_staff/status/1444610731047981057',
@@ -417,6 +418,35 @@ export const newsList = {
             articleUrl: [
                 'https://twitter.com/LoveLive_staff/status/1469964441613922305',
                 'https://twitter.com/LoveLive_staff/status/1469964871156768768',
+            ],
+        },
+    },
+    '2021-12-17': {
+        date: '2021-12-17',
+        title: 'Liella 1st live tour 千叶公演 day1',
+        content: {
+            articleUrl: [
+                'https://twitter.com/LoveLive_staff/status/1471811843832578053',
+            ],
+        },
+    },
+    '2021-12-18': {
+        date: '2021-12-18',
+        title: 'Liella 1st live tour 千叶公演 day2',
+        content: {
+            articleUrl: [
+                'https://twitter.com/LoveLive_staff/status/1472138255781208064',
+            ],
+        },
+    },
+    '2021-12-19': {
+        date: '2021-12-19',
+        title: '嵐珠と可可のスペシャル番組',
+        content: {
+            articleUrl: [
+                'https://twitter.com/Liyu0109/status/1472568784292823045',
+                'https://twitter.com/homoto_akina/status/1472568108816936964',
+                'https://twitter.com/LoveLive_staff/status/1472522346816806912',
             ],
         },
     },

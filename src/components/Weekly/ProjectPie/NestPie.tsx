@@ -108,6 +108,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
             {
                 type: 'pie',
                 radius: [0, '30%'],
+                center: ['50%', '50%'],
                 label: {
                     position: 'inner',
                     formatter(param) {
@@ -131,6 +132,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
                 // 显示南丁格尔图
                 roseType: 'radius',
                 radius: ['40%', '55%'],
+                center: ['50%', '50%'],
                 // 量太小的就不显示了
                 minAngle: 0,
                 minShowLabelAngle: 10,
@@ -218,7 +220,12 @@ const NestPie: FC<NestPipeProps> = (props) => {
     }
 
     return (
-        <div className = 'nest-pie-wrap'>
+        <div
+            className = 'nest-pie-wrap'
+            style = { {
+                height: '700px',
+            } }
+        >
             { chartOption && (
                 <ReactECharts
                     option = { chartOption }

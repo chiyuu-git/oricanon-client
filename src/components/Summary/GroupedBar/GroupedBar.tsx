@@ -33,6 +33,7 @@ const GroupedBar = () => {
             title: {
                 text: 'Liella 成员关注数增量 区间分组',
                 left: 'left',
+                top: 20,
                 textStyle: {
                     fontSize: 32,
                 },

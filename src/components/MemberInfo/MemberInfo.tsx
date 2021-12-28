@@ -2,15 +2,15 @@ import React, { FC, useEffect, useReducer, useRef } from 'react';
 import { BasicType } from '@chiyu-bit/canon.root';
 
 import { reqMemberInfoMapOfType } from '@src/api';
-import { MemberInfoMap } from '@chiyu-bit/canon.root/member-list';
-import { MemberInfoContext, initMemberInfoContext, MemberInfoTypeMap } from './member-info-context-manager';
+import { MemberInfoMap } from '@chiyu-bit/canon.root/member-info';
+import { MemberInfoContext, initMemberInfoContext, MemberInfoListMap } from './member-info-context-manager';
 
 import Weekly from '../Weekly/Weekly';
 import Summary from '../Summary/Summary';
 
 type MemberInfoActionInfoMap = {
-    [BasicType.character]: {
-        memberInfoMap: MemberInfoMap<BasicType.character>;
+    [BasicType.chara]: {
+        memberInfoMap: MemberInfoMap<BasicType.chara>;
     };
     [BasicType.couple]: {
         memberInfoMap: MemberInfoMap<BasicType.couple>;
@@ -31,12 +31,12 @@ type MemberInfoAction = {
     };
 }[keyof typeof BasicType];
 
-function memberInfoContextReducer(state: MemberInfoTypeMap, action: MemberInfoAction): MemberInfoTypeMap {
+function memberInfoContextReducer(state: MemberInfoListMap, action: MemberInfoAction): MemberInfoListMap {
     switch (action.basicType) {
-        case BasicType.character:
+        case BasicType.chara:
             return {
                 ...state,
-                [BasicType.character]: action.payload.memberInfoMap,
+                [BasicType.chara]: action.payload.memberInfoMap,
             };
         case BasicType.couple:
             return {

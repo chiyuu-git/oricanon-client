@@ -12,13 +12,13 @@ type CoupleRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo>
 type SeiyuuRecordWeeklyInfo = Record<SeiyuuRecordType, RecordWeeklyInfo>;
 
 export type WeeklyInfo = {
-    [BasicType.character]: CharaRecordWeeklyInfo;
+    [BasicType.chara]: CharaRecordWeeklyInfo;
     [BasicType.couple]: CoupleRecordWeeklyInfo;
     [BasicType.seiyuu]: SeiyuuRecordWeeklyInfo;
 };
 
 export const initWeeklyContext: WeeklyInfo = {
-    [BasicType.character]: {} as CharaRecordWeeklyInfo,
+    [BasicType.chara]: {} as CharaRecordWeeklyInfo,
     [BasicType.couple]: {} as CoupleRecordWeeklyInfo,
     [BasicType.seiyuu]: {} as SeiyuuRecordWeeklyInfo,
 };

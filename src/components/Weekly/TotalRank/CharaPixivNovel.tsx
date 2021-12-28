@@ -10,8 +10,8 @@ const CharaPixivNovelTotalRank = () => {
     const memberInfoContext = useContext(MemberInfoContext);
     const [range, setRange] = useState('');
     const [totalRank, setTotalRank] = useState<TotalRank | null>(null);
-    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.novel];
-    const charaInfoMap = memberInfoContext.character;
+    const weeklyInfo = weeklyContext[BasicType.chara][CharacterRecordType.novel];
+    const charaInfoMap = memberInfoContext.chara;
 
     useEffect(() => {
         if (weeklyInfo && charaInfoMap) {

@@ -20,7 +20,7 @@ const TwitterFollowerBarRace = () => {
 
             const liellaMemberList = await reqMemberList({
                 projectName: ProjectName.llss,
-                type: BasicType.seiyuu,
+                basicType: BasicType.seiyuu,
             });
 
             const seiyuuRecordData: RawData = seiyuuRecord.map((record) => {
@@ -28,7 +28,7 @@ const TwitterFollowerBarRace = () => {
                 return [date, ...records] as const;
             });
 
-            const seiyuuList = liellaMemberList.list.map(({ name }) => name);
+            const seiyuuList = liellaMemberList.map(({ name }) => name);
             const list = [
                 '伊達さゆり-sayurin',
                 'Liyuu-liyuu',

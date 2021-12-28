@@ -12,12 +12,12 @@ const CompareProjectPie = () => {
         setWeeklyInfo,
     ] = useState<RecordWeeklyInfo | null>(null);
     const memberInfoContext = useContext(MemberInfoContext);
-    const memberCharaInfoMap = memberInfoContext.character;
+    const memberCharaInfoMap = memberInfoContext.chara;
 
     useEffect(() => {
         async function getWeeklyInfo() {
             const charaPixivIllustWeeklyInfo = await reqInfoTypeWeekly(
-                BasicType.character,
+                BasicType.chara,
                 CharacterRecordType.illust,
                 '2021-01-08',
             );

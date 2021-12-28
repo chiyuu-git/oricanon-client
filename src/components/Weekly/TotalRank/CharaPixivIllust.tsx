@@ -10,8 +10,8 @@ const CharaPixivIllustTotalRank = () => {
     const memberInfoContext = useContext(MemberInfoContext);
     const [range, setRange] = useState('');
     const [totalRank, setTotalRank] = useState<TotalRank | null>(null);
-    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
-    const charaInfoMap = memberInfoContext.character;
+    const weeklyInfo = weeklyContext[BasicType.chara][CharacterRecordType.illust];
+    const charaInfoMap = memberInfoContext.chara;
 
     useEffect(() => {
         if (weeklyInfo && charaInfoMap) {

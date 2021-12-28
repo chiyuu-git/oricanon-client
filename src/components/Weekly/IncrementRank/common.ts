@@ -1,5 +1,5 @@
 import { BasicType, ProjectName } from '@chiyu-bit/canon.root';
-import { MemberInfoMap } from '@chiyu-bit/canon.root/member-list';
+import { MemberInfoMap } from '@chiyu-bit/canon.root/member-info';
 import { MemberWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { HistoricalIncrementRank, MemberIncrementInfo } from '@chiyu-bit/canon.root/summary';
 
@@ -57,9 +57,9 @@ export function getWeekIncrementRank<Type extends BasicType>(
         .sort((a, b) => a.weekIncrement - b.weekIncrement)
         .map((memberWeeklyInfo, index) => {
             const { romaName, weekIncrement, weekIncrementRate } = memberWeeklyInfo;
-            const memberBasicInfo = memberInfoMap[romaName];
+            const memberInfo = memberInfoMap[romaName];
             // 百分位没有对应的 basicInfo
-            if (!memberBasicInfo) {
+            if (!memberInfo) {
                 return {
                     nameAndRoma: '',
                     increment: weekIncrement < 0 ? 0 : weekIncrement,
@@ -67,7 +67,7 @@ export function getWeekIncrementRank<Type extends BasicType>(
                     incrementRateStr: '年内全企划周增量80分位',
                 };
             }
-            const { name, projectName } = memberBasicInfo;
+            const { name, projectName } = memberInfo;
 
             // 第一位注释为先周比
             let rateStr = weekIncrementRate || '-';

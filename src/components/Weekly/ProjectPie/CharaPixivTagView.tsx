@@ -8,8 +8,8 @@ import NestPie from './NestPie';
 const CharaPixivTagViewProjectPie = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.tagView];
-    const charaInfoMap = memberInfoContext.character;
+    const weeklyInfo = weeklyContext[BasicType.chara][CharacterRecordType.tagView];
+    const charaInfoMap = memberInfoContext.chara;
 
     return useMemo(() => {
         if (weeklyInfo && charaInfoMap) {

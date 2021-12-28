@@ -12,8 +12,8 @@ import RankBar from './RankBar';
 const CharaPixivTagViewWeekIncrementRank: FC<unknown> = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.tagView];
-    const charaInfoMap = memberInfoContext.character;
+    const weeklyInfo = weeklyContext[BasicType.chara][CharacterRecordType.tagView];
+    const charaInfoMap = memberInfoContext.chara;
 
     const [range, setRange] = useState('');
     const [weekIncrementRank, setWeekIncrementRank] = useState<IncrementRank | null>(null);
@@ -22,7 +22,7 @@ const CharaPixivTagViewWeekIncrementRank: FC<unknown> = () => {
     useEffect(() => {
         async function getHistoricalIncrementRank() {
             const rank = await reqWeekIncrementRankOfTypeInRange(
-                BasicType.character,
+                BasicType.chara,
                 CharacterRecordType.tagView,
             );
             setHistoricalIncrementRank(rank);
@@ -32,7 +32,7 @@ const CharaPixivTagViewWeekIncrementRank: FC<unknown> = () => {
 
     useEffect(() => {
         if (weeklyInfo && historicalIncrementRank && charaInfoMap) {
-            const weekRank = getWeekIncrementRank<BasicType.character>(
+            const weekRank = getWeekIncrementRank<BasicType.chara>(
                 charaInfoMap,
                 weeklyInfo.memberInfoList,
                 historicalIncrementRank,

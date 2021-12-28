@@ -1,13 +1,13 @@
 import { createContext } from 'react';
-import { MemberInfoMap } from '@chiyu-bit/canon.root/member-list';
+import { MemberInfoMap } from '@chiyu-bit/canon.root/member-info';
 import { BasicType } from '@chiyu-bit/canon.root';
 
-export type MemberInfoTypeMap = {
-    [BasicType.character]: MemberInfoMap<BasicType.character>;
+export type MemberInfoListMap = {
+    [BasicType.chara]: MemberInfoMap<BasicType.chara>;
     [BasicType.couple]: MemberInfoMap<BasicType.couple>;
     [BasicType.seiyuu]: MemberInfoMap<BasicType.seiyuu>;
 }
 
-export const initMemberInfoContext: MemberInfoTypeMap = {} as MemberInfoTypeMap;
+export const initMemberInfoContext: MemberInfoListMap = {} as MemberInfoListMap;
 
-export const MemberInfoContext = createContext<MemberInfoTypeMap>(initMemberInfoContext);
+export const MemberInfoContext = createContext<MemberInfoListMap>(initMemberInfoContext);

@@ -12,8 +12,8 @@ import RankBar from './RankBar';
 const CharaPixivNovelWeekIncrementRank: FC<unknown> = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.novel];
-    const charaInfoMap = memberInfoContext.character;
+    const weeklyInfo = weeklyContext[BasicType.chara][CharacterRecordType.novel];
+    const charaInfoMap = memberInfoContext.chara;
 
     const [range, setRange] = useState('');
     const [weekIncrementRank, setWeekIncrementRank] = useState<IncrementRank | null>(null);
@@ -22,7 +22,7 @@ const CharaPixivNovelWeekIncrementRank: FC<unknown> = () => {
     useEffect(() => {
         async function getHistoricalIncrementRank() {
             const rank = await reqWeekIncrementRankOfTypeInRange(
-                BasicType.character,
+                BasicType.chara,
                 CharacterRecordType.novel,
             );
             console.log('novel historicalIncrementRank:', rank);
@@ -33,7 +33,7 @@ const CharaPixivNovelWeekIncrementRank: FC<unknown> = () => {
 
     useEffect(() => {
         if (weeklyInfo && historicalIncrementRank && charaInfoMap) {
-            const weekRank = getWeekIncrementRank<BasicType.character>(
+            const weekRank = getWeekIncrementRank<BasicType.chara>(
                 charaInfoMap,
                 weeklyInfo.memberInfoList,
                 historicalIncrementRank,

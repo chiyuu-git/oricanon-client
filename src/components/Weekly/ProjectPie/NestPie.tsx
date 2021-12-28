@@ -5,7 +5,7 @@ import { EChartsOption } from 'echarts';
 import { ProjectShorthandMap, ProjectColorMap, characterRichMap } from '@src/constant';
 import { BasicType, ProjectName } from '@chiyu-bit/canon.root';
 import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
-import { MemberInfoMap } from '@chiyu-bit/canon.root/member-list';
+import { MemberInfoMap } from '@chiyu-bit/canon.root/member-info';
 
 import './NestPie.less';
 
@@ -17,7 +17,7 @@ type NestPipeProps = {
         width: string;
         height: string;
     };
-    memberInfoMap: MemberInfoMap<BasicType.character>;
+    memberInfoMap: MemberInfoMap<BasicType.chara>;
 } & RecordWeeklyInfo
 
 interface PieDataItem {

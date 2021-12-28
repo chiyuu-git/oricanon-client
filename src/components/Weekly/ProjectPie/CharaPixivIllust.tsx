@@ -8,8 +8,8 @@ import NestPie from './NestPie';
 const CharaPixivIllustProjectPie = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const weeklyInfo = weeklyContext[BasicType.character][CharacterRecordType.illust];
-    const charaInfoMap = memberInfoContext.character;
+    const weeklyInfo = weeklyContext[BasicType.chara][CharacterRecordType.illust];
+    const charaInfoMap = memberInfoContext.chara;
 
     return useMemo(() => {
         if (weeklyInfo && charaInfoMap) {

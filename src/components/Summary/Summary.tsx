@@ -21,7 +21,7 @@ const Summary = () => {
 
             const liellaMemberList = await reqMemberList({
                 projectName: ProjectName.llss,
-                type: BasicType.seiyuu,
+                basicType: BasicType.seiyuu,
             });
 
             let lastDateTime = new Date(seiyuuRecord[0].date);
@@ -38,7 +38,7 @@ const Summary = () => {
                 }
             }
 
-            const seiyuuList = liellaMemberList.list.map(({ name, romaName }) => `${name}-${romaName}`);
+            const seiyuuList = liellaMemberList.map(({ name, romaName }) => `${name}-${romaName}`);
 
             const source = [
                 [

@@ -2,14 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { EChartsOption } from 'echarts';
 
-import { MemberList, reqMemberList } from '@src/api';
+import { reqMemberList } from '@src/api';
 
 import { AggregationType, BasicType, ProjectName } from '@chiyu-bit/canon.root';
+import { MemberBasicInfo } from '@chiyu-bit/canon.root/member-info';
 import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
 import { WeeklyContext } from '../weekly-context-manager';
 import { processMembers } from './process-chart-option';
 
 import './index.less';
+
 /**
  * 有副作用，指定 lineStyle label 即数据
  */
@@ -45,7 +47,7 @@ function decorateWithDataLabel(
 const CoupleCircle = () => {
     const weeklyContext = useContext(WeeklyContext);
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
-    const [memberList, setMemberList] = useState<MemberList<BasicType.character> | null>(null);
+    const [memberList, setMemberList] = useState<MemberBasicInfo<BasicType.chara>[] | null>(null);
     const weeklyInfo = weeklyContext[BasicType.couple][AggregationType.coupleUnionIllust];
 
     /**
@@ -55,7 +57,7 @@ const CoupleCircle = () => {
         async function getIconImg() {
             const liellaMemberList = await reqMemberList({
                 projectName: ProjectName.llss,
-                type: BasicType.character,
+                basicType: BasicType.chara,
             });
             setMemberList(liellaMemberList);
         }
@@ -128,10 +130,8 @@ const CoupleCircle = () => {
         }
     }, [weeklyInfo]);
 
-    function renderIconImg(liellaMemberList: MemberList<BasicType.character>) {
-        const { projectName, list } = liellaMemberList;
-
-        return list.map(({ name, supportColor }) => (
+    function renderIconImg(liellaMemberList: MemberBasicInfo<BasicType.chara>[]) {
+        return liellaMemberList.map(({ projectName, name, supportColor }) => (
             <div
                 key = { name }
                 className = 'icon'

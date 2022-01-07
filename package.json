@@ -67,7 +67,6 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@chiyu-bit/canon.root": "^0.0.8",
     "canvas2image": "^1.0.5",
     "core-js": "^3.18.1",
     "echarts": "^5.2.1",

@@ -1,8 +1,9 @@
 import React, { useEffect, useReducer, useRef } from 'react';
 
-import { BasicType, AggregationType, CharacterRecordType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
-import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
-import { reqInfoTypeWeekly } from '@src/api';
+import { BasicType } from '@common/root';
+import { CharaRecordType, CoupleRecordType, SeiyuuRecordType } from '@common/record';
+import { RecordWeeklyInfo } from '@common/weekly';
+import { reqRecordTypeWeekly } from '@src/api';
 import { html2Image } from '@src/utils/html-to-image';
 
 import { WeeklyContext, initWeeklyContext, WeeklyInfo } from './weekly-context-manager';
@@ -25,15 +26,15 @@ import CharaPixivTagViewProjectPie from './ProjectPie/CharaPixivTagView';
 
 type WeeklyActionInfoMap = {
     [BasicType.chara]: {
-        infoType: CharacterRecordType | AggregationType;
+        recordType: CharaRecordType;
         recordWeeklyInfo: RecordWeeklyInfo;
     };
     [BasicType.couple]: {
-        infoType: CharacterRecordType | AggregationType;
+        recordType: CoupleRecordType;
         recordWeeklyInfo: RecordWeeklyInfo;
     };
     [BasicType.seiyuu]: {
-        infoType: SeiyuuRecordType;
+        recordType: SeiyuuRecordType;
         recordWeeklyInfo: RecordWeeklyInfo;
     };
 }
@@ -56,7 +57,7 @@ function weeklyContextReducer(state: WeeklyInfo, action: WeeklyAction): WeeklyIn
                 ...state,
                 [BasicType.chara]: {
                     ...state.chara,
-                    [action.payload.infoType]: action.payload.recordWeeklyInfo,
+                    [action.payload.recordType]: action.payload.recordWeeklyInfo,
                 },
             };
         case BasicType.couple:
@@ -64,7 +65,7 @@ function weeklyContextReducer(state: WeeklyInfo, action: WeeklyAction): WeeklyIn
                 ...state,
                 [BasicType.couple]: {
                     ...state.couple,
-                    [action.payload.infoType]: action.payload.recordWeeklyInfo,
+                    [action.payload.recordType]: action.payload.recordWeeklyInfo,
                 },
             };
         case BasicType.seiyuu:
@@ -72,7 +73,7 @@ function weeklyContextReducer(state: WeeklyInfo, action: WeeklyAction): WeeklyIn
                 ...state,
                 [BasicType.seiyuu]: {
                     ...state.seiyuu,
-                    [action.payload.infoType]: action.payload.recordWeeklyInfo,
+                    [action.payload.recordType]: action.payload.recordWeeklyInfo,
                 },
             };
 
@@ -83,32 +84,32 @@ function weeklyContextReducer(state: WeeklyInfo, action: WeeklyAction): WeeklyIn
 
 const CHARA_WEEKLY_INFO_LIST = {
     basicType: BasicType.chara,
-    infoTypeList: [
-        CharacterRecordType.illust,
-        CharacterRecordType.novel,
-        CharacterRecordType.tagView,
-        AggregationType.illustWithNovel,
+    recordTypeList: [
+        CharaRecordType.illust,
+        CharaRecordType.novel,
+        CharaRecordType.tagView,
+        CharaRecordType.illustWithNovel,
     ],
 } as const;
 
 const COUPLE_WEEKLY_INFO_LIST = {
     basicType: BasicType.couple,
-    infoTypeList: [
-        CharacterRecordType.illust,
-        CharacterRecordType.illustReverse,
-        CharacterRecordType.illustIntersection,
-        CharacterRecordType.novel,
-        CharacterRecordType.novelReverse,
-        CharacterRecordType.novelIntersection,
-        AggregationType.coupleUnionIllust,
-        AggregationType.coupleUnionNovel,
-        AggregationType.illustWithNovel,
+    recordTypeList: [
+        CoupleRecordType.illust,
+        CoupleRecordType.illustReverse,
+        CoupleRecordType.illustIntersection,
+        CoupleRecordType.novel,
+        CoupleRecordType.novelReverse,
+        CoupleRecordType.novelIntersection,
+        CoupleRecordType.coupleUnionIllust,
+        // CoupleRecordType.coupleUnionNovel,
+        // CoupleRecordType.illustWithNovel,
     ],
 } as const;
 
 const SEIYUU_WEEKLY_INFO_LIST = {
     basicType: BasicType.seiyuu,
-    infoTypeList: [
+    recordTypeList: [
         SeiyuuRecordType.twitterFollower,
     ],
 } as const;
@@ -121,14 +122,14 @@ const Weekly = () => {
 
     // 获取 character weeklyInfo
     useEffect(() => {
-        const { basicType, infoTypeList } = CHARA_WEEKLY_INFO_LIST;
-        for (const infoType of infoTypeList) {
-            reqInfoTypeWeekly(basicType, infoType)
+        const { basicType, recordTypeList } = CHARA_WEEKLY_INFO_LIST;
+        for (const recordType of recordTypeList) {
+            reqRecordTypeWeekly(basicType, recordType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
                         basicType: BasicType.chara,
                         payload: {
-                            infoType,
+                            recordType,
                             recordWeeklyInfo,
                         },
                     });
@@ -140,14 +141,14 @@ const Weekly = () => {
 
     // 获取 seiyuu weeklyInfo
     useEffect(() => {
-        const { basicType, infoTypeList } = SEIYUU_WEEKLY_INFO_LIST;
-        for (const infoType of infoTypeList) {
-            reqInfoTypeWeekly(basicType, infoType)
+        const { basicType, recordTypeList } = SEIYUU_WEEKLY_INFO_LIST;
+        for (const recordType of recordTypeList) {
+            reqRecordTypeWeekly(basicType, recordType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
                         basicType: BasicType.seiyuu,
                         payload: {
-                            infoType,
+                            recordType,
                             recordWeeklyInfo,
                         },
                     });
@@ -159,14 +160,14 @@ const Weekly = () => {
 
     // 获取 couple weeklyInfo
     useEffect(() => {
-        const { basicType, infoTypeList } = COUPLE_WEEKLY_INFO_LIST;
-        for (const infoType of infoTypeList) {
-            reqInfoTypeWeekly(basicType, infoType)
+        const { basicType, recordTypeList } = COUPLE_WEEKLY_INFO_LIST;
+        for (const recordType of recordTypeList) {
+            reqRecordTypeWeekly(basicType, recordType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
                         basicType: BasicType.couple,
                         payload: {
-                            infoType,
+                            recordType,
                             recordWeeklyInfo,
                         },
                     });

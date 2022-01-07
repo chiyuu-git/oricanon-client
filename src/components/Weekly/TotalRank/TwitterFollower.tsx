@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { BasicType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
+import { BasicType } from '@common/root';
+import { SeiyuuRecordType } from '@common/record';
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';
 import { TotalRank } from './common';

@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useReducer, useRef } from 'react';
-import { BasicType } from '@chiyu-bit/canon.root';
+import { BasicType } from '@common/root';
 
 import { reqMemberInfoMapOfType } from '@src/api';
-import { MemberInfoMap } from '@chiyu-bit/canon.root/member-info';
+import { MemberInfoMap } from '@common/member-info';
 import { MemberInfoContext, initMemberInfoContext, MemberInfoListMap } from './member-info-context-manager';
 
 import Weekly from '../Weekly/Weekly';

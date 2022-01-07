@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
-import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
-import { reqInfoTypeWeekly } from '@src/api';
+import { BasicType } from '@common/root';
+import { CharaRecordType } from '@common/record';
+import { RecordWeeklyInfo } from '@common/weekly';
+import { reqRecordTypeWeekly } from '@src/api';
 
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
 import NestPie from './NestPie';
@@ -16,9 +17,9 @@ const CompareProjectPie = () => {
 
     useEffect(() => {
         async function getWeeklyInfo() {
-            const charaPixivIllustWeeklyInfo = await reqInfoTypeWeekly(
+            const charaPixivIllustWeeklyInfo = await reqRecordTypeWeekly(
                 BasicType.chara,
-                CharacterRecordType.illust,
+                CharaRecordType.illust,
                 '2021-01-08',
             );
 

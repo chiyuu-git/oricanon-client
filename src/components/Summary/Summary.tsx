@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { BasicType, ProjectName, SeiyuuRecordType } from '@chiyu-bit/canon.root';
+import { BasicType, ProjectName } from '@common/root';
 import { reqMemberList, reqRelativeIncrementOfTypeInRange } from '@src/api';
+import { characterRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
+import { SeiyuuRecordType } from '@common/record';
 
 import * as echarts from 'echarts';
-import { characterRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
 import TwitterFollowerBarRace from './BarRace/TwitterFollower';
 import GroupedBar from './GroupedBar/GroupedBar';
 

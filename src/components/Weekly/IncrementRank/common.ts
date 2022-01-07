@@ -1,7 +1,7 @@
-import { BasicType, ProjectName } from '@chiyu-bit/canon.root';
-import { MemberInfoMap } from '@chiyu-bit/canon.root/member-info';
-import { MemberWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
-import { HistoricalIncrementRank, MemberIncrementInfo } from '@chiyu-bit/canon.root/summary';
+import { BasicType, ProjectName } from '@common/root';
+import { MemberInfoMap } from '@common/member-info';
+import { MemberWeeklyInfo } from '@common/weekly';
+import { HistoricalIncrementRank, MemberIncrementInfo } from '@common/summary';
 
 export type IncrementRank = {
     projectName: ProjectName;

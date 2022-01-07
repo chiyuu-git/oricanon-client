@@ -1,25 +1,24 @@
 import {
     BasicType,
-    InfoType,
     ProjectName,
     DateString,
-    Record,
-} from '@chiyu-bit/canon.root';
+} from '@common/root';
 import {
     MemberInfoMap,
-    MemberBasicInfo,
-} from '@chiyu-bit/canon.root/member-info';
-import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
-import { HistoricalIncrementRank } from '@chiyu-bit/canon.root/summary';
+    GetMemberInfoByType,
+} from '@common/member-info';
+import { RecordWeeklyInfo } from '@common/weekly';
+import { HistoricalIncrementRank } from '@common/summary';
+import { ProjectRecord, RecordType } from '@common/record';
 import { enhanceFetch } from './fetch';
 
 export function reqRelativeIncrementOfTypeInRange(
     basicType: BasicType,
-    recordType: InfoType,
+    recordType: RecordType,
     projectName: ProjectName,
     from?: DateString,
     to?: DateString,
-): Promise<Record[]> {
+): Promise<ProjectRecord[]> {
     return enhanceFetch('/api/summary/relative_increment_of_type_in_range', {
         basicType,
         recordType,
@@ -31,24 +30,24 @@ export function reqRelativeIncrementOfTypeInRange(
 
 export function reqWeekIncrementRankOfTypeInRange(
     basicType: BasicType,
-    infoType: InfoType,
+    recordType: RecordType,
     from?: DateString,
     to?: DateString,
 ): Promise<HistoricalIncrementRank> {
     return enhanceFetch('/api/summary/week_increment_rank_of_type_in_range', {
         basicType,
-        recordType: infoType,
+        recordType,
     });
 }
 
-export function reqInfoTypeWeekly<Type extends BasicType>(
+export function reqRecordTypeWeekly<Type extends BasicType>(
     basicType: Type,
-    infoType: InfoType,
+    recordType: RecordType,
     endDate = '',
 ): Promise<RecordWeeklyInfo> {
     return enhanceFetch('/api/weekly/info_type_weekly', {
         basicType,
-        infoType,
+        recordType,
         endDate,
     });
 }
@@ -66,7 +65,7 @@ interface QueryMemberList {
 
 type ResMemberList<T extends QueryMemberList> = T extends { basicType: infer R; }
     ? R extends BasicType
-        ? MemberBasicInfo<R>[]
+        ? GetMemberInfoByType<R>[]
         : never
     : never;
 

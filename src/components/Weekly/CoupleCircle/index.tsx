@@ -4,9 +4,10 @@ import { EChartsOption } from 'echarts';
 
 import { reqMemberList } from '@src/api';
 
-import { AggregationType, BasicType, ProjectName } from '@chiyu-bit/canon.root';
-import { MemberBasicInfo } from '@chiyu-bit/canon.root/member-info';
-import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
+import { BasicType, ProjectName } from '@common/root';
+import { CoupleRecordType } from '@common/record';
+import { GetMemberInfoByType } from '@common/member-info';
+import { RecordWeeklyInfo } from '@common/weekly';
 import { WeeklyContext } from '../weekly-context-manager';
 import { processMembers } from './process-chart-option';
 
@@ -47,8 +48,8 @@ function decorateWithDataLabel(
 const CoupleCircle = () => {
     const weeklyContext = useContext(WeeklyContext);
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
-    const [memberList, setMemberList] = useState<MemberBasicInfo<BasicType.chara>[] | null>(null);
-    const weeklyInfo = weeklyContext[BasicType.couple][AggregationType.coupleUnionIllust];
+    const [memberList, setMemberList] = useState<GetMemberInfoByType<BasicType.chara>[] | null>(null);
+    const weeklyInfo = weeklyContext[BasicType.couple][CoupleRecordType.coupleUnionIllust];
 
     /**
      * 获取 liella memberList
@@ -130,7 +131,7 @@ const CoupleCircle = () => {
         }
     }, [weeklyInfo]);
 
-    function renderIconImg(liellaMemberList: MemberBasicInfo<BasicType.chara>[]) {
+    function renderIconImg(liellaMemberList: GetMemberInfoByType<BasicType.chara>[]) {
         return liellaMemberList.map(({ projectName, name, supportColor }) => (
             <div
                 key = { name }

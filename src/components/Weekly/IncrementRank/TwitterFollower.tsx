@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect, useContext, useMemo } from 'react';
-import { BasicType, SeiyuuRecordType } from '@chiyu-bit/canon.root';
-import { HistoricalIncrementRank } from '@chiyu-bit/canon.root/summary';
+import { BasicType } from '@common/root';
+import { SeiyuuRecordType } from '@common/record';
+import { HistoricalIncrementRank } from '@common/summary';
 import { reqWeekIncrementRankOfTypeInRange } from '@src/api';
 import { MemberInfoContext } from '@components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';

@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { MemberInfoMap } from '@chiyu-bit/canon.root/member-info';
-import { BasicType } from '@chiyu-bit/canon.root';
+import { MemberInfoMap } from '@common/member-info';
+import { BasicType } from '@common/root';
 
 export type MemberInfoListMap = {
     [BasicType.chara]: MemberInfoMap<BasicType.chara>;

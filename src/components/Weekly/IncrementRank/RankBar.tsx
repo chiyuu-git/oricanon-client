@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 import { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
-import { ProjectName } from '@chiyu-bit/canon.root';
+import { ProjectName } from '@common/root';
 import {
     characterRichMap,
     projectRichMap,

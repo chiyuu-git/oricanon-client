@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect, useContext, useMemo } from 'react';
-import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
-import { HistoricalIncrementRank } from '@chiyu-bit/canon.root/summary';
+import { BasicType } from '@common/root';
+import { CharaRecordType } from '@common/record';
+import { HistoricalIncrementRank } from '@common/summary';
 import { reqWeekIncrementRankOfTypeInRange } from '@src/api';
 
 import { MemberInfoContext } from '@components/MemberInfo/member-info-context-manager';
@@ -12,7 +13,7 @@ import RankBar from './RankBar';
 const CharaPixivTagViewWeekIncrementRank: FC<unknown> = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const weeklyInfo = weeklyContext[BasicType.chara][CharacterRecordType.tagView];
+    const weeklyInfo = weeklyContext[BasicType.chara][CharaRecordType.tagView];
     const charaInfoMap = memberInfoContext.chara;
 
     const [range, setRange] = useState('');
@@ -23,7 +24,7 @@ const CharaPixivTagViewWeekIncrementRank: FC<unknown> = () => {
         async function getHistoricalIncrementRank() {
             const rank = await reqWeekIncrementRankOfTypeInRange(
                 BasicType.chara,
-                CharacterRecordType.tagView,
+                CharaRecordType.tagView,
             );
             setHistoricalIncrementRank(rank);
         }

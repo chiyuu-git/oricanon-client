@@ -3,9 +3,9 @@ import ReactECharts from 'echarts-for-react';
 import { EChartsOption } from 'echarts';
 
 import { ProjectShorthandMap, ProjectColorMap, characterRichMap } from '@src/constant';
-import { BasicType, ProjectName } from '@chiyu-bit/canon.root';
-import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
-import { MemberInfoMap } from '@chiyu-bit/canon.root/member-info';
+import { BasicType, ProjectName } from '@common/root';
+import { RecordWeeklyInfo } from '@common/weekly';
+import { MemberInfoMap } from '@common/member-info';
 
 import './NestPie.less';
 

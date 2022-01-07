@@ -49,11 +49,11 @@ module.exports = merge(baseWebpackConfig, {
         // 自动添加模块后缀名
         extensions: ['.tsx', '.ts', '.wasm', '.mjs', '.js', '.json'],
         alias: {
-            '@src': path.resolve(__dirname, '../src'),
+            '@common': path.resolve(__dirname, '../src/common'),
             '@components': path.resolve(__dirname, '../src/components'),
             '@utils': path.resolve(__dirname, '../src/utils'),
-            '@constant': path.resolve(__dirname, '../src/constant'),
             '@assets': path.resolve(__dirname, '../src/assets'),
+            '@src': path.resolve(__dirname, '../src'),
         },
     },
 });

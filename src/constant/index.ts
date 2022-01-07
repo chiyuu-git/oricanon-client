@@ -1,4 +1,4 @@
-import { ProjectName } from '@chiyu-bit/canon.root';
+import { ProjectName } from '@common/root';
 
 export const ProjectColorMap = {
     [ProjectName.ll]: '#ee0088',

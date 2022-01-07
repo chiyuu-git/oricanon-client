@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { BasicType, CharacterRecordType } from '@chiyu-bit/canon.root';
-import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
+import { BasicType } from '@common/root';
+import { CharaRecordType } from '@common/record';
+import { MemberInfoContext } from '@components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';
 import { TotalRank } from './common';
 import RankTable from './RankTable';
@@ -10,7 +11,7 @@ const CharaPixivIllustTotalRank = () => {
     const memberInfoContext = useContext(MemberInfoContext);
     const [range, setRange] = useState('');
     const [totalRank, setTotalRank] = useState<TotalRank | null>(null);
-    const weeklyInfo = weeklyContext[BasicType.chara][CharacterRecordType.illust];
+    const weeklyInfo = weeklyContext[BasicType.chara][CharaRecordType.illust];
     const charaInfoMap = memberInfoContext.chara;
 
     useEffect(() => {

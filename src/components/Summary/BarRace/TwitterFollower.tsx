@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { BasicType, ProjectName, SeiyuuRecordType } from '@chiyu-bit/canon.root';
+import { BasicType, ProjectName } from '@common/root';
+import { SeiyuuRecordType } from '@common/record';
 import { reqMemberList, reqRelativeIncrementOfTypeInRange } from '@src/api';
 
 import BarRace from './BarRace';

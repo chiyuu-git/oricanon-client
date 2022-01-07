@@ -1,13 +1,11 @@
 import React, { createContext } from 'react';
-import { BasicType, CharacterRecordType, SeiyuuRecordType, AggregationType } from '@chiyu-bit/canon.root';
+import { BasicType } from '@common/root';
+import { CharaRecordType, CoupleRecordType, SeiyuuRecordType } from '@common/record';
+import { RecordWeeklyInfo } from '@common/weekly';
 
-import { RecordWeeklyInfo } from '@chiyu-bit/canon.root/weekly';
+type CharaRecordWeeklyInfo = Record<CharaRecordType, RecordWeeklyInfo>
 
-type CharaRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo>
-& Record<AggregationType, RecordWeeklyInfo>
-
-type CoupleRecordWeeklyInfo = Record<CharacterRecordType, RecordWeeklyInfo>
-& Record<AggregationType, RecordWeeklyInfo>
+type CoupleRecordWeeklyInfo = Record<CoupleRecordType, RecordWeeklyInfo>
 
 type SeiyuuRecordWeeklyInfo = Record<SeiyuuRecordType, RecordWeeklyInfo>;
 

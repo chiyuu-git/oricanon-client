@@ -45,7 +45,7 @@ export function reqRecordTypeWeekly<Type extends BasicType>(
     recordType: RecordType,
     endDate = '',
 ): Promise<RecordWeeklyInfo> {
-    return enhanceFetch('/api/weekly/info_type_weekly', {
+    return enhanceFetch('/api/weekly/record_type_weekly', {
         basicType,
         recordType,
         endDate,

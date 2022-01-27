@@ -139,14 +139,14 @@ const Weekly = () => {
         }
     }, []);
 
-    // 获取 seiyuu weeklyInfo
+    // 获取 couple weeklyInfo
     useEffect(() => {
-        const { basicType, recordTypeList } = SEIYUU_WEEKLY_INFO_LIST;
+        const { basicType, recordTypeList } = COUPLE_WEEKLY_INFO_LIST;
         for (const recordType of recordTypeList) {
             reqRecordTypeWeekly(basicType, recordType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
-                        basicType: BasicType.seiyuu,
+                        basicType: BasicType.couple,
                         payload: {
                             recordType,
                             recordWeeklyInfo,
@@ -158,14 +158,14 @@ const Weekly = () => {
         }
     }, []);
 
-    // 获取 couple weeklyInfo
+    // 获取 seiyuu weeklyInfo
     useEffect(() => {
-        const { basicType, recordTypeList } = COUPLE_WEEKLY_INFO_LIST;
+        const { basicType, recordTypeList } = SEIYUU_WEEKLY_INFO_LIST;
         for (const recordType of recordTypeList) {
             reqRecordTypeWeekly(basicType, recordType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
-                        basicType: BasicType.couple,
+                        basicType: BasicType.seiyuu,
                         payload: {
                             recordType,
                             recordWeeklyInfo,

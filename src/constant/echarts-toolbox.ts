@@ -1,3 +1,11 @@
+/**
+ * echarts options 统一配置
+ */
+
+export const TITLE_MARGIN_TOP = 20;
+export const TITLE_FONT_SIZE = 32;
+export const GRID_MARGIN_TOP = 100;
+
 export const toolbox = {
     // show为显示工具栏
     show: true,

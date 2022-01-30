@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { thousandSplit } from '@src/utils';
+import { TITLE_FONT_SIZE } from '@src/constant/echarts-toolbox';
 import { TotalRank } from './common';
 
 import './RankTable.less';
@@ -33,9 +34,9 @@ const RankTable: FC<RankTableProps> = ({ title, range, layoutOption, totalRank }
     return (
         <div className = 'rank-table-wrap'>
             <p className = 'table-title'>
-                <span className = 'describe'>说明：排名-成员-累计-(周增)</span>
-                <span className = 'title'>{ title }</span>
-                <span className = 'range'>集计范围:{ range }</span>
+                <span className = 'describe' style = { { fontSize: TITLE_FONT_SIZE / 2 } }>说明：排名-成员-累计-(周增)</span>
+                <span className = 'title' style = { { fontSize: TITLE_FONT_SIZE } }>{ title }</span>
+                <span className = 'range' style = { { fontSize: TITLE_FONT_SIZE / 2 } }>集计范围：{ range }</span>
             </p>
             { renderTable() }
         </div>

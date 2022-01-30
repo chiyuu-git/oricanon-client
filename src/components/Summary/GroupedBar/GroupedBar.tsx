@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-import { characterRichMap } from '@src/constant';
+import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
 import { shadeRGBColor } from '@src/utils';
 
 const GroupedBar = () => {
@@ -33,16 +33,13 @@ const GroupedBar = () => {
             title: {
                 text: 'Liella 成员关注数增量 区间分组',
                 left: 'left',
-                top: 20,
+                top: TITLE_MARGIN_TOP,
                 textStyle: {
-                    fontSize: 32,
+                    fontSize: TITLE_FONT_SIZE,
                 },
             },
             grid: {
-                left: '1%',
-                right: '1%',
-                bottom: '2%',
-                top: 100,
+                top: GRID_MARGIN_TOP,
                 containLabel: true,
             },
             legend: {

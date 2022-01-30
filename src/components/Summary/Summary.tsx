@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { BasicType, ProjectName } from '@common/root';
 import { reqMemberList, reqRelativeIncrementOfTypeInRange } from '@src/api';
-import { characterRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
+import { charaRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
 import { SeiyuuRecordType } from '@common/record';
 
 import * as echarts from 'echarts';
+import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
 import TwitterFollowerBarRace from './BarRace/TwitterFollower';
 import GroupedBar from './GroupedBar/GroupedBar';
 
@@ -16,7 +17,7 @@ const Summary = () => {
                 BasicType.seiyuu,
                 SeiyuuRecordType.twitterFollower,
                 ProjectName.llss,
-                '2020-12-18',
+                '2020-12-25',
                 '2021-12-14',
             );
 
@@ -25,45 +26,34 @@ const Summary = () => {
                 basicType: BasicType.seiyuu,
             });
 
-            let lastDateTime = new Date(seiyuuRecord[0].date);
-            lastDateTime.setDate(lastDateTime.getDate() - 7);
-            const seiyuuRecordData = [];
+            // 1. 返回的数据日期间隔不一定是一周
+            // 2. 整理数据成 echarts 的 dataset 形式
+            let lastWeeklyFetchDate = new Date(seiyuuRecord[0].date);
+            lastWeeklyFetchDate.setDate(lastWeeklyFetchDate.getDate() - 7);
+            const sourceData = [];
 
             for (const { date, records } of seiyuuRecord) {
                 const originTime = new Date(date);
-                const dateTime = new Date(date);
-                dateTime.setDate(dateTime.getDate() - 7);
-                if (dateTime.getTime() === lastDateTime.getTime()) {
-                    lastDateTime = originTime;
-                    seiyuuRecordData.push([date, ...records] as const);
+                const lastWeeklyDate = new Date(date);
+                lastWeeklyDate.setDate(lastWeeklyDate.getDate() - 7);
+                // 七天前的日期与上一个 fetchDate 相同，说明今天是 fetchDate
+                if (lastWeeklyDate.getTime() === lastWeeklyFetchDate.getTime()) {
+                    lastWeeklyFetchDate = originTime;
+                    sourceData.push([date, ...records] as const);
                 }
             }
 
-            const seiyuuList = liellaMemberList.map(({ name, romaName }) => `${name}-${romaName}`);
-
-            const source = [
-                [
-                    'date',
-                    '伊達さゆり-sayurin',
-                    'Liyuu-liyuu',
-                    '岬なこ-nako',
-                    'ペイトン尚未-payton',
-                    '青山なぎさ-nagisa',
-                ],
-                ...seiyuuRecordData,
-            ];
-
             const seriesList: echarts.SeriesOption[] = [];
-            echarts.util.each(seiyuuList, (nameAndRoma) => {
-                const [member, romaName] = nameAndRoma.split('-');
+            // 给每个成员生成一个折线 series
+            for (const { name, romaName } of liellaMemberList) {
                 seriesList.push({
                     type: 'line',
                     showSymbol: false,
-                    name: nameAndRoma,
+                    name: `${name}-${romaName}`,
                     endLabel: {
                         show: true,
                         formatter(params: any) {
-                            return `{${romaName}|${member}: ${params.value[params.seriesIndex + 1]}}`;
+                            return `{${romaName}|${name}: ${params.value[params.seriesIndex + 1]}}`;
                         },
                         rich: {
                             per: {
@@ -72,7 +62,7 @@ const Summary = () => {
                                 padding: [2, 4],
                                 borderRadius: 2,
                             },
-                            ...characterRichMap,
+                            ...charaRichMap,
                         },
                     },
                     lineStyle: {
@@ -114,24 +104,23 @@ const Summary = () => {
                         focus: 'series',
                     },
                 });
-            });
+            }
 
             const option = {
                 animationDuration: 15_000,
                 dataset: {
-                    source: seiyuuRecordData,
+                    source: sourceData,
                 },
                 title: {
                     text: 'Liella 成员推特关注数增量 since 2020-12-14',
                     left: 'left',
-                    top: 20,
+                    top: TITLE_MARGIN_TOP,
                     textStyle: {
-                        fontSize: 32,
+                        fontSize: TITLE_FONT_SIZE,
                     },
                 },
                 grid: {
-                    top: 100,
-                    right: 140,
+                    top: GRID_MARGIN_TOP,
                 },
                 tooltip: {
                     order: 'valueDesc',

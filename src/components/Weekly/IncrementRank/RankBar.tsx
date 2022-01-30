@@ -3,10 +3,11 @@ import { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import { ProjectName } from '@common/root';
 import {
-    characterRichMap,
+    charaRichMap,
     projectRichMap,
     ProjectColorMap,
 } from '@src/constant';
+import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
 import { IncrementRank } from './common';
 
 import './RankBar.less';
@@ -25,18 +26,19 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, increme
             text: title,
             subtext: `集计范围：${range}`,
             left: 'center',
+            top: TITLE_MARGIN_TOP,
             textStyle: {
-                fontSize: 24,
+                fontSize: TITLE_FONT_SIZE,
             },
             subtextStyle: {
-                fontSize: 16,
+                fontSize: TITLE_FONT_SIZE / 2,
             },
         },
         grid: {
+            top: GRID_MARGIN_TOP,
             left: '1%',
             right: '4%',
             bottom: '2%',
-            top: 80,
             containLabel: true,
         },
         dataset: {
@@ -79,7 +81,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, increme
                         padding: [2, 4],
                         borderRadius: 2,
                     },
-                    ...characterRichMap,
+                    ...charaRichMap,
                 },
             },
         },

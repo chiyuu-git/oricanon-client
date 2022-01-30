@@ -54,7 +54,7 @@ function memberInfoContextReducer(state: MemberInfoListMap, action: MemberInfoAc
     }
 }
 
-const MemberInfo: FC<unknown> = () => {
+const MemberInfo: FC<unknown> = ({ children }) => {
     const [memberInfoContext, dispatchMemberInfoContext] = useReducer(memberInfoContextReducer, initMemberInfoContext);
 
     // 获取 各基础类型的 memberInfo
@@ -76,7 +76,7 @@ const MemberInfo: FC<unknown> = () => {
 
     return (
         <MemberInfoContext.Provider value = { memberInfoContext }>
-            { /* <Summary /> */ }
+            <Summary />
             <Weekly />
         </MemberInfoContext.Provider>
     );

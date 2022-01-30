@@ -89,9 +89,9 @@ export const romaColorMap = {
 export type KeyofRomaColorMap = keyof typeof romaColorMap
 
 // 准备 rich 对象，以角色罗马音为 key，绑定应援色
-export const characterRichMap: Record<string, unknown> = {};
+export const charaRichMap: Record<string, unknown> = {};
 for (const [romaName, supportColor] of Object.entries(romaColorMap)) {
-    characterRichMap[romaName] = {
+    charaRichMap[romaName] = {
         color: supportColor,
         fontSize: 14,
         fontWeight: 'bold',

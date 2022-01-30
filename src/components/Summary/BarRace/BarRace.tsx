@@ -2,8 +2,9 @@ import React, { FC, useEffect, useRef, useState } from 'react';
 
 import * as echarts from 'echarts';
 import { useSpring, animated, useTransition, config } from 'react-spring';
-import { characterRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
+import { charaRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
 import { shadeRGBColor } from '@src/utils';
+import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
 import { BarRaceDataSource } from './common';
 
 import { newsList } from './news';
@@ -56,16 +57,13 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
             title: {
                 text: 'Liella 成员推特关注数增量 since 2020-12-14',
                 left: 'left',
-                top: 20,
+                top: TITLE_MARGIN_TOP,
                 textStyle: {
-                    fontSize: 32,
+                    fontSize: TITLE_FONT_SIZE,
                 },
             },
             grid: {
-                top: '10%',
-                left: '1%',
-                bottom: '2%',
-                right: '5%',
+                top: GRID_MARGIN_TOP,
                 containLabel: true,
             },
             xAxis: {
@@ -104,7 +102,7 @@ const BarRace: FC<BarRaceProps> = ({ barRaceDataSet }) => {
                             padding: [2, 4],
                             borderRadius: 2,
                         },
-                        ...characterRichMap,
+                        ...charaRichMap,
                     },
                 },
             },

@@ -8,6 +8,7 @@ import { BasicType, ProjectName } from '@common/root';
 import { CoupleRecordType } from '@common/record';
 import { GetMemberInfoByType } from '@common/member-info';
 import { RecordWeeklyInfo } from '@common/weekly';
+import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
 import { WeeklyContext } from '../weekly-context-manager';
 import { processMembers } from './process-chart-option';
 
@@ -84,16 +85,15 @@ const CoupleCircle = () => {
                     text: 'pixiv-illust-角色cp榜',
                     subtext: `集计时间：${weeklyInfo.range.split('至')[1]}日`,
                     left: 'left',
+                    top: TITLE_MARGIN_TOP,
                     textStyle: {
-                        fontSize: 24,
+                        fontSize: TITLE_FONT_SIZE,
                     },
                     subtextStyle: {
-                        fontSize: 16,
+                        fontSize: TITLE_FONT_SIZE / 2,
                     },
                 },
                 tooltip: {},
-                //   animationDurationUpdate: 1500,
-                //   animationEasingUpdate: "quinticInOut",
                 series: [
                     {
                         type: 'graph',
@@ -151,8 +151,8 @@ const CoupleCircle = () => {
                     <ReactECharts
                         option = { chartOption }
                         style = { {
-                            width: '800px',
-                            height: '600px',
+                            width: '864px',
+                            height: '720px',
                         } }
                     />
                     { memberList && renderIconImg(memberList) }

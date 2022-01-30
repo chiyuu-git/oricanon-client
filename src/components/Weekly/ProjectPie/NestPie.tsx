@@ -2,12 +2,13 @@ import React, { FC, useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { EChartsOption } from 'echarts';
 
-import { ProjectShorthandMap, ProjectColorMap, characterRichMap } from '@src/constant';
+import { ProjectShorthandMap, ProjectColorMap, charaRichMap } from '@src/constant';
 import { BasicType, ProjectName } from '@common/root';
 import { RecordWeeklyInfo } from '@common/weekly';
 import { MemberInfoMap } from '@common/member-info';
 
 import './NestPie.less';
+import { TITLE_FONT_SIZE } from '@src/constant/echarts-toolbox';
 
 type NestPipeProps = {
     title: string;
@@ -98,10 +99,10 @@ const NestPie: FC<NestPipeProps> = (props) => {
             subtext: `集计范围：${range}`,
             left: 'center',
             textStyle: {
-                fontSize: 24,
+                fontSize: TITLE_FONT_SIZE,
             },
             subtextStyle: {
-                fontSize: 16,
+                fontSize: TITLE_FONT_SIZE / 2,
             },
         },
         series: [
@@ -150,7 +151,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
                             padding: [2, 4],
                             borderRadius: 2,
                         },
-                        ...characterRichMap,
+                        ...charaRichMap,
                     },
                 },
                 itemStyle: {
@@ -222,9 +223,6 @@ const NestPie: FC<NestPipeProps> = (props) => {
     return (
         <div
             className = 'nest-pie-wrap'
-            style = { {
-                height: '700px',
-            } }
         >
             { chartOption && (
                 <ReactECharts

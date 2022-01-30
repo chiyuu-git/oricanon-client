@@ -102,8 +102,8 @@ const COUPLE_WEEKLY_INFO_LIST = {
         CoupleRecordType.novelReverse,
         CoupleRecordType.novelIntersection,
         CoupleRecordType.coupleUnionIllust,
-        // CoupleRecordType.coupleUnionNovel,
-        // CoupleRecordType.illustWithNovel,
+        CoupleRecordType.coupleUnionNovel,
+        CoupleRecordType.illustWithNovel,
     ],
 } as const;
 
@@ -120,7 +120,7 @@ const Weekly = () => {
 
     // // TODO: 遍历获取 weeklyInfo
 
-    // 获取 character weeklyInfo
+    // 获取 chara weeklyInfo
     useEffect(() => {
         const { basicType, recordTypeList } = CHARA_WEEKLY_INFO_LIST;
         for (const recordType of recordTypeList) {

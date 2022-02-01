@@ -8,7 +8,7 @@ import { html2Image } from '@src/utils/html-to-image';
 
 import { WeeklyContext, initWeeklyContext, WeeklyInfo } from './weekly-context-manager';
 
-import CoupleCircle from './CoupleCircle';
+import CoupleCircle from './CoupleCircle/CoupleCircle';
 import CharaPixivIllustWeekIncrementRank from './IncrementRank/CharaPixivIllust';
 import TwitterFollowerIncrementRank from './IncrementRank/TwitterFollower';
 import CharaPixivIllustTotalRank from './TotalRank/CharaPixivIllust';

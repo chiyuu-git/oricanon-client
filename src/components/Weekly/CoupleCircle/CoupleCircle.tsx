@@ -12,7 +12,7 @@ import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constan
 import { WeeklyContext } from '../weekly-context-manager';
 import { processMembers } from './process-chart-option';
 
-import './index.less';
+import './CoupleCircle.less';
 
 /**
  * 有副作用，指定 lineStyle label 即数据

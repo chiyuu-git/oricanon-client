@@ -1,0 +1,82 @@
+.event-flow-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 35vw;
+    height: 100vh;
+    padding: 0 10px;
+    color: #a6469d;
+
+    .event-date {
+        font-size: 64px;
+    }
+
+    .event-date-fade-in {
+        opacity: 0;
+        animation-name: fade-in;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+
+    .event-date-fade-in-and-out {
+        opacity: 0;
+        animation-name: fade-in;
+        animation-timing-function: ease;
+        animation-fill-mode: backwards;
+    }
+
+    .event-info-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        .event-detail-container {
+            opacity: 0;
+            animation-name: fade-in-and-out;
+            animation-timing-function: ease;
+            animation-fill-mode: forwards;
+
+            .event-title {
+                height: 80px;
+                margin-top: 10px;
+                font-size: 32px;
+            }
+        }
+    }
+}
+
+// 前面的日期动画和detail保持一致，最后一个日期动画不需要淡出
+@keyframes fade-in {
+
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-and-out {
+
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

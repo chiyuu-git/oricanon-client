@@ -5,13 +5,11 @@ import { pipe } from '@src/utils';
 
 /**
  * 根据 members 排列组合，返回一个二维数组
- * TODO: 从 lastData 获取 coupleList 不要自己生成了
  */
 function getCombinationMembers(members: readonly KeyofRomaColorMap[]) {
     return members.map((member, i) => {
         // 计算出要与多少名成员组合
         const target = members.slice(i + 1);
-        // TODO: 最后的结果再赋值成这个接口
         const combination: NonNullable<GraphSeriesOption['links']> = [];
         if (target.length > 0) {
             for (const combineMember of target) {
@@ -104,7 +102,7 @@ function decorateWithColor(combinationMembers: ReturnType<typeof decorateWithCir
 function decorateWithWidth(combinationMembers: ReturnType<typeof decorateWithCircle>) {
     // 按照占比来划分好了，目前可香占比超过了50%
     // 前三名单独width，中间五名递减width，最后2名统一为10
-    const widthOptions = [35, 25, 10, 15, 10, 25, 10, 5, 15, 15];
+    const widthOptions = [35, 35, 15, 15, 10, 35, 10, 5, 15, 15];
 
     return combinationMembers.map((combinationMember, i) => {
         const couple = combinationMember;

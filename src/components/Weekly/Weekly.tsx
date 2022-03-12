@@ -190,13 +190,13 @@ const Weekly = () => {
     }
 
     return (
-        <WeeklyContext.Provider value = { weeklyContext }>
-            <div className = 'weekly-wrap' ref = { weeklyWrap }>
-                <button type = 'button' onClick = { downloadAll }> 下载所有图片 </button>
+        <WeeklyContext.Provider value = {weeklyContext}>
+            <div className = 'weekly-wrap' ref = {weeklyWrap}>
+                <button type = 'button' onClick = {downloadAll}> 下载所有图片 </button>
                 <CharaPixivIllustWeekIncrementRank />
                 <div className = 'compare-pie-container'>
                     <CharaPixivIllustProjectPie />
-                    { /* <CompareProjectPie /> */ }
+                    {/* <CompareProjectPie /> */}
                 </div>
                 <CharaPixivIllustTotalRank />
                 <CoupleCircle />

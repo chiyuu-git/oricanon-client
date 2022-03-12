@@ -38,12 +38,12 @@ const TwitterFollowerTotalRank = () => {
             return (
                 <RankTable
                     title = 'twitter-follower-累计榜'
-                    range = { range }
-                    totalRank = { totalRank }
-                    layoutOption = { {
+                    range = {range}
+                    totalRank = {totalRank}
+                    layoutOption = {{
                         contentType: 'seiyuu-total-rank',
                         incrementNodeWidth: '4em',
-                    } }
+                    }}
                 />
             );
         }

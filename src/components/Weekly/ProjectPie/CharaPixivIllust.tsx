@@ -18,15 +18,15 @@ const CharaPixivIllustProjectPie = () => {
             return (
                 <NestPie
                     title = 'pixiv-illust-企划周增榜'
-                    range = { range }
-                    memberInfoMap = { charaInfoMap }
-                    projectInfoList = { projectInfoList }
-                    memberInfoList = { memberInfoList }
+                    range = {range}
+                    memberInfoMap = {charaInfoMap}
+                    projectInfoList = {projectInfoList}
+                    memberInfoList = {memberInfoList}
                     showWidget
-                    size = { {
+                    size = {{
                         width: '800px',
                         height: '800px',
-                    } }
+                    }}
                 />
             );
         }

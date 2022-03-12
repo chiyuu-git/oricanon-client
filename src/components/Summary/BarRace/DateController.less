@@ -1,0 +1,35 @@
+.date-controller-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(0 0 0 / 30%);
+    transition: 0.3s transform;
+
+    & * {
+        user-select: none;
+    }
+
+    .process-control-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .process-container {
+            position: relative;
+            width: 50vw;
+            height: 20px;
+        }
+    }
+}
+
+.hide-controller {
+    display: none;
+}

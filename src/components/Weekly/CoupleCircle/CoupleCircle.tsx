@@ -56,14 +56,14 @@ const CoupleCircle = () => {
      * 获取 liella memberList
      */
     useEffect(() => {
-        async function getIconImg() {
+        async function getMemberList() {
             const liellaMemberList = await reqMemberList({
                 projectName: ProjectName.llss,
                 basicType: BasicType.chara,
             });
             setMemberList(liellaMemberList);
         }
-        getIconImg();
+        getMemberList();
     }, []);
 
     /**
@@ -72,6 +72,7 @@ const CoupleCircle = () => {
     useEffect(() => {
         if (weeklyInfo) {
             const latestData = weeklyInfo.memberInfoList;
+            console.log('latestData:', latestData);
 
             const liellaMember = ['kanon', 'keke', 'chisato', 'sumire', 'ren'] as const;
 
@@ -134,30 +135,30 @@ const CoupleCircle = () => {
     function renderIconImg(liellaMemberList: GetMemberInfoByType<BasicType.chara>[]) {
         return liellaMemberList.map(({ projectName, name, supportColor }) => (
             <div
-                key = { name }
+                key = {name}
                 className = 'icon'
-                style = { {
+                style = {{
                     backgroundImage: `url(/api/assets/icon/${projectName}/${name}.png)`,
                     borderColor: supportColor,
-                } }
+                }}
             />
         ));
     }
 
     return (
         <div className = 'couple-circle-wrap'>
-            { chartOption && (
+            {chartOption && (
                 <>
                     <ReactECharts
-                        option = { chartOption }
-                        style = { {
+                        option = {chartOption}
+                        style = {{
                             width: '864px',
                             height: '720px',
-                        } }
+                        }}
                     />
-                    { memberList && renderIconImg(memberList) }
+                    {memberList && renderIconImg(memberList)}
                 </>
-            ) }
+            )}
         </div>
     );
 };

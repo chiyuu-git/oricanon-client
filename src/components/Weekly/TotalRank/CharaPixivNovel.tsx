@@ -39,12 +39,12 @@ const CharaPixivNovelTotalRank = () => {
             return (
                 <RankTable
                     title = 'pixiv-novel-角色累计榜'
-                    range = { range }
-                    totalRank = { totalRank }
-                    layoutOption = { {
+                    range = {range}
+                    totalRank = {totalRank}
+                    layoutOption = {{
                         contentType: 'chara-total-rank',
                         incrementNodeWidth: '3em',
-                    } }
+                    }}
                 />
             );
         }

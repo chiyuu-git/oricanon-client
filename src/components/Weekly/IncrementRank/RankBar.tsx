@@ -159,19 +159,19 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, increme
     return (
         <div
             className = 'rank-bar-wrap'
-            style = { {
+            style = {{
                 background: `linear-gradient(-45deg, ${linearGradient} 50px, white 50%, white)`,
-            } }
+            }}
         >
             <ReactECharts
                 className = 'rank-bar'
-                option = { chartOption }
-                style = { {
+                option = {chartOption}
+                style = {{
                     width: '1200px',
                     height: '1000px',
-                } }
+                }}
             />
-            <i className = { `iconfont ${icon}` } />
+            <i className = {`iconfont ${icon}`} />
         </div>
     );
 };

@@ -49,10 +49,10 @@ const CharaPixivTagViewWeekIncrementRank: FC<unknown> = () => {
             return (
                 <RankBar
                     title = 'pixiv-标签阅览数-角色周增榜'
-                    range = { range }
+                    range = {range}
                     linearGradient = 'rgb(151,255,199)'
                     icon = 'icon-pixiv-tag-view'
-                    incrementRank = { weekIncrementRank }
+                    incrementRank = {weekIncrementRank}
                 />
             );
         }

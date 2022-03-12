@@ -50,10 +50,10 @@ const CharaPixivIllustWeekIncrementRank: FC<unknown> = () => {
             return (
                 <RankBar
                     title = 'pixiv-illust-角色周增榜'
-                    range = { range }
+                    range = {range}
                     linearGradient = 'rgb(255,175,175)'
                     icon = 'icon-pixiv-illust'
-                    incrementRank = { weekIncrementRank }
+                    incrementRank = {weekIncrementRank}
                 />
             );
         }

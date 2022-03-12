@@ -3,7 +3,7 @@ module.exports = {
         '@chiyu-git/eslint-config-react',
     ],
     rules: {
-        'react/jsx-equals-spacing': [2, 'always'],
-        'react/jsx-curly-spacing': [2, { 'when': 'always', 'children': true }],
+        'no-unused-vars': 1,
+        'func-names': [1, 'as-needed'],
     },
 };

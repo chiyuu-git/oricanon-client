@@ -19,26 +19,26 @@ const RankTable: FC<RankTableProps> = ({ title, range, layoutOption, totalRank }
     function renderTable() {
         const { contentType, incrementNodeWidth } = layoutOption;
         const cell = totalRank.map(({ name, projectName, record, increment }, index) => (
-            <li className = { `cell ${projectName}` } key = { name }>
-                <span className = 'ranking'>{ index + 1 }</span>
-                <img src = { `/api/assets/icon/${projectName}/${name}.png` } alt = { name } />
-                <span className = 'name'>{ name }</span>
-                <span className = 'record'>{ thousandSplit(record) }</span>
-                <span className = 'increment' style = { { width: incrementNodeWidth } }>
-                    ({ thousandSplit(increment) })
+            <li className = {`cell ${projectName}`} key = {name}>
+                <span className = 'ranking'>{index + 1}</span>
+                <img src = {`/api/assets/icon/${projectName}/${name}.png`} alt = {name} />
+                <span className = 'name'>{name}</span>
+                <span className = 'record'>{thousandSplit(record)}</span>
+                <span className = 'increment' style = {{ width: incrementNodeWidth }}>
+                    ({thousandSplit(increment)})
                 </span>
             </li>
         ));
-        return <ul className = { `${contentType}-table-content` }>{ cell }</ul>;
+        return <ul className = {`${contentType}-table-content`}>{cell}</ul>;
     }
     return (
         <div className = 'rank-table-wrap'>
             <p className = 'table-title'>
-                <span className = 'describe' style = { { fontSize: TITLE_FONT_SIZE / 2 } }>说明：排名-成员-累计-(周增)</span>
-                <span className = 'title' style = { { fontSize: TITLE_FONT_SIZE } }>{ title }</span>
-                <span className = 'range' style = { { fontSize: TITLE_FONT_SIZE / 2 } }>集计范围：{ range }</span>
+                <span className = 'describe' style = {{ fontSize: TITLE_FONT_SIZE / 2 }}>说明：排名-成员-累计-(周增)</span>
+                <span className = 'title' style = {{ fontSize: TITLE_FONT_SIZE }}>{title}</span>
+                <span className = 'range' style = {{ fontSize: TITLE_FONT_SIZE / 2 }}>集计范围：{range}</span>
             </p>
-            { renderTable() }
+            {renderTable()}
         </div>
     );
 };

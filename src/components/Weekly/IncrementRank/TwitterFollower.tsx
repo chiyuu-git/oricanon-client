@@ -48,10 +48,10 @@ const TwitterFollowerWeekIncrementRank: FC<unknown> = () => {
             return (
                 <RankBar
                     title = 'twitter-follower-周增榜'
-                    range = { range }
+                    range = {range}
                     linearGradient = 'rgb(136,141,255)'
                     icon = 'icon-twitter-follower'
-                    incrementRank = { weekIncrementRank }
+                    incrementRank = {weekIncrementRank}
                 />
             );
         }

@@ -224,12 +224,12 @@ const NestPie: FC<NestPipeProps> = (props) => {
         <div
             className = 'nest-pie-wrap'
         >
-            { chartOption && (
+            {chartOption && (
                 <ReactECharts
-                    option = { chartOption }
-                    style = { size }
+                    option = {chartOption}
+                    style = {size}
                 />
-            ) }
+            )}
         </div>
     );
 };

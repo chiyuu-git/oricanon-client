@@ -16,8 +16,8 @@
     "build": "webpack --progress --config config/webpack.prod.conf.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npm run lint-eslint && npm run lint-stylelint",
-    "lint-eslint": "eslint --color -c .eslintrc.js --ext .ts,.tsx,.js src",
-    "lint-stylelint": "stylelint --config .stylelintrc.js src/**/*.{less,css,scss}",
+    "lint-eslint": "eslint --fix --color -c .eslintrc.js --ext .ts,.tsx,.js src",
+    "lint-stylelint": "stylelint --fix --config .stylelintrc.js src/**/*.{less,css,scss}",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "husky": {
@@ -41,8 +41,8 @@
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.15.0",
     "@babel/runtime": "^7.15.4",
-    "@chiyu-git/eslint-config-react": "^1.0.7",
-    "@chiyu-git/stylelint-config-basic": "^1.0.2",
+    "@chiyu-git/eslint-config-react": "^1.0.8",
+    "@chiyu-git/stylelint-config-basic": "^1.0.3",
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@types/react": "^17.0.26",

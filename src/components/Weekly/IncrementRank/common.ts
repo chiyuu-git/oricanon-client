@@ -41,7 +41,6 @@ export function getWeekIncrementRank<Type extends BasicType>(
     memberWeeklyInfoList: MemberWeeklyInfo[],
     historicalIncrementRank?: HistoricalIncrementRank,
 ) {
-    // TODO: remove any
     let eightyPercentile = {} as MemberWeeklyInfo;
     if (historicalIncrementRank) {
         // 长草期，参考历史分位

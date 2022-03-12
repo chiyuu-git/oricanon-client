@@ -1,5 +1,5 @@
 // TODO: ins photo
-export const newsList = {
+export const eventList = {
     '2020-12-25': {
         date: '2020-12-14',
         title: 'Liella 声优公布',
@@ -7,13 +7,13 @@ export const newsList = {
             articleUrl: ['https://www.lovelive-anime.jp/yuigaoka/news/?id=7183'],
         },
     },
-    '2021-01-01': {
-        date: '2020-12-14',
-        title: 'Liella 声优公布',
-        content: {
-            articleUrl: ['https://www.lovelive-anime.jp/yuigaoka/news/?id=7183'],
-        },
-    },
+    // '2021-01-01': {
+    //     date: '2020-12-14',
+    //     title: 'Liella 声优公布',
+    //     content: {
+    //         articleUrl: ['https://www.lovelive-anime.jp/yuigaoka/news/?id=7183'],
+    //     },
+    // },
     '2021-01-30': {
         date: '2021-01-30',
         title: 'Liella 初次生放送',

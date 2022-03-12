@@ -6,7 +6,7 @@ const Slide = () => {
     const [context, setContext] = useState(null);
 
     return (
-        <ConnectionContext.Provider value = { { context, setContext } }>
+        <ConnectionContext.Provider value = {{ context, setContext }}>
             <section className = 'candidate_box'>
                 <div className = 'candidate_body' />
             </section>

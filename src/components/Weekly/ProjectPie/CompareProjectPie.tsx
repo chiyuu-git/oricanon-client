@@ -34,15 +34,15 @@ const CompareProjectPie = () => {
         return (
             <NestPie
                 title = '创作数对比-企划周增榜'
-                range = { range }
-                memberInfoMap = { memberCharaInfoMap }
-                projectInfoList = { projectInfoList }
-                memberInfoList = { memberInfoList }
-                showWidget = { false }
-                size = { {
+                range = {range}
+                memberInfoMap = {memberCharaInfoMap}
+                projectInfoList = {projectInfoList}
+                memberInfoList = {memberInfoList}
+                showWidget = {false}
+                size = {{
                     width: '640px',
                     height: '640px',
-                } }
+                }}
             />
         );
     }

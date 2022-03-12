@@ -148,11 +148,11 @@ const LineRace = () => {
     return (
         <div>
             <div
-                ref = { lineRace }
-                style = { {
+                ref = {lineRace}
+                style = {{
                     width: '100vw',
                     height: '100vh',
-                } }
+                }}
             >
                 lineRace
             </div>

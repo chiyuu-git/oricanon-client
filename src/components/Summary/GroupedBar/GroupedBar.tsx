@@ -76,11 +76,11 @@ const GroupedBar = () => {
     });
     return (
         <div
-            ref = { bar }
-            style = { {
+            ref = {bar}
+            style = {{
                 width: '100vw',
                 height: '100vh',
-            } }
+            }}
         >
             GroupedBar
         </div>

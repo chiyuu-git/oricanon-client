@@ -75,9 +75,9 @@ const MemberInfo: FC<unknown> = ({ children }) => {
     }, []);
 
     return (
-        <MemberInfoContext.Provider value = { memberInfoContext }>
-            <Summary />
-            { /* <Weekly /> */ }
+        <MemberInfoContext.Provider value = {memberInfoContext}>
+            {/* <Summary /> */}
+            <Weekly />
         </MemberInfoContext.Provider>
     );
 };

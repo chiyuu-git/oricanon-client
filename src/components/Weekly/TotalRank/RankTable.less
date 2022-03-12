@@ -1,4 +1,4 @@
-@cellWidth: 382.5px;
+@cellwidth: 382.5px;
 
 /* 控制rank的标题和内容的布局 */
 
@@ -7,8 +7,8 @@
 
     .table-title {
         display: flex;
-        justify-content: space-between;
         align-items: baseline;
+        justify-content: space-between;
         width: 100%;
         font-size: 24px;
         line-height: 50px;
@@ -29,20 +29,20 @@
 
 .chara-total-rank-table-content {
     display: grid;
+    grid-template-rows: repeat(13, 50px);
+    /* 通过grid-auto去控制textarea */
+    grid-template-columns: repeat(3, @cellwidth);
     /* grid-auto-columns:350px; */
     grid-auto-flow: column;
-    /* 通过grid-auto去控制textarea */
-    grid-template-columns: repeat(3, @cellWidth);
-    grid-template-rows: repeat(13, 50px);
     border-top: 1px solid;
 }
 
 .seiyuu-total-rank-table-content {
     display: grid;
+    grid-template-rows: repeat(9, 50px);
+    grid-template-columns: repeat(2, @cellwidth);
     grid-auto-columns: 350px;
     grid-auto-flow: column;
-    grid-template-columns: repeat(2, @cellWidth);
-    grid-template-rows: repeat(9, 50px);
     border-top: 1px solid;
 }
 /* 控制rank中每一个排名的样式 */
@@ -51,10 +51,10 @@
     display: flex;
     align-items: center;
     box-sizing: border-box;
-    font-size: 16px;
 
     border-right: 1px solid;
     border-bottom: 1px solid;
+    font-size: 16px;
 
     .ranking {
         width: 20px;
@@ -99,6 +99,3 @@
 .lln {
     background-color: rgba(#f39800, 0.5);
 }
-
-// .summary {
-// }

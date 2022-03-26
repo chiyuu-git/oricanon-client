@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { BasicType, ProjectName } from '@common/root';
-import { reqMemberList, reqRelativeIncrementOfTypeInRange } from '@src/api';
+import { Category, ProjectName } from '@common/root';
+import { reqMemberList, reqRelativeIncrementOfTypeInRange, reqWeekIncrementOfProjectInRange } from '@src/api';
 import { charaRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
-import { SeiyuuRecordType } from '@common/record';
+import { CharaRecordType, SeiyuuRecordType } from '@common/record';
 
 import * as echarts from 'echarts';
 import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
@@ -11,26 +11,40 @@ const LineRace = () => {
     const lineRace = useRef(null);
     useEffect(() => {
         async function getRecordOfTypeInRange() {
-            const seiyuuRecord = await reqRelativeIncrementOfTypeInRange(
-                BasicType.seiyuu,
+            // const seiyuuRecord = await reqRelativeIncrementOfTypeInRange(
+            //     Category.seiyuu,
+            //     SeiyuuRecordType.twitterFollower,
+            //     ProjectName.llss,
+            //     '2020-12-25',
+            //     '2021-12-14',
+            // );
+
+            const charaRecord = await reqWeekIncrementOfProjectInRange(
+                Category.seiyuu,
                 SeiyuuRecordType.twitterFollower,
-                ProjectName.llss,
-                '2020-12-25',
-                '2021-12-14',
+                ProjectName.lln,
+                '2021-01-01',
+                '2021-12-31',
             );
 
-            const liellaMemberList = await reqMemberList({
-                projectName: ProjectName.llss,
-                basicType: BasicType.seiyuu,
+            console.log('charaRecord:', charaRecord);
+            // const liellaMemberList = await reqMemberList({
+            //     projectName: ProjectName.llss,
+            //     category: Category.seiyuu,
+            // });
+
+            const nijigakuMemberList = await reqMemberList({
+                projectName: ProjectName.lln,
+                category: Category.seiyuu,
             });
 
             // 1. 返回的数据日期间隔不一定是一周
             // 2. 整理数据成 echarts 的 dataset 形式
-            let lastWeeklyFetchDate = new Date(seiyuuRecord[0].date);
+            let lastWeeklyFetchDate = new Date(charaRecord[0].date);
             lastWeeklyFetchDate.setDate(lastWeeklyFetchDate.getDate() - 7);
             const sourceData = [];
 
-            for (const { date, records } of seiyuuRecord) {
+            for (const { date, records } of charaRecord) {
                 const originTime = new Date(date);
                 const lastWeeklyDate = new Date(date);
                 lastWeeklyDate.setDate(lastWeeklyDate.getDate() - 7);
@@ -43,7 +57,7 @@ const LineRace = () => {
 
             const seriesList: echarts.SeriesOption[] = [];
             // 给每个成员生成一个折线 series
-            for (const { name, romaName } of liellaMemberList) {
+            for (const { name, romaName } of nijigakuMemberList) {
                 seriesList.push({
                     type: 'line',
                     showSymbol: false,
@@ -105,7 +119,7 @@ const LineRace = () => {
             }
 
             const option = {
-                animationDuration: 15_000,
+                animationDuration: 300,
                 dataset: {
                     source: sourceData,
                 },
@@ -123,7 +137,7 @@ const LineRace = () => {
                 tooltip: {
                     order: 'valueDesc',
                     trigger: 'axis',
-                    position: ['50%', '50%'],
+                    // position: ['50%', '50%'],
                 },
                 xAxis: {
                     type: 'category',

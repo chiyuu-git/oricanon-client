@@ -4,7 +4,7 @@ import { EChartsOption } from 'echarts';
 
 import { reqMemberList } from '@src/api';
 
-import { BasicType, ProjectName } from '@common/root';
+import { Category, ProjectName } from '@common/root';
 import { CoupleRecordType } from '@common/record';
 import { GetMemberInfoByType } from '@common/member-info';
 import { RecordWeeklyInfo } from '@common/weekly';
@@ -49,8 +49,8 @@ function decorateWithDataLabel(
 const CoupleCircle = () => {
     const weeklyContext = useContext(WeeklyContext);
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
-    const [memberList, setMemberList] = useState<GetMemberInfoByType<BasicType.chara>[] | null>(null);
-    const weeklyInfo = weeklyContext[BasicType.couple][CoupleRecordType.coupleUnionIllust];
+    const [memberList, setMemberList] = useState<GetMemberInfoByType<Category.chara>[] | null>(null);
+    const weeklyInfo = weeklyContext[Category.couple][CoupleRecordType.coupleUnionIllust];
 
     /**
      * 获取 liella memberList
@@ -59,7 +59,7 @@ const CoupleCircle = () => {
         async function getMemberList() {
             const liellaMemberList = await reqMemberList({
                 projectName: ProjectName.llss,
-                basicType: BasicType.chara,
+                category: Category.chara,
             });
             setMemberList(liellaMemberList);
         }
@@ -72,7 +72,6 @@ const CoupleCircle = () => {
     useEffect(() => {
         if (weeklyInfo) {
             const latestData = weeklyInfo.memberInfoList;
-            console.log('latestData:', latestData);
 
             const liellaMember = ['kanon', 'keke', 'chisato', 'sumire', 'ren'] as const;
 
@@ -132,7 +131,7 @@ const CoupleCircle = () => {
         }
     }, [weeklyInfo]);
 
-    function renderIconImg(liellaMemberList: GetMemberInfoByType<BasicType.chara>[]) {
+    function renderIconImg(liellaMemberList: GetMemberInfoByType<Category.chara>[]) {
         return liellaMemberList.map(({ projectName, name, supportColor }) => (
             <div
                 key = {name}

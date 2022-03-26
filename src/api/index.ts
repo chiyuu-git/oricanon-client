@@ -1,5 +1,5 @@
 import {
-    BasicType,
+    Category,
     ProjectName,
     DateString,
 } from '@common/root';
@@ -12,15 +12,31 @@ import { HistoricalIncrementRank } from '@common/summary';
 import { ProjectRecord, RecordType } from '@common/record';
 import { enhanceFetch } from './fetch';
 
+export function reqWeekIncrementOfProjectInRange(
+    category: Category,
+    recordType: RecordType,
+    projectName: ProjectName,
+    from?: DateString,
+    to?: DateString,
+): Promise<ProjectRecord[]> {
+    return enhanceFetch('/api/summary/week_increment_of_project_in_range', {
+        category,
+        recordType,
+        projectName,
+        from,
+        to,
+    });
+}
+
 export function reqRelativeIncrementOfTypeInRange(
-    basicType: BasicType,
+    category: Category,
     recordType: RecordType,
     projectName: ProjectName,
     from?: DateString,
     to?: DateString,
 ): Promise<ProjectRecord[]> {
     return enhanceFetch('/api/summary/relative_increment_of_type_in_range', {
-        basicType,
+        category,
         recordType,
         projectName,
         from,
@@ -29,30 +45,32 @@ export function reqRelativeIncrementOfTypeInRange(
 }
 
 export function reqWeekIncrementRankOfTypeInRange(
-    basicType: BasicType,
+    category: Category,
     recordType: RecordType,
-    from?: DateString,
+    from: DateString = '2020-06-06',
     to?: DateString,
 ): Promise<HistoricalIncrementRank> {
     return enhanceFetch('/api/summary/week_increment_rank_of_type_in_range', {
-        basicType,
+        category,
         recordType,
+        from,
+        to,
     });
 }
 
-export function reqRecordTypeWeekly<Type extends BasicType>(
-    basicType: Type,
+export function reqRecordTypeWeekly<Type extends Category>(
+    category: Type,
     recordType: RecordType,
     endDate = '',
 ): Promise<RecordWeeklyInfo> {
     return enhanceFetch('/api/weekly/record_type_weekly', {
-        basicType,
+        category,
         recordType,
         endDate,
     });
 }
 
-export function reqMemberInfoMapOfType<Type extends BasicType>(
+export function reqMemberInfoMapOfType<Type extends Category>(
     type: Type,
 ): Promise<MemberInfoMap<Type>> {
     return enhanceFetch('/api/member_info/member_info_map', { type });
@@ -60,21 +78,21 @@ export function reqMemberInfoMapOfType<Type extends BasicType>(
 
 interface QueryMemberList {
     projectName: ProjectName;
-    basicType: BasicType;
+    category: Category;
 }
 
-type ResMemberList<T extends QueryMemberList> = T extends { basicType: infer R; }
-    ? R extends BasicType
+type ResMemberList<T extends QueryMemberList> = T extends { category: infer R; }
+    ? R extends Category
         ? GetMemberInfoByType<R>[]
         : never
     : never;
 
 export function reqMemberList<T extends QueryMemberList>({
     projectName,
-    basicType,
+    category,
 }: T): Promise<ResMemberList<T>> {
-    return enhanceFetch('/api/member_info/member_info_of_type_and_project', {
+    return enhanceFetch('/api/member_info/project_member_info_of_category', {
         projectName,
-        basicType,
+        category,
     });
 }

@@ -1,11 +1,11 @@
 import { createContext } from 'react';
 import { MemberInfoMap } from '@common/member-info';
-import { BasicType } from '@common/root';
+import { Category } from '@common/root';
 
 export type MemberInfoListMap = {
-    [BasicType.chara]: MemberInfoMap<BasicType.chara>;
-    [BasicType.couple]: MemberInfoMap<BasicType.couple>;
-    [BasicType.seiyuu]: MemberInfoMap<BasicType.seiyuu>;
+    [Category.chara]: MemberInfoMap<Category.chara>;
+    [Category.couple]: MemberInfoMap<Category.couple>;
+    [Category.seiyuu]: MemberInfoMap<Category.seiyuu>;
 }
 
 export const initMemberInfoContext: MemberInfoListMap = {} as MemberInfoListMap;

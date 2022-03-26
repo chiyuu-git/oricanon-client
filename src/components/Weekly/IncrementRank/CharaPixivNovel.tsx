@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, useContext, useMemo } from 'react';
-import { BasicType } from '@common/root';
+import { Category } from '@common/root';
 import { CharaRecordType } from '@common/record';
 import { HistoricalIncrementRank } from '@common/summary';
 import { reqWeekIncrementRankOfTypeInRange } from '@src/api';
@@ -13,7 +13,7 @@ import RankBar from './RankBar';
 const CharaPixivNovelWeekIncrementRank: FC<unknown> = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const weeklyInfo = weeklyContext[BasicType.chara][CharaRecordType.novel];
+    const weeklyInfo = weeklyContext[Category.chara][CharaRecordType.novel];
     const charaInfoMap = memberInfoContext.chara;
 
     const [range, setRange] = useState('');
@@ -23,7 +23,7 @@ const CharaPixivNovelWeekIncrementRank: FC<unknown> = () => {
     useEffect(() => {
         async function getHistoricalIncrementRank() {
             const rank = await reqWeekIncrementRankOfTypeInRange(
-                BasicType.chara,
+                Category.chara,
                 CharaRecordType.novel,
             );
             console.log('novel historicalIncrementRank:', rank);
@@ -34,7 +34,7 @@ const CharaPixivNovelWeekIncrementRank: FC<unknown> = () => {
 
     useEffect(() => {
         if (weeklyInfo && historicalIncrementRank && charaInfoMap) {
-            const weekRank = getWeekIncrementRank<BasicType.chara>(
+            const weekRank = getWeekIncrementRank<Category.chara>(
                 charaInfoMap,
                 weeklyInfo.memberInfoList,
                 historicalIncrementRank,

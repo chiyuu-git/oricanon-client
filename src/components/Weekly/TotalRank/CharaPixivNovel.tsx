@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { BasicType } from '@common/root';
+import { Category } from '@common/root';
 import { CharaRecordType } from '@common/record';
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';
@@ -11,7 +11,7 @@ const CharaPixivNovelTotalRank = () => {
     const memberInfoContext = useContext(MemberInfoContext);
     const [range, setRange] = useState('');
     const [totalRank, setTotalRank] = useState<TotalRank | null>(null);
-    const weeklyInfo = weeklyContext[BasicType.chara][CharaRecordType.novel];
+    const weeklyInfo = weeklyContext[Category.chara][CharaRecordType.novel];
     const charaInfoMap = memberInfoContext.chara;
 
     useEffect(() => {

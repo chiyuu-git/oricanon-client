@@ -1,4 +1,4 @@
-import { BasicType, ProjectName } from '@common/root';
+import { Category, ProjectName } from '@common/root';
 import { MemberInfoMap } from '@common/member-info';
 import { MemberWeeklyInfo } from '@common/weekly';
 import { HistoricalIncrementRank, MemberIncrementInfo } from '@common/summary';
@@ -36,7 +36,7 @@ function getHistoricalIncrementRankPercentile(incrementRank: MemberIncrementInfo
     return getPercentile(incrementArray, percentile);
 }
 
-export function getWeekIncrementRank<Type extends BasicType>(
+export function getWeekIncrementRank<Type extends Category>(
     memberInfoMap: MemberInfoMap<Type>,
     memberWeeklyInfoList: MemberWeeklyInfo[],
     historicalIncrementRank?: HistoricalIncrementRank,

@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect, useContext, useMemo } from 'react';
-import { BasicType } from '@common/root';
+import { Category } from '@common/root';
 import { SeiyuuRecordType } from '@common/record';
 import { HistoricalIncrementRank } from '@common/summary';
 import { reqWeekIncrementRankOfTypeInRange } from '@src/api';
@@ -11,7 +11,7 @@ import RankBar from './RankBar';
 const TwitterFollowerWeekIncrementRank: FC<unknown> = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const weeklyInfo = weeklyContext[BasicType.seiyuu][SeiyuuRecordType.twitterFollower];
+    const weeklyInfo = weeklyContext[Category.seiyuu][SeiyuuRecordType.twitterFollower];
     const seiyuuInfoMap = memberInfoContext.seiyuu;
 
     const [range, setRange] = useState('');
@@ -21,7 +21,7 @@ const TwitterFollowerWeekIncrementRank: FC<unknown> = () => {
     useEffect(() => {
         async function getHistoricalIncrementRank() {
             const rank = await reqWeekIncrementRankOfTypeInRange(
-                BasicType.seiyuu,
+                Category.seiyuu,
                 SeiyuuRecordType.twitterFollower,
             );
             console.log('follower historicalIncrementRank:', rank);
@@ -32,7 +32,7 @@ const TwitterFollowerWeekIncrementRank: FC<unknown> = () => {
 
     useEffect(() => {
         if (weeklyInfo && historicalIncrementRank && seiyuuInfoMap) {
-            const weekRank = getWeekIncrementRank<BasicType.seiyuu>(
+            const weekRank = getWeekIncrementRank<Category.seiyuu>(
                 seiyuuInfoMap,
                 weeklyInfo.memberInfoList,
                 historicalIncrementRank,

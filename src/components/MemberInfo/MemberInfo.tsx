@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useReducer, useRef } from 'react';
-import { BasicType } from '@common/root';
+import { Category } from '@common/root';
 
 import { reqMemberInfoMapOfType } from '@src/api';
 import { MemberInfoMap } from '@common/member-info';
@@ -9,14 +9,14 @@ import Weekly from '../Weekly/Weekly';
 import Summary from '../Summary/Summary';
 
 type MemberInfoActionInfoMap = {
-    [BasicType.chara]: {
-        memberInfoMap: MemberInfoMap<BasicType.chara>;
+    [Category.chara]: {
+        memberInfoMap: MemberInfoMap<Category.chara>;
     };
-    [BasicType.couple]: {
-        memberInfoMap: MemberInfoMap<BasicType.couple>;
+    [Category.couple]: {
+        memberInfoMap: MemberInfoMap<Category.couple>;
     };
-    [BasicType.seiyuu]: {
-        memberInfoMap: MemberInfoMap<BasicType.seiyuu>;
+    [Category.seiyuu]: {
+        memberInfoMap: MemberInfoMap<Category.seiyuu>;
     };
 }
 
@@ -25,28 +25,28 @@ type MemberInfoActionInfo<T> = T extends keyof MemberInfoActionInfoMap
     : any;
 
 type MemberInfoAction = {
-    [key in keyof typeof BasicType]: {
-        basicType: typeof BasicType[key];
-        payload: MemberInfoActionInfo<typeof BasicType[key]>;
+    [key in keyof typeof Category]: {
+        category: typeof Category[key];
+        payload: MemberInfoActionInfo<typeof Category[key]>;
     };
-}[keyof typeof BasicType];
+}[keyof typeof Category];
 
 function memberInfoContextReducer(state: MemberInfoListMap, action: MemberInfoAction): MemberInfoListMap {
-    switch (action.basicType) {
-        case BasicType.chara:
+    switch (action.category) {
+        case Category.chara:
             return {
                 ...state,
-                [BasicType.chara]: action.payload.memberInfoMap,
+                [Category.chara]: action.payload.memberInfoMap,
             };
-        case BasicType.couple:
+        case Category.couple:
             return {
                 ...state,
-                [BasicType.couple]: action.payload.memberInfoMap,
+                [Category.couple]: action.payload.memberInfoMap,
             };
-        case BasicType.seiyuu:
+        case Category.seiyuu:
             return {
                 ...state,
-                [BasicType.seiyuu]: action.payload.memberInfoMap,
+                [Category.seiyuu]: action.payload.memberInfoMap,
             };
 
         default:
@@ -59,11 +59,11 @@ const MemberInfo: FC<unknown> = ({ children }) => {
 
     // 获取 各基础类型的 memberInfo
     useEffect(() => {
-        for (const basicType of Object.values(BasicType)) {
-            reqMemberInfoMapOfType(basicType)
+        for (const category of Object.values(Category)) {
+            reqMemberInfoMapOfType(category)
                 .then((memberInfoMap) => {
                     dispatchMemberInfoContext({
-                        basicType,
+                        category,
                         payload: {
                             memberInfoMap,
                         },
@@ -76,8 +76,8 @@ const MemberInfo: FC<unknown> = ({ children }) => {
 
     return (
         <MemberInfoContext.Provider value = {memberInfoContext}>
-            {/* <Summary /> */}
-            <Weekly />
+            <Summary />
+            {/* <Weekly /> */}
         </MemberInfoContext.Provider>
     );
 };

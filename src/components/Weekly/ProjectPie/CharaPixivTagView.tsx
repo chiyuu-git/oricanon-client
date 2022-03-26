@@ -1,4 +1,4 @@
-import { BasicType } from '@common/root';
+import { Category } from '@common/root';
 import { CharaRecordType } from '@common/record';
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
 import React, { useContext, useMemo } from 'react';
@@ -9,7 +9,7 @@ import NestPie from './NestPie';
 const CharaPixivTagViewProjectPie = () => {
     const weeklyContext = useContext(WeeklyContext);
     const memberInfoContext = useContext(MemberInfoContext);
-    const weeklyInfo = weeklyContext[BasicType.chara][CharaRecordType.tagView];
+    const weeklyInfo = weeklyContext[Category.chara][CharaRecordType.tagView];
     const charaInfoMap = memberInfoContext.chara;
 
     return useMemo(() => {

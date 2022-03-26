@@ -3,15 +3,15 @@ import { ProjectName } from '@common/root';
 export const ProjectColorMap = {
     [ProjectName.ll]: '#ee0088',
     [ProjectName.lls]: '#4fc4fe',
-    [ProjectName.llss]: '#a6469d',
     [ProjectName.lln]: '#f39800',
+    [ProjectName.llss]: '#a6469d',
 } as const;
 
 export const ProjectShorthandMap = {
     [ProjectName.ll]: 'LL',
     [ProjectName.lls]: 'LLS',
-    [ProjectName.llss]: 'LLSS',
     [ProjectName.lln]: 'LLN',
+    [ProjectName.llss]: 'LLSS',
 } as const;
 
 export const romaColorMap = {

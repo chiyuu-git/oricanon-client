@@ -3,7 +3,7 @@ import ReactECharts from 'echarts-for-react';
 import { EChartsOption } from 'echarts';
 
 import { ProjectShorthandMap, ProjectColorMap, charaRichMap } from '@src/constant';
-import { BasicType, ProjectName } from '@common/root';
+import { Category, ProjectName } from '@common/root';
 import { RecordWeeklyInfo } from '@common/weekly';
 import { MemberInfoMap } from '@common/member-info';
 
@@ -18,7 +18,7 @@ type NestPipeProps = {
         width: string;
         height: string;
     };
-    memberInfoMap: MemberInfoMap<BasicType.chara>;
+    memberInfoMap: MemberInfoMap<Category.chara>;
 } & RecordWeeklyInfo
 
 interface PieDataItem {

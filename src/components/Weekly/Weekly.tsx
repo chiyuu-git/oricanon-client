@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useRef } from 'react';
 
-import { BasicType } from '@common/root';
+import { Category } from '@common/root';
 import { CharaRecordType, CoupleRecordType, SeiyuuRecordType } from '@common/record';
 import { RecordWeeklyInfo } from '@common/weekly';
 import { reqRecordTypeWeekly } from '@src/api';
@@ -25,15 +25,15 @@ import CharaPixivNovelProjectPie from './ProjectPie/CharaPixivNovel';
 import CharaPixivTagViewProjectPie from './ProjectPie/CharaPixivTagView';
 
 type WeeklyActionInfoMap = {
-    [BasicType.chara]: {
+    [Category.chara]: {
         recordType: CharaRecordType;
         recordWeeklyInfo: RecordWeeklyInfo;
     };
-    [BasicType.couple]: {
+    [Category.couple]: {
         recordType: CoupleRecordType;
         recordWeeklyInfo: RecordWeeklyInfo;
     };
-    [BasicType.seiyuu]: {
+    [Category.seiyuu]: {
         recordType: SeiyuuRecordType;
         recordWeeklyInfo: RecordWeeklyInfo;
     };
@@ -44,34 +44,34 @@ type WeeklyActionInfo<T> = T extends keyof WeeklyActionInfoMap
     : any;
 
 type WeeklyAction = {
-    [key in keyof typeof BasicType]: {
-        basicType: typeof BasicType[key];
-        payload: WeeklyActionInfo<typeof BasicType[key]>;
+    [key in keyof typeof Category]: {
+        category: typeof Category[key];
+        payload: WeeklyActionInfo<typeof Category[key]>;
     };
-}[keyof typeof BasicType];
+}[keyof typeof Category];
 
 function weeklyContextReducer(state: WeeklyInfo, action: WeeklyAction): WeeklyInfo {
-    switch (action.basicType) {
-        case BasicType.chara:
+    switch (action.category) {
+        case Category.chara:
             return {
                 ...state,
-                [BasicType.chara]: {
+                [Category.chara]: {
                     ...state.chara,
                     [action.payload.recordType]: action.payload.recordWeeklyInfo,
                 },
             };
-        case BasicType.couple:
+        case Category.couple:
             return {
                 ...state,
-                [BasicType.couple]: {
+                [Category.couple]: {
                     ...state.couple,
                     [action.payload.recordType]: action.payload.recordWeeklyInfo,
                 },
             };
-        case BasicType.seiyuu:
+        case Category.seiyuu:
             return {
                 ...state,
-                [BasicType.seiyuu]: {
+                [Category.seiyuu]: {
                     ...state.seiyuu,
                     [action.payload.recordType]: action.payload.recordWeeklyInfo,
                 },
@@ -83,7 +83,7 @@ function weeklyContextReducer(state: WeeklyInfo, action: WeeklyAction): WeeklyIn
 }
 
 const CHARA_WEEKLY_INFO_LIST = {
-    basicType: BasicType.chara,
+    category: Category.chara,
     recordTypeList: [
         CharaRecordType.illust,
         CharaRecordType.novel,
@@ -93,7 +93,7 @@ const CHARA_WEEKLY_INFO_LIST = {
 } as const;
 
 const COUPLE_WEEKLY_INFO_LIST = {
-    basicType: BasicType.couple,
+    category: Category.couple,
     recordTypeList: [
         CoupleRecordType.illust,
         CoupleRecordType.illustReverse,
@@ -108,7 +108,7 @@ const COUPLE_WEEKLY_INFO_LIST = {
 } as const;
 
 const SEIYUU_WEEKLY_INFO_LIST = {
-    basicType: BasicType.seiyuu,
+    category: Category.seiyuu,
     recordTypeList: [
         SeiyuuRecordType.twitterFollower,
     ],
@@ -122,12 +122,12 @@ const Weekly = () => {
 
     // 获取 chara weeklyInfo
     useEffect(() => {
-        const { basicType, recordTypeList } = CHARA_WEEKLY_INFO_LIST;
+        const { category, recordTypeList } = CHARA_WEEKLY_INFO_LIST;
         for (const recordType of recordTypeList) {
-            reqRecordTypeWeekly(basicType, recordType)
+            reqRecordTypeWeekly(category, recordType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
-                        basicType: BasicType.chara,
+                        category: Category.chara,
                         payload: {
                             recordType,
                             recordWeeklyInfo,
@@ -141,12 +141,12 @@ const Weekly = () => {
 
     // 获取 couple weeklyInfo
     useEffect(() => {
-        const { basicType, recordTypeList } = COUPLE_WEEKLY_INFO_LIST;
+        const { category, recordTypeList } = COUPLE_WEEKLY_INFO_LIST;
         for (const recordType of recordTypeList) {
-            reqRecordTypeWeekly(basicType, recordType)
+            reqRecordTypeWeekly(category, recordType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
-                        basicType: BasicType.couple,
+                        category: Category.couple,
                         payload: {
                             recordType,
                             recordWeeklyInfo,
@@ -160,12 +160,12 @@ const Weekly = () => {
 
     // 获取 seiyuu weeklyInfo
     useEffect(() => {
-        const { basicType, recordTypeList } = SEIYUU_WEEKLY_INFO_LIST;
+        const { category, recordTypeList } = SEIYUU_WEEKLY_INFO_LIST;
         for (const recordType of recordTypeList) {
-            reqRecordTypeWeekly(basicType, recordType)
+            reqRecordTypeWeekly(category, recordType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
-                        basicType: BasicType.seiyuu,
+                        category: Category.seiyuu,
                         payload: {
                             recordType,
                             recordWeeklyInfo,

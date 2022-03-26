@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { BasicType } from '@common/root';
+import { Category } from '@common/root';
 import { CharaRecordType } from '@common/record';
 import { RecordWeeklyInfo } from '@common/weekly';
 import { reqRecordTypeWeekly } from '@src/api';
@@ -18,7 +18,7 @@ const CompareProjectPie = () => {
     useEffect(() => {
         async function getWeeklyInfo() {
             const charaPixivIllustWeeklyInfo = await reqRecordTypeWeekly(
-                BasicType.chara,
+                Category.chara,
                 CharaRecordType.illust,
                 '2021-01-08',
             );

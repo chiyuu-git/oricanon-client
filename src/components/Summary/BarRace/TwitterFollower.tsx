@@ -6,7 +6,7 @@
  */
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { BasicType, ProjectName } from '@common/root';
+import { Category, ProjectName } from '@common/root';
 import { SeiyuuRecordType } from '@common/record';
 import { getWeeklyFetchDate } from '@common/weekly';
 import { WeeklyEventMap } from '@common/event-record';
@@ -31,7 +31,7 @@ const TwitterFollowerBarRace = () => {
     useEffect(() => {
         async function getRecordOfTypeInRange() {
             const seiyuuRecord = await reqRelativeIncrementOfTypeInRange(
-                BasicType.seiyuu,
+                Category.seiyuu,
                 SeiyuuRecordType.twitterFollower,
                 ProjectName.llss,
                 '2020-12-18',
@@ -40,7 +40,7 @@ const TwitterFollowerBarRace = () => {
 
             const liellaSeiyuuList = await reqMemberList({
                 projectName: ProjectName.llss,
-                basicType: BasicType.seiyuu,
+                category: Category.seiyuu,
             });
 
             const seiyuuCategory = liellaSeiyuuList.map(({ name, romaName }) => `${name}-${romaName}`);

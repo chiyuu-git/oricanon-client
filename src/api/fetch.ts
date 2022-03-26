@@ -25,7 +25,9 @@ export async function enhanceFetch(
     // 无论是GET还是POST都需要拼接参数
     let query = '';
     for (const [key, value] of Object.entries(params)) {
-        query += `${key}=${value}&`;
+        if (value) {
+            query += `${key}=${value}&`;
+        }
     }
     // 去除最后一个 &
     if (query) {
@@ -55,6 +57,7 @@ export async function enhanceFetch(
             default:
         }
     }
+    // TODO: 服务器返回 error 不一定会触发 catch ，需要额外做判断
     catch (error) {
         console.log('Request Error:', error);
     }

@@ -39,3 +39,7 @@ export interface ProjectRecord {
     date: string;
     records: number[];
 }
+export interface MemberRecord {
+    date: string;
+    record: number;
+}

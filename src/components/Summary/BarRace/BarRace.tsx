@@ -8,8 +8,8 @@ import React, { FC, useEffect, useRef } from 'react';
 
 import * as echarts from 'echarts';
 import { charaRichMap, KeyofRomaColorMap, romaColorMap } from '@src/constant';
-import { shadeRGBColor } from '@src/utils';
-import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
+import { shadeRGBColor } from '@src/utils/color';
+import { GRID_MARGIN_TOP, H1_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
 import { EChartsOption, EChartsType } from 'echarts';
 import { RecordList } from './common';
 
@@ -42,7 +42,7 @@ const BarRace: FC<BarRaceProps> = ({ category, recordList, curIndex, dataUpdateI
                 left: 'left',
                 top: TITLE_MARGIN_TOP,
                 textStyle: {
-                    fontSize: TITLE_FONT_SIZE,
+                    fontSize: H1_FONT_SIZE,
                 },
             },
             grid: {

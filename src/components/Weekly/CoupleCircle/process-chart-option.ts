@@ -102,7 +102,7 @@ function decorateWithColor(combinationMembers: ReturnType<typeof decorateWithCir
 function decorateWithWidth(combinationMembers: ReturnType<typeof decorateWithCircle>) {
     // 按照占比来划分好了，目前可香占比超过了50%
     // 前三名单独width，中间五名递减width，最后2名统一为10
-    const widthOptions = [35, 35, 15, 15, 10, 35, 10, 5, 15, 15];
+    const widthOptions = [35, 35, 15, 15, 10, 35, 10, 10, 15, 15];
 
     return combinationMembers.map((combinationMember, i) => {
         const couple = combinationMember;

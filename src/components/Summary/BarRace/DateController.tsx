@@ -48,8 +48,8 @@ const DateController: FC<DateControllerProps> = ({
         },
     });
     const [playState, setPlayState] = useState(PLAY_STATE.paused);
-    const [show, setShow] = useState(false);
-    const showController = useRef(false);
+    const [showController, setShowController] = useState(false);
+    const controllerState = useRef(false);
 
     // 记录 autoplay 时的定时器 id
     const playId = useRef<NodeJS.Timer | null>(null);
@@ -60,8 +60,8 @@ const DateController: FC<DateControllerProps> = ({
         // 初始化时隐藏，通过空格控制显隐
         document.addEventListener('keydown', (e: KeyboardEvent) => {
             if (e.code === 'Space') {
-                setShow(!showController.current);
-                showController.current = !showController.current;
+                setShowController(!controllerState.current);
+                controllerState.current = !controllerState.current;
             }
         });
     }, []);
@@ -136,7 +136,7 @@ const DateController: FC<DateControllerProps> = ({
     }
 
     return (
-        <div className = {`date-controller-container ${show ? '' : 'hide-controller'}`}>
+        <div className = {`date-controller-container ${showController ? '' : 'hide-controller'}`}>
             {
                 playState === PLAY_STATE.paused
                     ? <div className = 'play-btn' onClick = {handlePlay}>播放</div>

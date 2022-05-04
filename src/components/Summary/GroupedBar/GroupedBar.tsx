@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
-import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
-import { shadeRGBColor } from '@src/utils';
+import { GRID_MARGIN_TOP, H1_FONT_SIZE, H3_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
+import { shadeRGBColor } from '@src/utils/color';
 
 const GroupedBar = () => {
     const bar = useRef(null);
@@ -35,7 +35,7 @@ const GroupedBar = () => {
                 left: 'left',
                 top: TITLE_MARGIN_TOP,
                 textStyle: {
-                    fontSize: TITLE_FONT_SIZE,
+                    fontSize: H1_FONT_SIZE,
                 },
             },
             grid: {
@@ -58,7 +58,7 @@ const GroupedBar = () => {
             xAxis: {
                 type: 'category',
                 axisLabel: {
-                    fontSize: 18,
+                    fontSize: H3_FONT_SIZE,
                 },
             },
             yAxis: {},

@@ -1,4 +1,7 @@
 import { ProjectName } from '@common/root';
+import { H4_FONT_SIZE } from './echarts-toolbox';
+
+export const PROJECT_AVERAGE_STR = '企划平均';
 
 export const ProjectColorMap = {
     [ProjectName.ll]: '#ee0088',
@@ -57,6 +60,10 @@ export const romaColorMap = {
     payton: '#74f466',
     ren: '#0000a0',
     nagisa: '#0000a0',
+    kinako: '#FFF442',
+    mei: '#FF3535',
+    shiki: '#B2FFDD',
+    natsumiC: '#FF51C4',
     // lln
     ayumu: '#ed7d95',
     aguri: '#ed7d95',
@@ -67,7 +74,7 @@ export const romaColorMap = {
     karin: '#485ec6',
     miyu: '#485ec6',
     ai: '#ff5800',
-    natsumi: '#ff5800',
+    natsumiS: '#ff5800',
     kanada: '#a664a0',
     akarin: '#a664a0',
     setsuna: '#d81c2f',
@@ -93,7 +100,7 @@ export const charaRichMap: Record<string, unknown> = {};
 for (const [romaName, supportColor] of Object.entries(romaColorMap)) {
     charaRichMap[romaName] = {
         color: supportColor,
-        fontSize: 14,
+        fontSize: H4_FONT_SIZE,
         fontWeight: 'bold',
     };
 }
@@ -103,7 +110,7 @@ export const projectRichMap: Record<string, unknown> = {};
 for (const [projectName, color] of Object.entries(ProjectColorMap)) {
     projectRichMap[projectName] = {
         color,
-        fontSize: 14,
+        fontSize: H4_FONT_SIZE,
         fontWeight: 'bold',
     };
 }

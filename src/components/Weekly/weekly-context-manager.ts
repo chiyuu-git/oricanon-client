@@ -1,13 +1,13 @@
 import React, { createContext } from 'react';
 import { Category } from '@common/root';
 import { CharaRecordType, CoupleRecordType, SeiyuuRecordType } from '@common/record';
-import { RecordWeeklyInfo } from '@common/weekly';
+import { RecordTypeWeeklyInfo } from '@common/weekly';
 
-type CharaRecordWeeklyInfo = Record<CharaRecordType, RecordWeeklyInfo>
+type CharaRecordWeeklyInfo = Record<CharaRecordType, RecordTypeWeeklyInfo>
 
-type CoupleRecordWeeklyInfo = Record<CoupleRecordType, RecordWeeklyInfo>
+type CoupleRecordWeeklyInfo = Record<CoupleRecordType, RecordTypeWeeklyInfo>
 
-type SeiyuuRecordWeeklyInfo = Record<SeiyuuRecordType, RecordWeeklyInfo>;
+type SeiyuuRecordWeeklyInfo = Record<SeiyuuRecordType, RecordTypeWeeklyInfo>;
 
 export type WeeklyInfo = {
     [Category.chara]: CharaRecordWeeklyInfo;

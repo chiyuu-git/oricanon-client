@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
+import LineRace from '@components/commom/LineRace';
 import TwitterFollowerBarRace from './BarRace/TwitterFollower';
-import LineRace from './LineRace/LineRace';
+import ProjectMemberLine from '../commom/Line';
 import GroupedBar from './GroupedBar/GroupedBar';
 
 const Summary = () => {

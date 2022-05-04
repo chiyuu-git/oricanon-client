@@ -4,11 +4,11 @@ import { EChartsOption } from 'echarts';
 
 import { ProjectShorthandMap, ProjectColorMap, charaRichMap } from '@src/constant';
 import { Category, ProjectName } from '@common/root';
-import { RecordWeeklyInfo } from '@common/weekly';
+import { RecordTypeWeeklyInfo } from '@common/weekly';
 import { MemberInfoMap } from '@common/member-info';
 
 import './NestPie.less';
-import { TITLE_FONT_SIZE } from '@src/constant/echarts-toolbox';
+import { H1_FONT_SIZE, H2_FONT_SIZE, H4_FONT_SIZE } from '@src/constant/echarts-toolbox';
 
 type NestPipeProps = {
     title: string;
@@ -19,7 +19,7 @@ type NestPipeProps = {
         height: string;
     };
     memberInfoMap: MemberInfoMap<Category.chara>;
-} & RecordWeeklyInfo
+} & RecordTypeWeeklyInfo
 
 interface PieDataItem {
     name: string;
@@ -99,10 +99,10 @@ const NestPie: FC<NestPipeProps> = (props) => {
             subtext: `集计范围：${range}`,
             left: 'center',
             textStyle: {
-                fontSize: TITLE_FONT_SIZE,
+                fontSize: H1_FONT_SIZE,
             },
             subtextStyle: {
-                fontSize: TITLE_FONT_SIZE / 2,
+                fontSize: H2_FONT_SIZE,
             },
         },
         series: [
@@ -117,7 +117,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
                         return `${ProjectShorthandMap[name as ProjectName]}：${value}\n(${percent}%)`;
                     },
                     color: '#fff',
-                    fontSize: 13,
+                    fontSize: H4_FONT_SIZE,
                     fontWeight: 'bold',
                 },
                 data: projectPie,

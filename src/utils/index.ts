@@ -1,5 +1,3 @@
-/* eslint-disable no-bitwise */
-
 type UnknownFunction = (...args: unknown[]) => unknown;
 /**
  * 函数式编程，函数组合工具，按顺序传递返回值调用函数管道
@@ -58,52 +56,5 @@ export function pipe(...funcs: UnknownFunction[]): UnknownFunction {
 export function thousandSplit(number: number) {
     const thousandRegex = /(?!^)(?=(\d{3})+$)/g;
     return `${number}`.replace(thousandRegex, ',');
-}
-
-/**
- * 保证 rgb 值是合法的，即大于0小于255
- */
-function getSafeRGBValue(value: number) {
-    let res = value;
-
-    if (res > 255) {
-        res = 255;
-    }
-    else if (res < 0) {
-        res = 0;
-    }
-    return res;
-}
-
-/**
- * shadeRGBColor，负数变暗，正数变亮
- *
- * 参考：https://segmentfault.com/a/1190000010284529
- */
-export function shadeRGBColor(col: string, amount: number) {
-    let usePrefix = false;
-    let rgbCol = col;
-
-    if (col.startsWith('#')) {
-        rgbCol = col.slice(1);
-        usePrefix = true;
-    }
-
-    const colNum = Number.parseInt(rgbCol, 16);
-
-    const r = getSafeRGBValue((colNum >> 16) + amount);
-
-    const b = getSafeRGBValue(((colNum >> 8) & 0x00_FF) + amount);
-
-    const g = getSafeRGBValue((colNum & 0x00_00_FF) + amount);
-
-    let rgb = (g | (b << 8) | (r << 16)).toString(16);
-
-    // 如果小于3位，需要加上前导0
-    if (rgb.length < 3) {
-        rgb = (`000${rgb}`).slice(-3);
-    }
-
-    return (usePrefix ? '#' : '') + rgb;
 }
 

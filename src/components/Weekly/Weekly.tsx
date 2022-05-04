@@ -2,8 +2,8 @@ import React, { useEffect, useReducer, useRef } from 'react';
 
 import { Category } from '@common/root';
 import { CharaRecordType, CoupleRecordType, SeiyuuRecordType } from '@common/record';
-import { RecordWeeklyInfo } from '@common/weekly';
-import { reqRecordTypeWeekly } from '@src/api';
+import { RecordTypeWeeklyInfo } from '@common/weekly';
+import { reqRecordTypeWeekly, reqWeekIncrementRankOfTypeInRange } from '@src/api';
 import { html2Image } from '@src/utils/html-to-image';
 
 import { WeeklyContext, initWeeklyContext, WeeklyInfo } from './weekly-context-manager';
@@ -27,15 +27,15 @@ import CharaPixivTagViewProjectPie from './ProjectPie/CharaPixivTagView';
 type WeeklyActionInfoMap = {
     [Category.chara]: {
         recordType: CharaRecordType;
-        recordWeeklyInfo: RecordWeeklyInfo;
+        recordWeeklyInfo: RecordTypeWeeklyInfo;
     };
     [Category.couple]: {
         recordType: CoupleRecordType;
-        recordWeeklyInfo: RecordWeeklyInfo;
+        recordWeeklyInfo: RecordTypeWeeklyInfo;
     };
     [Category.seiyuu]: {
         recordType: SeiyuuRecordType;
-        recordWeeklyInfo: RecordWeeklyInfo;
+        recordWeeklyInfo: RecordTypeWeeklyInfo;
     };
 }
 
@@ -175,6 +175,17 @@ const Weekly = () => {
                 })
                 .catch((error) => console.log(error));
         }
+    }, []);
+
+    // 获取历史周增信息，方便整理周榜
+    useEffect(() => {
+        async function getHistoricalIncrementRank() {
+            const [illust] = await Promise.all([
+                reqWeekIncrementRankOfTypeInRange(Category.chara, CharaRecordType.illust),
+            ]);
+            console.log('illust historicalIncrementRank:', illust);
+        }
+        getHistoricalIncrementRank();
     }, []);
 
     async function downloadAll() {

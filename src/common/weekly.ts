@@ -1,7 +1,7 @@
 import { formatDate } from '@utils/date';
 import { ProjectName } from './root';
 
-interface ProjectInfo {
+export interface ProjectInfo {
     projectName: ProjectName;
     projectTotal: number;
     projectWeekIncrement: number;
@@ -15,7 +15,7 @@ export type MemberWeeklyInfo = {
     weekIncrementRate: string;
 }
 
-export interface RecordWeeklyInfo {
+export interface RecordTypeWeeklyInfo {
     range: string;
     projectInfoList: ProjectInfo[];
     memberInfoList: MemberWeeklyInfo[];
@@ -43,11 +43,11 @@ function getFetchWeekDay(date: Date) {
  * 为了方便回顾每周的，需要方便的查看每一周的数据，因此是以周为单位的
  *
  * @private
- * @param {string} base YYYY-MM-DD
+ * @param {string} fetchDate YYYY-MM-DD
  * @return {string} last YYYY-MM-DD
  */
-export function getPrevWeeklyFetchDate(base: string) {
-    const baseDate = new Date(base);
+export function getPrevWeeklyFetchDate(fetchDate: string) {
+    const baseDate = new Date(fetchDate);
     const fetchWeekDay = getFetchWeekDay(baseDate);
     const baseWeekday = baseDate.getDay();
 
@@ -73,8 +73,8 @@ export function getPrevWeeklyFetchDate(base: string) {
     return formatDate(lastFetchDate);
 }
 
-function getNextWeeklyFetchDate(base: string) {
-    const baseDate = new Date(base);
+function getNextWeeklyFetchDate(fetchDate: string) {
+    const baseDate = new Date(fetchDate);
     const fetchWeekDay = getFetchWeekDay(baseDate);
     const baseWeekday = baseDate.getDay();
 

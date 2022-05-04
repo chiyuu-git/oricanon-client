@@ -2,13 +2,22 @@ import React, { FC, useState, useEffect } from 'react';
 import { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import { ProjectName } from '@common/root';
+import { MemberCommonInfo } from '@common/member-info';
 import {
     charaRichMap,
     projectRichMap,
     ProjectColorMap,
 } from '@src/constant';
-import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
-import { IncrementRank } from './common';
+import {
+    GRID_MARGIN_TOP,
+    H1_FONT_SIZE,
+    H2_FONT_SIZE,
+    H3_FONT_SIZE,
+    H4_FONT_SIZE,
+    H5_FONT_SIZE,
+    TITLE_MARGIN_TOP,
+} from '@src/constant/echarts-toolbox';
+import { IncrementRankInfo } from './common';
 
 import './RankBar.less';
 
@@ -17,10 +26,13 @@ interface RankBarProps {
     range: string;
     linearGradient: string;
     icon: string;
-    incrementRank: IncrementRank;
+    incrementRank: IncrementRankInfo;
+    memberInfoMap: {
+        [romaName: string]: MemberCommonInfo;
+    };
 }
 
-const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, incrementRank }) => {
+const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, memberInfoMap, incrementRank }) => {
     const chartOption: EChartsOption = {
         title: {
             text: title,
@@ -28,10 +40,10 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, increme
             left: 'center',
             top: TITLE_MARGIN_TOP,
             textStyle: {
-                fontSize: TITLE_FONT_SIZE,
+                fontSize: H1_FONT_SIZE,
             },
             subtextStyle: {
-                fontSize: TITLE_FONT_SIZE / 2,
+                fontSize: H2_FONT_SIZE,
             },
         },
         grid: {
@@ -46,7 +58,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, increme
             // 默认把第一个维度映射到 X 轴上，第二个维度映射到 Y 轴上。
             // 如果不指定 dimensions，也可以通过指定 series.encode
             // 完成映射，参见后文。
-            dimensions: ['nameAndRoma', 'increment'],
+            dimensions: ['romaName', 'increment'],
             source: incrementRank,
         },
         xAxis: {
@@ -65,14 +77,16 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, increme
             type: 'category',
             axisLabel: {
                 margin: 14,
-                formatter(nameAndRoma: string) {
-                    const [name, romaName] = nameAndRoma.split('-');
+                formatter(romaName: string) {
+                    const memberInfo = memberInfoMap[romaName];
 
-                    if (name && romaName) {
-                        // 试了几个 key 使用 romaName 作为 key 可行
-                        return `{${romaName}|${name}}`;
+                    if (!memberInfo) {
+                        return '';
                     }
-                    return '';
+
+                    const { name } = memberInfo;
+                    // 试了几个 key 使用 romaName 作为 key 可行
+                    return `{${romaName}|${name}}`;
                 },
                 rich: {
                     per: {
@@ -92,28 +106,31 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, increme
                     show: true,
                     position: 'right',
                     formatter(param) {
-                        const { dataIndex, data } = param;
+                        const { data } = param;
                         const {
                             increment,
                             incrementRateStr,
-                            projectName,
-                        } = data as unknown as IncrementRank[number];
+                            romaName,
+                        } = data as unknown as IncrementRankInfo[number];
 
-                        if (projectName) {
-                            return `{${projectName}|  ${increment}}{rate| ${incrementRateStr}}`;
+                        const memberInfo = memberInfoMap[romaName];
+
+                        if (memberInfo) {
+                            return `{${memberInfo.projectName}|  ${increment}}{rate| ${incrementRateStr}}`;
                         }
+                        // 没有 memberInfo 的即使参考线
                         const splitLine = '———————————————————————————';
                         // 分位线文本及补充分割线的样式
                         return `{percentile|${splitLine} ${incrementRateStr}：${increment} ${splitLine}}`;
                     },
-                    fontSize: 16,
+                    fontSize: H3_FONT_SIZE,
                     rich: {
                         rate: {
-                            fontSize: 12,
+                            fontSize: H5_FONT_SIZE,
                             fontWeight: 'bold',
                         },
                         percentile: {
-                            fontSize: 14,
+                            fontSize: H4_FONT_SIZE,
                             fontWeight: 'bold',
                         },
                         ...projectRichMap,
@@ -134,9 +151,10 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, increme
                 },
                 itemStyle: {
                     color(params) {
-                        const projectName = (params.data as IncrementRank[number]).projectName as ProjectName;
+                        const { romaName } = (params.data as IncrementRankInfo[number]);
+                        const memberInfo = memberInfoMap[romaName];
                         // 隐藏默认的item样式，全部采用 label 的样式
-                        if (!projectName) {
+                        if (!memberInfo) {
                             return {
                                 type: 'linear',
                                 x: 0,
@@ -149,7 +167,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, increme
                                 ],
                             };
                         }
-                        return ProjectColorMap[projectName];
+                        return ProjectColorMap[memberInfo.projectName];
                     },
                 },
             },

@@ -1,0 +1,187 @@
+.annual-container {
+    display: flex;
+    box-sizing: border-box;
+    padding: 5px;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    
+    .member-info-container {
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        // 隐藏占位文本
+        overflow: hidden;
+        width: 0;
+        opacity: 0;
+
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+
+            .member-avatar {
+                flex: 1;
+            }
+
+            .dimension-summary-container{
+                display: grid;
+                grid-template-rows: repeat(2, 50px);
+                grid-template-columns: minmax(min-content, 100px) 1fr 1fr;
+                border: 1px solid black;
+                
+                .dimension-detail {
+                    display: flex;
+                    align-items: center;
+                    border-bottom: 1px solid black;
+                    // margin-right: -1px;
+                    margin-bottom: -1px;
+
+                    .value {
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+
+        .radar-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+    }
+
+    .dimension-area {
+        flex-grow: 1;
+
+        .dimension-ranking-container {
+            display: flex;
+            height: 100%;
+            align-items: center;
+            justify-content: space-around;
+    
+            .ranking-container {
+                display: flex;
+                flex-direction: column;
+                border: 2px solid;
+    
+                .ranking-title {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 24px;
+                    line-height: 42px;
+                }
+    
+                .ranking-content {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+    
+                    .ranking-detail {
+                        display: flex;
+                        font-size: 18px;
+                        line-height: 36px;
+                        border-top: 2px solid;
+                        
+                        .rank {
+                            width: 2em;
+                            text-align: center;
+                            border-right: 2px solid rgb(0, 0, 0);
+                        }
+    
+                        .member-name {
+                            width: 7.5em;
+                            padding-left: 5px;
+                            overflow: hidden;
+                        }
+    
+                        .value {
+                            flex: 1;
+                            padding: 0 5px;
+                            text-align: right;
+                        }
+    
+                        .hide {
+                            opacity: 0;
+                        }
+                    }
+                }
+            }
+        }
+    
+        .dimension-info-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+                
+            .dimension-selector {
+                display: flex;
+                justify-content: flex-start;
+                
+                .selector-button {
+                    position: relative;
+                    margin-left: 50px;
+                    line-height: 35px;
+                    margin-top: 10px;
+                    padding-bottom: 10px;
+
+                    .progress {
+                        position: absolute;
+                        height: 4px;
+                        bottom: -4px;
+                        left: 0;
+                    }
+                }
+            }
+
+            .dimension-graph-container {
+                flex: 1;
+                width: 100%;
+                position: relative;
+                display: flex;
+                flex-wrap: nowrap;
+                box-sizing: border-box;
+                padding: 0 50px;
+                border-top: 1px solid;
+                
+                .graph-swiper-item {
+                    position: absolute;
+                    width: 100%;
+                    height:100%;
+                    flex-shrink: 0;
+                }
+                .graph-swiper-item:nth-child(2) {
+                    left: 100%;
+                }
+            }
+        }
+    }
+
+    .iconfont {
+        overflow: hidden;
+        font-size: 24px;
+    }
+
+    .icon-pixiv-illust-favor-rate {
+        color: red;
+    }
+
+    .icon-pixiv-illust-r18-rate {
+        display: block;
+        width: 26px;
+        height: 26px;
+        background:url(./pixiv-r18.png) no-repeat;
+        background-position: center;
+        background-size: 100%;
+    }
+}

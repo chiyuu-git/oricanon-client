@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Category } from '@common/root';
 import { CharaRecordType } from '@common/record';
-import { RecordWeeklyInfo } from '@common/weekly';
+import { RecordTypeWeeklyInfo } from '@common/weekly';
 import { reqRecordTypeWeekly } from '@src/api';
 
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
@@ -11,7 +11,7 @@ const CompareProjectPie = () => {
     const [
         weeklyInfo,
         setWeeklyInfo,
-    ] = useState<RecordWeeklyInfo | null>(null);
+    ] = useState<RecordTypeWeeklyInfo | null>(null);
     const memberInfoContext = useContext(MemberInfoContext);
     const memberCharaInfoMap = memberInfoContext.chara;
 

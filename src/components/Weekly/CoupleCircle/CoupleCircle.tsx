@@ -7,8 +7,8 @@ import { reqMemberList } from '@src/api';
 import { Category, ProjectName } from '@common/root';
 import { CoupleRecordType } from '@common/record';
 import { GetMemberInfoByType } from '@common/member-info';
-import { RecordWeeklyInfo } from '@common/weekly';
-import { GRID_MARGIN_TOP, TITLE_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
+import { RecordTypeWeeklyInfo } from '@common/weekly';
+import { H1_FONT_SIZE, H2_FONT_SIZE, H3_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
 import { WeeklyContext } from '../weekly-context-manager';
 import { processMembers } from './process-chart-option';
 
@@ -19,7 +19,7 @@ import './CoupleCircle.less';
  */
 function decorateWithDataLabel(
     combinationMembers: ReturnType<typeof processMembers>,
-    latestData: RecordWeeklyInfo['memberInfoList'],
+    latestData: RecordTypeWeeklyInfo['memberInfoList'],
 ) {
     return combinationMembers.map((combinationMember) => {
         const couple = combinationMember;
@@ -28,15 +28,15 @@ function decorateWithDataLabel(
             // rotate: 90,
             // offset: [100, 100],
             fontWeight: 'bolder',
-            fontSize: 16,
+            fontSize: H3_FONT_SIZE,
             align: 'center',
             verticalAlign: 'bottom',
             lineHeight: 0,
             formatter(params) {
                 const { dataIndex } = params;
-                const weekIncrement = latestData[dataIndex].weekIncrement >= 9
+                const weekIncrement = latestData[dataIndex].weekIncrement >= 0
                     ? `(+${latestData[dataIndex].weekIncrement})`
-                    : '';
+                    : `(${latestData[dataIndex].weekIncrement})`;
                 return `\n${latestData[dataIndex].record}${weekIncrement}`;
             },
         };
@@ -61,7 +61,7 @@ const CoupleCircle = () => {
                 projectName: ProjectName.llss,
                 category: Category.chara,
             });
-            setMemberList(liellaMemberList);
+            setMemberList(liellaMemberList.slice(0, 5));
         }
         getMemberList();
     }, []);
@@ -87,10 +87,10 @@ const CoupleCircle = () => {
                     left: 'left',
                     top: TITLE_MARGIN_TOP,
                     textStyle: {
-                        fontSize: TITLE_FONT_SIZE,
+                        fontSize: H1_FONT_SIZE,
                     },
                     subtextStyle: {
-                        fontSize: TITLE_FONT_SIZE / 2,
+                        fontSize: H2_FONT_SIZE,
                     },
                 },
                 tooltip: {},

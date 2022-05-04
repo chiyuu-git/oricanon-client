@@ -1,8 +1,11 @@
 import React, { FC, useEffect, useReducer, useRef } from 'react';
 import { Category } from '@common/root';
 
-import { reqMemberInfoMapOfType } from '@src/api';
+import { reqMemberInfoMapOfCategory } from '@src/api';
 import { MemberInfoMap } from '@common/member-info';
+import Annual from '@components/Summary/Annual/Annual';
+import Transition from '@components/Summary/Transition/Transition';
+import Guide from '@components/Summary/Transition/Guide';
 import { MemberInfoContext, initMemberInfoContext, MemberInfoListMap } from './member-info-context-manager';
 
 import Weekly from '../Weekly/Weekly';
@@ -60,7 +63,7 @@ const MemberInfo: FC<unknown> = ({ children }) => {
     // 获取 各基础类型的 memberInfo
     useEffect(() => {
         for (const category of Object.values(Category)) {
-            reqMemberInfoMapOfType(category)
+            reqMemberInfoMapOfCategory(category)
                 .then((memberInfoMap) => {
                     dispatchMemberInfoContext({
                         category,
@@ -76,8 +79,11 @@ const MemberInfo: FC<unknown> = ({ children }) => {
 
     return (
         <MemberInfoContext.Provider value = {memberInfoContext}>
-            <Summary />
+            {/* <Summary /> */}
             {/* <Weekly /> */}
+            <Annual />
+            {/* <Transition /> */}
+            {/* <Guide /> */}
         </MemberInfoContext.Provider>
     );
 };

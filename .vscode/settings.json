@@ -48,5 +48,11 @@
         "@src": "/Users/pangjing02/myProject/oricanon-client/src",
         "@components": "/Users/pangjing02/myProject/oricanon-client/src/components",
         "@utils": "/Users/pangjing02/myProject/oricanon-client/src/utils"
-    }
+    },
+    // mac 自动切换输入法
+    "vim.autoSwitchInputMethod.enable": true,
+    "vim.autoSwitchInputMethod.defaultIM": "1033",
+    "vim.autoSwitchInputMethod.obtainIMCmd": "F:\\Vim\\im-select.exe", 
+    "vim.autoSwitchInputMethod.switchIMCmd": "F:\\Vim\\im-select.exe {im}",
+    "vim.vimrc.enable": true
 }

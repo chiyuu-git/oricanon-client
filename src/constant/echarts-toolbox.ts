@@ -3,7 +3,11 @@
  */
 
 export const TITLE_MARGIN_TOP = 20;
-export const TITLE_FONT_SIZE = 32;
+export const H1_FONT_SIZE = 32;
+export const H2_FONT_SIZE = 24;
+export const H3_FONT_SIZE = 18;
+export const H4_FONT_SIZE = 14;
+export const H5_FONT_SIZE = 12;
 export const GRID_MARGIN_TOP = 100;
 
 export const toolbox = {

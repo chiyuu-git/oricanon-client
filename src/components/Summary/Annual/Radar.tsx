@@ -5,7 +5,8 @@ import * as echarts from 'echarts';
 import { EChartsType } from 'echarts';
 import React, { FC, useEffect, useRef, useState } from 'react';
 
-const indicatorTextList = ['illust', 'r18\nRate', 'favorRate', 'novel', 'tag\nView'];
+const indicatorTextList = ['illust', 'r18\nRate\n', 'favorRate\n', 'novel\n', 'tag\nView\n'];
+const indicatorGrade = ['E', 'D', 'C', 'B', 'A', 'S'];
 
 interface RadarProps {
     rankList: CharaMemberIncrementInfo[][];
@@ -24,18 +25,27 @@ const Radar: FC<RadarProps> = function ({
     const radarChart = useRef<EChartsType | null>(null);
 
     useEffect(() => {
-        const indicatorList = DIMENSION_LIST.map((recordType, i) => ({
-            text: indicatorTextList[i],
-            max: rankList[i][0][recordType],
-            color: 'black',
-            overflow: 'breakAll',
-        }));
+        const indicatorList = DIMENSION_LIST.map((recordType, i) => {
+            const max = rankList[i][0][recordType];
+            const val = memberInfo[recordType];
+            const percent = (val / max) * 100;
+            const divide = (percent - (percent % 20)) / 20;
+            const grade = indicatorGrade[divide];
+            return {
+                name: `${indicatorTextList[i]} (${grade || 'E'})`,
+                max,
+                min: 0,
+                color: mainColor || 'black',
+            };
+        });
         const average = DIMENSION_LIST.map((recordType, i) => {
             const sum = rankList[i].reduce((acc, info) => acc + info[recordType], 0);
-            return sum / (rankList[i].length - 1);
+            return sum / (rankList[i].length);
         });
 
-        const memberData = DIMENSION_LIST.map((recordType, i) => memberInfo[recordType]);
+        const memberData = DIMENSION_LIST.map((recordType, i) => (memberInfo[recordType] > 0
+            ? memberInfo[recordType]
+            : 0));
 
         const option: echarts.EChartsOption = {
             legend: {

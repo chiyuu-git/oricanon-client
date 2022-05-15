@@ -2,20 +2,39 @@
  * 动画控件，包装了原生的 input 添加更多功能
  */
 
-import React, { FC, FormEvent, MutableRefObject, useEffect, useRef, useState } from 'react';
+import React, {
+    FC,
+    FormEvent,
+    forwardRef,
+    MutableRefObject,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from 'react';
 import { AnimeTimelineInstance } from 'animejs';
 
 import './AnimeController.less';
 
+export type AnimeControllerHandle = {
+    setRangerValue: (value: number) => void;
+}
 interface AnimeControllerProps {
     timeline: MutableRefObject<AnimeTimelineInstance>;
-    value: number;
     rangeMax?: number;
 }
 
-const AnimeController: FC<AnimeControllerProps> = ({ timeline, value, rangeMax = 100 }) => {
+const AnimeController: React.ForwardRefRenderFunction<AnimeControllerHandle, AnimeControllerProps> = (
+    { timeline, rangeMax = 100 },
+    ref,
+) => {
     const controllerState = useRef(true);
+    const [rangerValue, setRangerValue] = useState(0);
     const [showController, setShowController] = useState(false);
+
+    useImperativeHandle(ref, () => ({
+        setRangerValue,
+    }));
 
     useEffect(() => {
         // 初始化时隐藏，通过空格控制显隐
@@ -43,11 +62,11 @@ const AnimeController: FC<AnimeControllerProps> = ({ timeline, value, rangeMax =
                 step = '1'
                 min = '0'
                 max = {rangeMax}
-                value = {value}
+                value = {rangerValue}
                 onInput = {handleProcessInput}
             />
         </div>
     );
 };
 
-export default AnimeController;
+export default forwardRef(AnimeController);

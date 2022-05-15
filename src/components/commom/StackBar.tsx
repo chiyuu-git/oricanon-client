@@ -9,7 +9,7 @@ import {
 import * as echarts from 'echarts';
 import type { EChartsOption } from 'echarts';
 import { FavorRecordTypeList } from '@common/record';
-import { PROJECT_AVERAGE_STR } from '@src/constant';
+import { PROJECT_AVERAGE_STR, PROJECT_MEDIAN_STR } from '@src/constant';
 import { getSequentialPalette } from '@utils/color';
 
 const favorTagList = ['50users入り', '100users入り', '500users入り', '1000users入り', '5000users入り', '10000users入り'];
@@ -75,7 +75,7 @@ const StackBar: FC<StackBarProps> = function ({ name, mainColor, stackValList })
             legend: {
                 orient: 'vertical',
                 right: 50,
-                top: 80,
+                top: TITLE_MARGIN_TOP,
                 textStyle: {
                     fontSize: H3_FONT_SIZE,
                 },
@@ -89,6 +89,7 @@ const StackBar: FC<StackBarProps> = function ({ name, mainColor, stackValList })
                 axisLabel: {
                     fontSize: H3_FONT_SIZE,
                 },
+                boundaryGap: ['0', '0.25'],
             },
             yAxis: {
                 type: 'category',
@@ -101,9 +102,9 @@ const StackBar: FC<StackBarProps> = function ({ name, mainColor, stackValList })
             dataset: {
                 source: [
                     ['type', ...FavorRecordTypeList],
-                    ['企划50分位', ...stackValList[2]],
+                    // [PROJECT_MEDIAN_STR, ...stackValList[2]],
                     [PROJECT_AVERAGE_STR, ...stackValList[1]],
-                    [name, ...stackValList[0]],
+                    [name, ...[...stackValList[0]].map((val) => (val > 0 ? val : 0))],
                 ],
             },
             series: seriesList,

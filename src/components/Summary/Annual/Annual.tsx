@@ -13,18 +13,20 @@ import { H2_FONT_SIZE, H3_FONT_SIZE, H4_FONT_SIZE } from '@src/constant/echarts-
 import { ProjectColorMap } from '@src/constant';
 import Radar from './Radar';
 import ProjectMemberLine from '../../commom/Line';
-import AnimeController from '../../commom/AnimeController';
+import AnimeController, { AnimeControllerHandle } from '../../commom/AnimeController';
 
+// 2021 虹 300
 const DEFAULT_INTERVAL = 300;
+const activeIndex = 4;
+const projectColor = ProjectColorMap.llss;
 
 const Annual: FC<unknown> = (props) => {
-    const [rangerValue, setRangerValue] = useState(0);
+    const animationControllerRef = useRef<AnimeControllerHandle>(null);
     const [dimensionRankList, setDimensionRankList] = useState<CharaMemberIncrementInfo[][] | null>(null);
     const [activeMemberInfo, setActiveMemberInfo] = useState<CharaMemberIncrementInfo | null>(null);
     const [mainColor, setMainColor] = useState<string>('');
     const [hideMemberList, setHideMemberList] = useState<string[]>([]);
-    const [showLineRace, setShowLineRace] = useState(true);
-    const [showStackBar, setShowStackBar] = useState(true);
+    const [showLine, setShowLine] = useState(true);
     const [stackValList, setStackValList] = useState<number[][] | null>(null);
 
     // 使用默认参数创建时间轴
@@ -34,7 +36,9 @@ const Annual: FC<unknown> = (props) => {
             duration: DEFAULT_INTERVAL,
             autoplay: true,
             update(anim) {
-                setRangerValue(anim.progress);
+                if (animationControllerRef && animationControllerRef.current) {
+                    animationControllerRef.current.setRangerValue(anim.progress);
+                }
             },
         }),
     );
@@ -44,7 +48,7 @@ const Annual: FC<unknown> = (props) => {
         async function getProjectRelativeIncrementInfo() {
             const incrementInfo = await reqProjectRelativeIncrementInfo(
                 Category.chara,
-                ProjectName.lls,
+                ProjectName.llss,
                 '2021-01-01',
             );
 
@@ -57,7 +61,6 @@ const Annual: FC<unknown> = (props) => {
             setDimensionRankList(sortedInfoList);
 
             // 2. 记录当前要展示的成员信息，以 illust 排行榜倒序，作为展示顺序
-            const activeIndex = 8;
             const memberInfo = sortedInfoList[0][activeIndex];
             setActiveMemberInfo(memberInfo);
 
@@ -71,8 +74,8 @@ const Annual: FC<unknown> = (props) => {
             for (const recordType of FavorRecordTypeList) {
                 const valueListOfType = incrementInfo.map((member) => member[recordType]).sort((a, b) => a - b);
                 const projectSum = valueListOfType.reduce((acc, num) => acc + num);
-                projectAveStackValue.push(+(projectSum / (incrementInfo.length - 1)).toFixed(0));
-                projectMidStackValue.push(valueListOfType[6]);
+                projectAveStackValue.push(+(projectSum / (incrementInfo.length)).toFixed(0));
+                projectMidStackValue.push(valueListOfType[4]);
             }
 
             setStackValList([
@@ -83,7 +86,8 @@ const Annual: FC<unknown> = (props) => {
 
             // 4. 计算出 hideList 即可， active 由 animation 触发显示
             const hideList = sortedInfoList[0].slice(0, activeIndex + 1);
-            setHideMemberList(hideList.map((member) => member.romaName));
+            // setHideMemberList(hideList.map((member) => member.romaName));
+            setHideMemberList([]);
         }
         getProjectRelativeIncrementInfo();
     }, []);
@@ -101,7 +105,8 @@ const Annual: FC<unknown> = (props) => {
             // 排行榜信息高亮动画
             .add({
                 targets: `.${romaName}-detail`,
-                backgroundColor: 'rgb(253, 174, 3)',
+                backgroundColor: projectColor,
+                color: getForegroundColorByBackground(projectColor),
                 duration: DEFAULT_INTERVAL * 5,
             })
             .add({
@@ -147,7 +152,7 @@ const Annual: FC<unknown> = (props) => {
                 targets: `.${romaName}-name`,
                 opacity: 1,
                 duration: DEFAULT_INTERVAL * 5,
-                endDelay: DEFAULT_INTERVAL * 10,
+                endDelay: DEFAULT_INTERVAL * 5,
             }, `-=${DEFAULT_INTERVAL * 5}`)
             // switch the first graph
             .add({
@@ -159,54 +164,73 @@ const Annual: FC<unknown> = (props) => {
                 targets: '.selector-button',
                 borderBottom: '4px solid rgba(0, 0, 0, 0)',
                 duration: DEFAULT_INTERVAL * 5,
-            }, `-=${DEFAULT_INTERVAL * 5}`)
-            .add({
-                targets: '.selector-button:nth-of-type(1)',
-                borderColor: restColor,
-                color: restColor,
-                duration: DEFAULT_INTERVAL * 5,
                 begin() {
-                    setShowLineRace(true);
+                    for (const el of document.querySelectorAll('.dimension-title')) {
+                        const titleNode = el;
+                        const linear = `linear-gradient(to right, 
+                            ${restColor} 50%, 
+                            #000 50%, 
+                            #000
+                            )`;
+                        (titleNode as HTMLElement).style.backgroundImage = linear;
+                    }
                 },
             }, `-=${DEFAULT_INTERVAL * 5}`)
             .add({
-                targets: '.selector-button:nth-of-type(1)>.progress',
+                targets: '.selector-button:nth-of-type(1)',
+                borderColor: '#000',
+                duration: DEFAULT_INTERVAL * 5,
+                begin() {
+                    setShowLine(true);
+                },
+            }, `-=${DEFAULT_INTERVAL * 5}`)
+            // start progress
+            .add({
+                targets: '.selector-button:nth-of-type(1)>.dimension-progress',
                 width: '100%',
                 easing: 'linear',
-                duration: DEFAULT_INTERVAL * 50,
-            })
+                // 2021-虹设定的 50 太久了点
+                duration: DEFAULT_INTERVAL * 35,
+            }, `-=${DEFAULT_INTERVAL * 5}`)
+            .add({
+                targets: '.selector-button:nth-of-type(1)>.dimension-title',
+                backgroundPositionX: '0%',
+                easing: 'linear',
+                duration: DEFAULT_INTERVAL * 35,
+            }, `-=${DEFAULT_INTERVAL * 35}`)
             // switch graph
             .add({
-                targets: '.selector-button:nth-of-type(1)>.progress',
+                targets: '.selector-button:nth-of-type(1)>.dimension-progress',
                 opacity: 0,
                 duration: DEFAULT_INTERVAL * 5,
             })
             .add({
                 targets: '.selector-button:nth-of-type(1)',
                 borderColor: 'rgba(0, 0, 0, 0)',
-                color: 'rgb(0,0,0)',
                 duration: DEFAULT_INTERVAL * 5,
             }, `-=${DEFAULT_INTERVAL * 5}`)
             .add({
                 targets: '.selector-button:nth-of-type(2)',
-                borderColor: restColor,
-                color: restColor,
+                borderColor: '#000',
                 duration: DEFAULT_INTERVAL * 5,
             }, `-=${DEFAULT_INTERVAL * 5}`)
             .add({
                 targets: '.graph-swiper-item',
                 translateX: '-100%',
                 duration: DEFAULT_INTERVAL * 5,
-                begin() {
-                    // setShowStackBar(true);
-                },
             }, `-=${DEFAULT_INTERVAL * 5}`)
             .add({
-                targets: '.selector-button:nth-of-type(2)>.progress',
+                targets: '.selector-button:nth-of-type(2)>.dimension-progress',
                 width: '100%',
                 easing: 'linear',
-                duration: DEFAULT_INTERVAL * 30,
-            });
+                duration: DEFAULT_INTERVAL * 20,
+            })
+            .add({
+                targets: '.selector-button:nth-of-type(2)>.dimension-title',
+                backgroundPositionX: '0%',
+                easing: 'linear',
+                duration: DEFAULT_INTERVAL * 20,
+            }, `-=${DEFAULT_INTERVAL * 20}`);
     }, [dimensionRankList, activeMemberInfo, hideMemberList]);
 
     function renderRankList(
@@ -222,6 +246,7 @@ const Annual: FC<unknown> = (props) => {
             const shouldHide = hideMemberList.includes(romaName);
             return (
                 <div
+                    style = {{ backgroundColor: supportColor, color: getForegroundColorByBackground(supportColor) }}
                     className = {`ranking-detail ${romaName}-detail`}
                     key = {name}
                 >
@@ -271,6 +296,7 @@ const Annual: FC<unknown> = (props) => {
     }
 
     const { name, supportColor, recordOrder } = activeMemberInfo;
+    const restColor = getComplementaryColor(supportColor);
     return (
         <div className = 'annual-container'>
             <div className = 'member-info-container'>
@@ -278,9 +304,9 @@ const Annual: FC<unknown> = (props) => {
                     <div
                         className = 'member-avatar'
                         style = {{
-                            backgroundImage: `url(/api/assets/portrait/lls/${name}.png)`,
-                            backgroundPosition: '50% 10%',
-                            backgroundSize: '100%',
+                            backgroundImage: `url(/api/assets/portrait/llss/${name}.png)`,
+                            backgroundPosition: '40% 0%',
+                            backgroundSize: '80%',
                             backgroundRepeat: 'no-repeat',
                             backgroundColor: shadeRGBColor(supportColor, 70),
                         }}
@@ -298,7 +324,7 @@ const Annual: FC<unknown> = (props) => {
                             <Radar
                                 rankList = {dimensionRankList}
                                 memberInfo = {activeMemberInfo}
-                                mainColor = {mainColor || ProjectColorMap.lln}
+                                mainColor = {mainColor || projectColor}
                                 supColor = {mainColor ? getComplementaryColor(supportColor) : 'grey'}
                             />
                         )
@@ -326,18 +352,18 @@ const Annual: FC<unknown> = (props) => {
                 <div className = 'dimension-info-container'>
                     <div className = 'dimension-selector' style = {{ fontSize: H3_FONT_SIZE }}>
                         <div className = 'selector-button'>
-                            <div className = 'progress' style = {{ backgroundColor: mainColor }} />
-                            <span>同人图-年增量详情</span>
+                            <div className = 'dimension-progress' style = {{ backgroundColor: restColor }} />
+                            <span className = 'dimension-title'>同人图-年增量详情</span>
                         </div>
                         <div className = 'selector-button'>
-                            <div className = 'progress' style = {{ backgroundColor: mainColor }} />
-                            <span>同人图-年增量-收藏率详情</span>
+                            <div className = 'dimension-progress' style = {{ backgroundColor: restColor }} />
+                            <span className = 'dimension-title'>同人图-年增量-收藏率详情</span>
                         </div>
                     </div>
                     <div className = 'dimension-detail-container' />
                     <div className = 'dimension-graph-container'>
                         <div className = 'graph-swiper-item'>
-                            {showLineRace && mainColor && (
+                            {showLine && mainColor && (
                                 <ProjectMemberLine
                                     mainColor = {mainColor}
                                     activeIndex = {recordOrder}
@@ -345,7 +371,7 @@ const Annual: FC<unknown> = (props) => {
                             )}
                         </div>
                         <div className = 'graph-swiper-item'>
-                            {showStackBar && stackValList && mainColor && (
+                            {stackValList && mainColor && (
                                 <StackBar
                                     name = {name}
                                     mainColor = {mainColor}
@@ -356,7 +382,7 @@ const Annual: FC<unknown> = (props) => {
                     </div>
                 </div>
             </div>
-            <AnimeController timeline = {timeline} value = {rangerValue} />
+            <AnimeController timeline = {timeline} ref = {animationControllerRef} />
         </div>
     );
 };

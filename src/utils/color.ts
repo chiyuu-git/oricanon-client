@@ -22,7 +22,7 @@ function getSafeRGBValue(value: number) {
 /**
  * 解析 col 字符串，返回 r g b [0-255]
  */
-function getRGBList(col: string, amount = 0) {
+export function getRGBList(col: string, amount = 0) {
     let rgbCol = col;
 
     if (col.startsWith('#')) {
@@ -67,15 +67,14 @@ export function shadeRGBColor(col: string, amount: number) {
  * https://css-tricks.com/switch-font-color-for-different-backgrounds-with-css/
  */
 export function getForegroundColorByBackground(col: string) {
-    const [r, g, b] = getRGBList(col);
-
     // 实现一，效果感觉不是很好
+    // const [r, g, b] = getRGBList(col);
     // return (r * 0.299 + g * 0.587 + b * 0.114) > 186
     //     ? '#000'
     //     : '#fff';
 
     // 实现二
-    // const [r, g, b] = list.map((val) => {
+    // const [r, g, b] = getRGBList(col).map((val) => {
     //     const temp = val / 255;
     //     if (temp <= 0.039_28) {
     //         return temp / 12.92;
@@ -86,13 +85,22 @@ export function getForegroundColorByBackground(col: string) {
     // const l = 0.2126 * r + 0.7152 * g + 0.0722 * b;
     // return l > 0.179 ? '#000000' : '#ffffff';
 
-    // 实现三，亲测好用
     // Gets the average value of the colors
-    const contrastRatio = (r + g + b) / (255 * 3);
+    // 实现三，亲测好用
+    // const [r, g, b] = getRGBList(col);
+    // const contrastRatio = (r + g + b) / (255 * 3);
 
-    return contrastRatio >= 0.5
-        ? '#000000'
-        : '#ffffff';
+    // return contrastRatio >= 0.5
+    //     ? '#000000'
+    //     : '#ffffff';
+
+    // 实现四
+    // https://www.fly63.com/article/detial/2925
+    const [r, g, b] = getRGBList(col);
+    const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    // return (yiq >= 128) ? '#000000' : '#ffffff';
+    // console.log('yiq:', yiq);
+    return (yiq >= 150) ? '#000000' : '#ffffff';
 }
 /**
  * 获取互补色
@@ -100,7 +108,8 @@ export function getForegroundColorByBackground(col: string) {
  */
 export function getComplementaryColor(col: string) {
     const [r, g, b] = getRGBList(col);
-    return rgb2Hex([255 - r, 255 - g, 255 - b], col.startsWith('#'));
+    // return rgb2Hex([255 - r, 255 - g, 255 - b], col.startsWith('#'));
+    return '#a6469d';
 }
 
 /**

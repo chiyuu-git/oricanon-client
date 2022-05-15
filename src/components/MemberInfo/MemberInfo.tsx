@@ -81,8 +81,8 @@ const MemberInfo: FC<unknown> = ({ children }) => {
         <MemberInfoContext.Provider value = {memberInfoContext}>
             {/* <Summary /> */}
             {/* <Weekly /> */}
-            <Annual />
-            {/* <Transition /> */}
+            {/* <Annual /> */}
+            <Transition />
             {/* <Guide /> */}
         </MemberInfoContext.Provider>
     );

@@ -20,7 +20,7 @@ export async function enhanceFetch(
 ) {
     let url = requestUrl;
 
-    let response: Response;
+    let response: Response = new Response();
 
     // 无论是GET还是POST都需要拼接参数
     let query = '';
@@ -62,5 +62,8 @@ export async function enhanceFetch(
         console.log('Request Error:', error);
     }
 
-    return response!.json();
+    if (!response.ok) {
+        console.log('Request Error:', response);
+    }
+    return response.json();
 }

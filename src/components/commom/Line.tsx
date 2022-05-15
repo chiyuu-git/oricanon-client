@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { Category, ProjectName } from '@common/root';
 import { reqMemberList, reqRelativeIncrementOfTypeInRange, reqWeekIncrementOfProjectInRange } from '@src/api';
-import { charaRichMap, KeyofRomaColorMap, PROJECT_AVERAGE_STR, romaColorMap } from '@src/constant';
+import { charaRichMap, KeyofRomaColorMap, PROJECT_AVERAGE_STR, PROJECT_MEDIAN_STR, romaColorMap } from '@src/constant';
 import { CharaRecordType, SeiyuuRecordType } from '@common/record';
 
 import * as echarts from 'echarts';
@@ -32,13 +32,13 @@ const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeIndex, mainColor 
             const recordList = await reqWeekIncrementOfProjectInRange(
                 Category.chara,
                 CharaRecordType.illust,
-                ProjectName.lln,
-                '2021-01-01',
+                ProjectName.llss,
+                '2020-12-25',
                 '2021-12-31',
             );
 
             const memberCategory = await reqMemberList({
-                projectName: ProjectName.lln,
+                projectName: ProjectName.llss,
                 category: Category.chara,
             });
             // 处理企划平均值的 category info
@@ -51,7 +51,7 @@ const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeIndex, mainColor 
             // 3. 如果是映射的数据，比如填充0，否则会出现无法映射的情况
             const sourceData = [];
             const fetchDateList: string[] = [];
-            for (const { date, average, records } of recordList) {
+            for (const { date, average, median, records } of recordList) {
                 if (isFetchDate(date)) {
                     const lengthDiff = memberCategory.length - 1 - records.length;
                     const appendZero = Array.from({ length: lengthDiff }).fill(0);
@@ -106,7 +106,7 @@ const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeIndex, mainColor 
                 let series: echarts.SeriesOption = {
                     animation: true,
                     animationDuration: 5000,
-                    animationDelay: 5000,
+                    animationDelay: 3500,
                     type: 'line',
                     name: `${name}`,
                     // 第一列是 x 轴，第二列是 average， 第 index + 1 列是单个成员的 y 轴
@@ -197,8 +197,8 @@ const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeIndex, mainColor 
                     },
                 },
                 yAxis: {
-                    max: 150,
-                    min: -20,
+                    max: 210,
+                    min: -30,
                     axisLine: {
                         show: true,
                     },

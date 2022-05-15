@@ -1,13 +1,13 @@
 import anime from 'animejs';
 import React, { useEffect, useRef, useState } from 'react';
-import AnimeController from '../../commom/AnimeController';
+import AnimeController, { AnimeControllerHandle } from '../../commom/AnimeController';
 
 import './Transition.less';
 
 const DEFAULT_INTERVAL = 300;
 
 function renderIcon() {
-    const list = Array.from({ length: 13 });
+    const list = Array.from({ length: 10 });
     return list.map((val, index) => {
         if (index > 0) {
             return (
@@ -18,8 +18,9 @@ function renderIcon() {
                     style = {{
                         width: '100px',
                         height: '100px',
-                        backgroundImage: `url(/api/assets/icon-mark/lln/${index}.png)`,
+                        backgroundImage: `url(/api/assets/icon-mark/llss/${index}.png)`,
                         backgroundSize: '100%',
+                        backgroundRepeat: 'no-repeat',
                     }}
                 />
             );
@@ -29,7 +30,7 @@ function renderIcon() {
 }
 
 const Transition = () => {
-    const [rangerValue, setRangerValue] = useState(0);
+    const animationControllerRef = useRef<AnimeControllerHandle>(null);
     // 使用默认参数创建时间轴
     const timeline = useRef(
         anime.timeline({
@@ -37,7 +38,9 @@ const Transition = () => {
             duration: DEFAULT_INTERVAL,
             autoplay: true,
             update(anim) {
-                setRangerValue(anim.progress);
+                if (animationControllerRef && animationControllerRef.current) {
+                    animationControllerRef.current.setRangerValue(anim.progress);
+                }
             },
         }),
     );
@@ -59,7 +62,7 @@ const Transition = () => {
             <div className = 'icon-container'>
                 {renderIcon()}
             </div>
-            <AnimeController timeline = {timeline} value = {rangerValue} />
+            <AnimeController timeline = {timeline} />
         </div>
     );
 };

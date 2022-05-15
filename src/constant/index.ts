@@ -2,6 +2,7 @@ import { ProjectName } from '@common/root';
 import { H4_FONT_SIZE } from './echarts-toolbox';
 
 export const PROJECT_AVERAGE_STR = '企划平均';
+export const PROJECT_MEDIAN_STR = '企划中位数';
 
 export const ProjectColorMap = {
     [ProjectName.ll]: '#ee0088',
@@ -61,9 +62,12 @@ export const romaColorMap = {
     ren: '#0000a0',
     nagisa: '#0000a0',
     kinako: '#FFF442',
+    suzuhara: '#FFF442',
     mei: '#FF3535',
+    akane: '#FF3535',
     shiki: '#B2FFDD',
     natsumiC: '#FF51C4',
+    aya: '#FF51C4',
     // lln
     ayumu: '#ed7d95',
     aguri: '#ed7d95',

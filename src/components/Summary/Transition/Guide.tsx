@@ -7,18 +7,21 @@ import './Guide.less';
 const DEFAULT_INTERVAL = 300;
 
 function renderIcon() {
-    const list = Array.from({ length: 13 });
+    const list = Array.from({ length: 10 });
     return list.map((val, index) => {
         if (index > 0) {
-            const randomIndex = Math.round(Math.random() * 11) + 1;
+            const randomIndex = Math.round(Math.random() * 8) + 1;
             return (
                 <div
                     className = 'icon-mark'
                     // eslint-disable-next-line react/no-array-index-key
                     key = {`icon-mark${index}`}
                     style = {{
-                        backgroundImage: `url(/api/assets/icon-mark/lln/${randomIndex}.png)`,
+                        width: '50px',
+                        height: '50px',
+                        backgroundImage: `url(/api/assets/icon-mark/llss/${randomIndex}.png)`,
                         backgroundSize: '100%',
+                        backgroundRepeat: 'no-repeat',
                     }}
                 />
             );

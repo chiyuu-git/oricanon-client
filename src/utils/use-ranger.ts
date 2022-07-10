@@ -235,7 +235,7 @@ export function useRanger({
     );
 
     const handleKeyDown = useCallback(
-        (e: KeyboardEvent, i) => {
+        (e: KeyboardEvent, i: number) => {
             const { values: latestValues, onChange: latestOnChange = () => {} } = getLatest();
             // Left Arrow || Right Arrow
             if (e.keyCode === 37 || e.keyCode === 39) {
@@ -255,9 +255,9 @@ export function useRanger({
     );
 
     const handlePress = useCallback(
-        (handleIndex) => {
+        (index: number) => {
             // 记录 active handle
-            setActiveHandleIndex(handleIndex);
+            setActiveHandleIndex(index);
 
             const handleRelease = (releaseEvent: globalThis.MouseEvent) => {
                 const {

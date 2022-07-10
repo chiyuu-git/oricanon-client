@@ -10,8 +10,8 @@ const Summary = () => {
 
     return (
         <div>
-            {/* <TwitterFollowerBarRace /> */}
-            <LineRace />
+            <TwitterFollowerBarRace />
+            {/* <LineRace /> */}
             {/*  <GroupedBar /> */}
         </div>
     );

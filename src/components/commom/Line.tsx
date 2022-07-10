@@ -2,7 +2,7 @@ import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { Category, ProjectName } from '@common/root';
 import { reqMemberList, reqRelativeIncrementOfTypeInRange, reqWeekIncrementOfProjectInRange } from '@src/api';
 import { charaRichMap, KeyofRomaColorMap, PROJECT_AVERAGE_STR, PROJECT_MEDIAN_STR, romaColorMap } from '@src/constant';
-import { CharaRecordType, SeiyuuRecordType } from '@common/record';
+import { CharaRecordType, PersonRecordType } from '@common/record';
 
 import * as echarts from 'echarts';
 import {
@@ -14,7 +14,7 @@ import {
     TITLE_MARGIN_TOP,
 } from '@src/constant/echarts-toolbox';
 import { getWeeklyFetchDate, isFetchDate } from '@common/weekly';
-import { CharaInfo, SeiyuuInfo } from '@common/member-info';
+import { CharaInfo, PersonInfo } from '@common/member-info';
 import { getComplementaryColor, getForegroundColorByBackground } from '@utils/color';
 import { formatDate } from '@utils/date';
 
@@ -22,13 +22,14 @@ interface ProjectMemberLineProps {
     /**
      * 需要展示的 index，0 为企划平均，从 1 开始是企划的各个成员
      */
-    activeIndex: number;
+    activeRomaName: string;
     mainColor: string;
 }
-const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeIndex, mainColor }) => {
+const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeRomaName, mainColor }) => {
     const lineRace = useRef(null);
     useEffect(() => {
         async function getRecordOfTypeInRange() {
+            // FIXME: 每次 rerender 都会重新 req
             const recordList = await reqWeekIncrementOfProjectInRange(
                 Category.chara,
                 CharaRecordType.illust,
@@ -41,6 +42,7 @@ const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeIndex, mainColor 
                 projectName: ProjectName.llss,
                 category: Category.chara,
             });
+            const activeIndex = memberCategory.findIndex((charaInfo => charaInfo.romaName === activeRomaName))
             // 处理企划平均值的 category info
             memberCategory.unshift({
                 name: PROJECT_AVERAGE_STR,
@@ -225,7 +227,7 @@ const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeIndex, mainColor 
             }
         }
         getRecordOfTypeInRange();
-    }, [activeIndex, mainColor]);
+    }, [activeRomaName, mainColor]);
 
     return (
         <div

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Category } from '@common/root';
-import { SeiyuuRecordType } from '@common/record';
+import { PersonRecordType } from '@common/record';
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
 import { WeeklyContext } from '../weekly-context-manager';
 import { TotalRank } from './common';
@@ -11,16 +11,16 @@ const TwitterFollowerTotalRank = () => {
     const memberInfoContext = useContext(MemberInfoContext);
     const [range, setRange] = useState('');
     const [totalRank, setTotalRank] = useState<TotalRank | null>(null);
-    const weeklyInfo = weeklyContext[Category.seiyuu][SeiyuuRecordType.twitterFollower];
-    const seiyuuInfoMap = memberInfoContext.seiyuu;
+    const weeklyInfo = weeklyContext[Category.person][PersonRecordType.twitterFollower];
+    const personInfoMap = memberInfoContext.person;
 
     useEffect(() => {
-        if (weeklyInfo && seiyuuInfoMap) {
+        if (weeklyInfo && personInfoMap) {
             const rank = [...weeklyInfo.memberInfoList]
                 .sort((a, b) => b.record - a.record)
                 .map((memberInfo) => {
                     const { romaName, record, weekIncrement } = memberInfo;
-                    const { name, projectName } = seiyuuInfoMap[romaName];
+                    const { name, projectName } = personInfoMap[romaName];
                     return {
                         name,
                         projectName,
@@ -31,7 +31,7 @@ const TwitterFollowerTotalRank = () => {
             setRange(weeklyInfo.range);
             setTotalRank(rank);
         }
-    }, [weeklyInfo, seiyuuInfoMap]);
+    }, [weeklyInfo, personInfoMap]);
 
     return useMemo(() => {
         if (totalRank) {
@@ -41,7 +41,7 @@ const TwitterFollowerTotalRank = () => {
                     range = {range}
                     totalRank = {totalRank}
                     layoutOption = {{
-                        contentType: 'seiyuu-total-rank',
+                        contentType: 'person-total-rank',
                         incrementNodeWidth: '4em',
                     }}
                 />

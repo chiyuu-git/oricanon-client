@@ -18,8 +18,8 @@ type MemberInfoActionInfoMap = {
     [Category.couple]: {
         memberInfoMap: MemberInfoMap<Category.couple>;
     };
-    [Category.seiyuu]: {
-        memberInfoMap: MemberInfoMap<Category.seiyuu>;
+    [Category.person]: {
+        memberInfoMap: MemberInfoMap<Category.person>;
     };
 }
 
@@ -46,10 +46,10 @@ function memberInfoContextReducer(state: MemberInfoListMap, action: MemberInfoAc
                 ...state,
                 [Category.couple]: action.payload.memberInfoMap,
             };
-        case Category.seiyuu:
+        case Category.person:
             return {
                 ...state,
-                [Category.seiyuu]: action.payload.memberInfoMap,
+                [Category.person]: action.payload.memberInfoMap,
             };
 
         default:
@@ -57,7 +57,7 @@ function memberInfoContextReducer(state: MemberInfoListMap, action: MemberInfoAc
     }
 }
 
-const MemberInfo: FC<unknown> = ({ children }) => {
+const MemberInfo: FC<unknown> = () => {
     const [memberInfoContext, dispatchMemberInfoContext] = useReducer(memberInfoContextReducer, initMemberInfoContext);
 
     // 获取 各基础类型的 memberInfo
@@ -80,9 +80,9 @@ const MemberInfo: FC<unknown> = ({ children }) => {
     return (
         <MemberInfoContext.Provider value = {memberInfoContext}>
             {/* <Summary /> */}
-            {/* <Weekly /> */}
+            <Weekly />
             {/* <Annual /> */}
-            <Transition />
+            {/* <Transition /> */}
             {/* <Guide /> */}
         </MemberInfoContext.Provider>
     );

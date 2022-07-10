@@ -22,20 +22,24 @@ function getSafeRGBValue(value: number) {
 /**
  * 解析 col 字符串，返回 r g b [0-255]
  */
-export function getRGBList(col: string, amount = 0) {
-    let rgbCol = col;
+export function getRGBList(hexCol: string, amount = 0) {
+    let hex = hexCol;
 
-    if (col.startsWith('#')) {
-        rgbCol = col.slice(1);
+    if (hexCol.startsWith('#')) {
+        hex = hexCol.slice(1);
     }
 
-    const colNum = Number.parseInt(rgbCol, 16);
+    const bigint = Number.parseInt(hex, 16);
 
-    const r = getSafeRGBValue((colNum >> 16) + amount);
+    // const r = getSafeRGBValue((colNum >> 16) + amount);
 
-    const b = getSafeRGBValue(((colNum >> 8) & 0x00_FF) + amount);
+    // const b = getSafeRGBValue(((colNum >> 8) & 0x00_FF) + amount);
 
-    const g = getSafeRGBValue((colNum & 0x00_00_FF) + amount);
+    // const g = getSafeRGBValue((colNum & 0x00_00_FF) + amount);
+
+    var r = (bigint >> 16) & 255;
+    var g = (bigint >> 8) & 255;
+    var b = bigint & 255;
 
     return [r, g, b];
 }

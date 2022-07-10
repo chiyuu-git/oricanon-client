@@ -12,6 +12,9 @@ export type HistoricalIncrementRank = Record<ProjectName, MemberIncrementInfo[]>
     historical: MemberIncrementInfo[];
 }
 
+/**
+ * 总结是使用的精确类型，便于理解，加上了 illust 前缀
+ */
 export enum SummaryRecordType {
     r18Rate = 'pixiv_illust_r18_rate',
     favorRate = 'pixiv_illust_favor_rate',

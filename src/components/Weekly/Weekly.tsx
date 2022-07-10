@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useRef } from 'react';
 
 import { Category } from '@common/root';
-import { CharaRecordType, CoupleRecordType, SeiyuuRecordType } from '@common/record';
+import { CharaRecordType, CoupleRecordType, PersonRecordType } from '@common/record';
 import { RecordTypeWeeklyInfo } from '@common/weekly';
 import { reqRecordTypeWeekly, reqWeekIncrementRankOfTypeInRange } from '@src/api';
 import { html2Image } from '@src/utils/html-to-image';
@@ -33,8 +33,8 @@ type WeeklyActionInfoMap = {
         recordType: CoupleRecordType;
         recordWeeklyInfo: RecordTypeWeeklyInfo;
     };
-    [Category.seiyuu]: {
-        recordType: SeiyuuRecordType;
+    [Category.person]: {
+        recordType: PersonRecordType;
         recordWeeklyInfo: RecordTypeWeeklyInfo;
     };
 }
@@ -68,11 +68,11 @@ function weeklyContextReducer(state: WeeklyInfo, action: WeeklyAction): WeeklyIn
                     [action.payload.recordType]: action.payload.recordWeeklyInfo,
                 },
             };
-        case Category.seiyuu:
+        case Category.person:
             return {
                 ...state,
-                [Category.seiyuu]: {
-                    ...state.seiyuu,
+                [Category.person]: {
+                    ...state.person,
                     [action.payload.recordType]: action.payload.recordWeeklyInfo,
                 },
             };
@@ -108,9 +108,9 @@ const COUPLE_WEEKLY_INFO_LIST = {
 } as const;
 
 const SEIYUU_WEEKLY_INFO_LIST = {
-    category: Category.seiyuu,
+    category: Category.person,
     recordTypeList: [
-        SeiyuuRecordType.twitterFollower,
+        PersonRecordType.twitterFollower,
     ],
 } as const;
 
@@ -158,14 +158,14 @@ const Weekly = () => {
         }
     }, []);
 
-    // 获取 seiyuu weeklyInfo
+    // 获取 person weeklyInfo
     useEffect(() => {
         const { category, recordTypeList } = SEIYUU_WEEKLY_INFO_LIST;
         for (const recordType of recordTypeList) {
             reqRecordTypeWeekly(category, recordType)
                 .then((recordWeeklyInfo) => {
                     dispatchWeeklyContext({
-                        category: Category.seiyuu,
+                        category: Category.person,
                         payload: {
                             recordType,
                             recordWeeklyInfo,

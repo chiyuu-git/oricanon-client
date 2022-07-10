@@ -4,19 +4,17 @@ import { H4_FONT_SIZE } from './echarts-toolbox';
 export const PROJECT_AVERAGE_STR = '企划平均';
 export const PROJECT_MEDIAN_STR = '企划中位数';
 
+/**
+ * 从官网企划列表获取的背景色
+ */
 export const ProjectColorMap = {
-    [ProjectName.ll]: '#ee0088',
-    [ProjectName.lls]: '#4fc4fe',
-    [ProjectName.lln]: '#f39800',
-    [ProjectName.llss]: '#a6469d',
+    [ProjectName.ll]: '#e50080',
+    [ProjectName.lls]: '#19b1f6',
+    [ProjectName.lln]: '#f8b656',
+    [ProjectName.llss]: '#da57d8',
+    [ProjectName.rest]: '#19737d'
 } as const;
 
-export const ProjectShorthandMap = {
-    [ProjectName.ll]: 'LL',
-    [ProjectName.lls]: 'LLS',
-    [ProjectName.lln]: 'LLN',
-    [ProjectName.llss]: 'LLSS',
-} as const;
 
 export const romaColorMap = {
     // ll
@@ -95,6 +93,8 @@ export const romaColorMap = {
     shu: '#a9a898',
     lanzhu: '#f69992',
     akina: '#f69992',
+    // rest
+    gjy: '#19737d'
 };
 
 export type KeyofRomaColorMap = keyof typeof romaColorMap
@@ -106,6 +106,13 @@ for (const [romaName, supportColor] of Object.entries(romaColorMap)) {
         color: supportColor,
         fontSize: H4_FONT_SIZE,
         fontWeight: 'bold',
+        ...(supportColor === '#FFF442'
+            ? {
+                textBorderWidth: 1,
+                textBorderType: 'solid',
+                textBorderColor: 'black',
+            }
+            : {}),
     };
 }
 

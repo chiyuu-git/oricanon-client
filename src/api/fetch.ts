@@ -59,11 +59,18 @@ export async function enhanceFetch(
     }
     // TODO: 服务器返回 error 不一定会触发 catch ，需要额外做判断
     catch (error) {
-        console.log('Request Error:', error);
+        console.log('Request Error1:', error);
     }
 
+    const contentType = response.headers.get('content-type');
+    const isJson = contentType && contentType.includes('application/json');
+
     if (!response.ok) {
-        console.log('Request Error:', response);
+        if (isJson) {
+            console.log('Request Error:', await response.json());
+        }
+        console.log('Request Error:', await response.text());
     }
-    return response.json();
+
+    return isJson ? response.json() : response.text();
 }

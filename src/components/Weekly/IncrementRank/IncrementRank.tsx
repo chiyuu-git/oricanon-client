@@ -63,6 +63,7 @@ const IncrementRank: FC<IncrementRankProps> = ({ weeklyInfo, category, recordTyp
                     icon = {icon}
                     memberInfoMap = {memberInfoMap}
                     incrementRank = {weekIncrementRank}
+                    groupHeight = {weekIncrementRank.length * 30}
                 />
             );
         }

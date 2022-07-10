@@ -295,7 +295,7 @@ const Annual: FC<unknown> = (props) => {
         return <div>dimensionRankList</div>;
     }
 
-    const { name, supportColor, recordOrder } = activeMemberInfo;
+    const { name, supportColor, romaName } = activeMemberInfo;
     const restColor = getComplementaryColor(supportColor);
     return (
         <div className = 'annual-container'>
@@ -366,7 +366,7 @@ const Annual: FC<unknown> = (props) => {
                             {showLine && mainColor && (
                                 <ProjectMemberLine
                                     mainColor = {mainColor}
-                                    activeIndex = {recordOrder}
+                                    activeRomaName = {romaName}
                                 />
                             )}
                         </div>

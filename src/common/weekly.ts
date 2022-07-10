@@ -101,6 +101,22 @@ function getNextWeeklyFetchDate(fetchDate: string) {
 }
 
 /**
+ * 接受一个date，返回 last，beforeLast 两个个相对的时间点
+ *
+ * @param {?Date} date
+ * @return {Object} YYYY-MM-DD
+ */
+export const getRelativeDate = function (date: string) {
+    const baseDate = date;
+
+    // 根据base计算出last和beforeLast
+    const lastDate = getPrevWeeklyFetchDate(baseDate);
+    const beforeLastDate = getPrevWeeklyFetchDate(lastDate);
+
+    return [baseDate, lastDate, beforeLastDate];
+};
+
+/**
  * 判断日期是否在 weekly 区间内
  * 如果 dateString 刚好是 fetchDate ，则 dateString 会等于 nextWeeklyFetchDate
  * 所以新闻的范围是右闭合的，可以等于 endDate，但是不能等于 startDate

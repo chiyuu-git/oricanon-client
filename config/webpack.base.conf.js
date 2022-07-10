@@ -61,7 +61,7 @@ module.exports = {
                     path.resolve(__dirname, '../src'), // src 目录下的才需要经过 babel-loader 处理
                 ],
                 options: {
-                    cacheDirectory: true,
+                    // cacheDirectory: true,
                     presets: [
                         ['@babel/env', {
                             useBuiltIns: 'usage',

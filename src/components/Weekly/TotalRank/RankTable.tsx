@@ -4,6 +4,8 @@ import { H1_FONT_SIZE, H3_FONT_SIZE } from '@src/constant/echarts-toolbox';
 import { TotalRank } from './common';
 
 import './RankTable.less';
+import { ProjectColorMap } from '@src/constant';
+import { getRGBList } from '@utils/color';
 
 interface RankTableProps {
     title: string;
@@ -19,7 +21,10 @@ const RankTable: FC<RankTableProps> = ({ title, range, layoutOption, totalRank }
     function renderTable() {
         const { contentType, incrementNodeWidth } = layoutOption;
         const cell = totalRank.map(({ name, projectName, record, increment }, index) => (
-            <li className = {`cell ${projectName}`} key = {name}>
+            <li className="cell" style={{
+                backgroundColor: `rgba(${getRGBList(ProjectColorMap[projectName])}, 0.75)`,
+                // backgroundColor: ProjectColorMap[projectName],
+            }} key={name}>
                 <span className = 'ranking'>{index + 1}</span>
                 <div
                     className = 'icon'

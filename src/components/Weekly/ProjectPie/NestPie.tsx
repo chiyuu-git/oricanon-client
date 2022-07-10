@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { EChartsOption } from 'echarts';
 
-import { ProjectShorthandMap, ProjectColorMap, charaRichMap } from '@src/constant';
+import { ProjectColorMap, charaRichMap } from '@src/constant';
 import { Category, ProjectName } from '@common/root';
 import { RecordTypeWeeklyInfo } from '@common/weekly';
 import { MemberInfoMap } from '@common/member-info';
@@ -39,7 +39,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
     // 处理legend，总结先周比
     const projectLegend: Record<string, string> = {};
     for (const { projectName, projectWeekIncrementRate } of projectInfoList) {
-        const key = ProjectShorthandMap[projectName];
+        const key = ProjectName[projectName];
         // 修饰先周比
         let rateStr = projectWeekIncrementRate;
         if (projectName === ProjectName.ll) {
@@ -114,7 +114,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
                     position: 'inner',
                     formatter(param) {
                         const { name, value, percent } = param;
-                        return `${ProjectShorthandMap[name as ProjectName]}：${value}\n(${percent}%)`;
+                        return `${ProjectName[name as ProjectName]}：${value}\n(${percent}%)`;
                     },
                     color: '#fff',
                     fontSize: H4_FONT_SIZE,
@@ -175,7 +175,7 @@ const NestPie: FC<NestPipeProps> = (props) => {
             // 内外圆公用的legend
             data: Object.values(ProjectName),
             formatter(name) {
-                return projectLegend[ProjectShorthandMap[name as ProjectName]];
+                return projectLegend[ProjectName[name as ProjectName]];
             },
         };
 

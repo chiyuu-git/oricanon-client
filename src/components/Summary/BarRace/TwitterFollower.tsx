@@ -7,7 +7,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Category, ProjectName } from '@common/root';
-import { SeiyuuRecordType } from '@common/record';
+import { CharaRecordType, PersonRecordType } from '@common/record';
 import { getWeeklyFetchDate } from '@common/weekly';
 import { WeeklyEventMap } from '@common/event-record';
 import { reqMemberList, reqRelativeIncrementOfTypeInRange } from '@src/api';
@@ -19,7 +19,7 @@ import DateController from './DateController';
 import EventFlow from './EventFlow';
 import { eventList } from './event-record';
 
-const DURATION = 3000;
+const DURATION = 300;
 
 const TwitterFollowerBarRace = () => {
     const [category, setCategory] = useState<string[] | null>(null);
@@ -30,30 +30,31 @@ const TwitterFollowerBarRace = () => {
 
     useEffect(() => {
         async function getRecordOfTypeInRange() {
-            const seiyuuRecord = await reqRelativeIncrementOfTypeInRange(
-                Category.seiyuu,
-                SeiyuuRecordType.twitterFollower,
+            const personRecord = await reqRelativeIncrementOfTypeInRange(
+                Category.chara,
+                // PersonRecordType.twitterFollower,
+                CharaRecordType.illust,
                 ProjectName.llss,
-                '2020-12-18',
-                '2021-12-14',
+                '2022-04-01',
+                '2022-06-18',
             );
 
-            const liellaSeiyuuList = await reqMemberList({
+            const liellaPersonList = await reqMemberList({
                 projectName: ProjectName.llss,
-                category: Category.seiyuu,
+                category: Category.chara,
             });
 
-            const seiyuuCategory = liellaSeiyuuList.map(({ name, romaName }) => `${name}-${romaName}`);
+            const personCategory = liellaPersonList.map(({ name, romaName }) => `${name}-${romaName}`);
 
             const tempDataList: string[] = [];
             const tempRecordList: number[][] = [];
 
-            for (const { date, records } of seiyuuRecord) {
+            for (const { date, records } of personRecord) {
                 tempDataList.push(date);
                 tempRecordList.push(records);
             }
 
-            setCategory(seiyuuCategory);
+            setCategory(personCategory);
             setDateList(tempDataList);
             setRecordList(tempRecordList);
         }

@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Category, ProjectName } from '@common/root';
 import { reqMemberList, reqRelativeIncrementOfTypeInRange, reqWeekIncrementOfProjectInRange } from '@src/api';
 import { charaRichMap, KeyofRomaColorMap, PROJECT_AVERAGE_STR, romaColorMap } from '@src/constant';
-import { CharaRecordType, SeiyuuRecordType } from '@common/record';
+import { CharaRecordType, PersonRecordType } from '@common/record';
 
 import * as echarts from 'echarts';
 import {
@@ -13,7 +13,7 @@ import {
     TITLE_MARGIN_TOP,
 } from '@src/constant/echarts-toolbox';
 import { isFetchDate } from '@common/weekly';
-import { CharaInfo, SeiyuuInfo } from '@common/member-info';
+import { CharaInfo, PersonInfo } from '@common/member-info';
 
 const LineRace = () => {
     const lineRace = useRef(null);

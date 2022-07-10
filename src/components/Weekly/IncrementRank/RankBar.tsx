@@ -27,12 +27,21 @@ interface RankBarProps {
     linearGradient: string;
     icon: string;
     incrementRank: IncrementRankInfo;
+    groupHeight: number;
     memberInfoMap: {
         [romaName: string]: MemberCommonInfo;
     };
 }
 
-const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, memberInfoMap, incrementRank }) => {
+const RankBar: FC<RankBarProps> = ({
+    title,
+    range,
+    linearGradient,
+    icon,
+    memberInfoMap,
+    incrementRank,
+    groupHeight,
+}) => {
     const chartOption: EChartsOption = {
         title: {
             text: title,
@@ -97,6 +106,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, memberI
                     },
                     ...charaRichMap,
                 },
+
             },
         },
         series: [
@@ -186,7 +196,7 @@ const RankBar: FC<RankBarProps> = ({ title, range, linearGradient, icon, memberI
                 option = {chartOption}
                 style = {{
                     width: '1200px',
-                    height: '1000px',
+                    height: `${groupHeight}px`,
                 }}
             />
             <i className = {`iconfont ${icon}`} />

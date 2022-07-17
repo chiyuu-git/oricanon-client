@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { EChartsOption } from 'echarts';
 
-import { reqMemberList } from '@src/api';
+import { reqProjectMemberListOfCategory } from '@src/api';
 
 import { Category, ProjectName } from '@common/root';
 import { CoupleRecordType } from '@common/record';
@@ -46,7 +46,7 @@ function decorateWithDataLabel(
 
 // echarts option shape 参考按需引入的 component 结构，拼接成最终的 option
 // 如何获取 echarts 暴露的 ts 接口？ 没必要我自己去拼接
-const CoupleCircle = () => {
+function CoupleCircle() {
     const weeklyContext = useContext(WeeklyContext);
     const [chartOption, setChartOption] = useState<EChartsOption | null>(null);
     const [memberList, setMemberList] = useState<GetMemberInfoByType<Category.chara>[] | null>(null);
@@ -57,7 +57,7 @@ const CoupleCircle = () => {
      */
     useEffect(() => {
         async function getMemberList() {
-            const liellaMemberList = await reqMemberList({
+            const liellaMemberList = await reqProjectMemberListOfCategory({
                 projectName: ProjectName.llss,
                 category: Category.chara,
             });
@@ -160,6 +160,6 @@ const CoupleCircle = () => {
             )}
         </div>
     );
-};
+}
 
 export default CoupleCircle;

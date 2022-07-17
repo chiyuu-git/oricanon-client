@@ -6,6 +6,7 @@ import { MemberInfoMap } from '@common/member-info';
 import Annual from '@components/Summary/Annual/Annual';
 import Transition from '@components/Summary/Transition/Transition';
 import Guide from '@components/Summary/Transition/Guide';
+import MonthlyCouple from '@components/Monthly/Couple';
 import { MemberInfoContext, initMemberInfoContext, MemberInfoListMap } from './member-info-context-manager';
 
 import Weekly from '../Weekly/Weekly';
@@ -57,7 +58,7 @@ function memberInfoContextReducer(state: MemberInfoListMap, action: MemberInfoAc
     }
 }
 
-const MemberInfo: FC<unknown> = () => {
+const MemberInfo: FC<unknown> = function () {
     const [memberInfoContext, dispatchMemberInfoContext] = useReducer(memberInfoContextReducer, initMemberInfoContext);
 
     // 获取 各基础类型的 memberInfo
@@ -80,10 +81,11 @@ const MemberInfo: FC<unknown> = () => {
     return (
         <MemberInfoContext.Provider value = {memberInfoContext}>
             {/* <Summary /> */}
-            <Weekly />
+            {/* <Weekly /> */}
             {/* <Annual /> */}
             {/* <Transition /> */}
             {/* <Guide /> */}
+            <MonthlyCouple />
         </MemberInfoContext.Provider>
     );
 };

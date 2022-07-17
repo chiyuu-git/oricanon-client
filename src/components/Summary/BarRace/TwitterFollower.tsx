@@ -10,7 +10,7 @@ import { Category, ProjectName } from '@common/root';
 import { CharaRecordType, PersonRecordType } from '@common/record';
 import { getWeeklyFetchDate } from '@common/weekly';
 import { WeeklyEventMap } from '@common/event-record';
-import { reqMemberList, reqRelativeIncrementOfTypeInRange } from '@src/api';
+import { reqProjectMemberListOfCategory, reqRelativeIncrementOfTypeInRange } from '@src/api';
 
 import BarRace from './BarRace';
 import { RecordList } from './common';
@@ -39,7 +39,7 @@ const TwitterFollowerBarRace = () => {
                 '2022-06-18',
             );
 
-            const liellaPersonList = await reqMemberList({
+            const liellaPersonList = await reqProjectMemberListOfCategory({
                 projectName: ProjectName.llss,
                 category: Category.chara,
             });

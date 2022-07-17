@@ -47,7 +47,7 @@ function renderColumn() {
     });
 }
 
-const Transition = () => {
+function Transition() {
     const [rangerValue, setRangerValue] = useState(0);
 
     return (
@@ -56,6 +56,6 @@ const Transition = () => {
             {/* <AnimeController timeline = {timeline} value = {rangerValue} /> */}
         </div>
     );
-};
+}
 
 export default Transition;

@@ -7,7 +7,7 @@ import { reqRecordTypeWeekly } from '@src/api';
 import { MemberInfoContext } from '@src/components/MemberInfo/member-info-context-manager';
 import NestPie from './NestPie';
 
-const CompareProjectPie = () => {
+function CompareProjectPie() {
     const [
         weeklyInfo,
         setWeeklyInfo,
@@ -48,6 +48,6 @@ const CompareProjectPie = () => {
     }
 
     return <div>CompareProjectPie</div>;
-};
+}
 
 export default CompareProjectPie;

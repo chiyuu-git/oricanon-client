@@ -29,7 +29,7 @@ function renderIcon() {
     });
 }
 
-const Transition = () => {
+function Transition() {
     const animationControllerRef = useRef<AnimeControllerHandle>(null);
     // 使用默认参数创建时间轴
     const timeline = useRef(
@@ -65,6 +65,6 @@ const Transition = () => {
             <AnimeController timeline = {timeline} />
         </div>
     );
-};
+}
 
 export default Transition;

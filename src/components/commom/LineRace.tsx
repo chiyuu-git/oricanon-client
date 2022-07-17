@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Category, ProjectName } from '@common/root';
-import { reqMemberList, reqRelativeIncrementOfTypeInRange, reqWeekIncrementOfProjectInRange } from '@src/api';
+import { reqProjectMemberListOfCategory, reqWeekIncrementOfProjectInRange } from '@src/api';
 import { charaRichMap, KeyofRomaColorMap, PROJECT_AVERAGE_STR, romaColorMap } from '@src/constant';
-import { CharaRecordType, PersonRecordType } from '@common/record';
+import { CharaRecordType, CoupleRecordType, PersonRecordType } from '@common/record';
 
 import * as echarts from 'echarts';
 import {
@@ -13,28 +13,29 @@ import {
     TITLE_MARGIN_TOP,
 } from '@src/constant/echarts-toolbox';
 import { isFetchDate } from '@common/weekly';
-import { CharaInfo, PersonInfo } from '@common/member-info';
+import { CharaInfo, CoupleInfo, PersonInfo } from '@common/member-info';
 
-const LineRace = () => {
+function LineRace() {
     const lineRace = useRef(null);
     useEffect(() => {
         async function getRecordOfTypeInRange() {
             const recordList = await reqWeekIncrementOfProjectInRange(
-                Category.chara,
-                CharaRecordType.illust,
-                ProjectName.lln,
+                Category.couple,
+                CoupleRecordType.illust,
+                ProjectName.llss,
                 '2021-01-01',
                 '2021-12-31',
             );
+            console.log('recordList:', recordList);
 
-            const memberCategory = await reqMemberList({
-                projectName: ProjectName.lln,
-                category: Category.chara,
+            const memberCategory = await reqProjectMemberListOfCategory({
+                projectName: ProjectName.llss,
+                category: Category.couple,
             });
             // 处理企划平均值的 category info
             memberCategory.unshift({
                 name: PROJECT_AVERAGE_STR,
-            } as CharaInfo);
+            } as CoupleInfo);
 
             // 1. 返回的数据日期间隔不一定是一周，只取 fetchDate 的数据即可
             // 2. records 数组直接展开即可，通过 echarts 的数据映射处理数据
@@ -55,7 +56,7 @@ const LineRace = () => {
                     // 第一列是 x 轴，第二列是 average， 第 index + 1 列是单个成员的 y 轴
                     encode: { x: 0, y: i + 1 },
                     itemStyle: {
-                        color: romaColorMap[romaName as KeyofRomaColorMap] || 'orange',
+                        // color: romaColorMap[romaName as KeyofRomaColorMap] || 'orange',
                     },
                     lineStyle: {
                         type: name === PROJECT_AVERAGE_STR ? 'dotted' : 'solid',
@@ -171,7 +172,7 @@ const LineRace = () => {
                         fontSize: H2_FONT_SIZE,
                     },
                 },
-                series: [seriesList[0], seriesList[2]],
+                series: [seriesList[0], ...seriesList],
             };
 
             if (lineRace.current) {
@@ -186,13 +187,13 @@ const LineRace = () => {
         <div
             ref = {lineRace}
             style = {{
-                width: '100%',
-                height: '100%',
+                width: '100vw',
+                height: '100vh',
             }}
         >
             lineRace
         </div>
     );
-};
+}
 
 export default LineRace;

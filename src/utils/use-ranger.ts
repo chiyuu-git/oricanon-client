@@ -113,15 +113,17 @@ export function useRanger({
 
     const trackElRef = useRef<Element>();
 
-    const getValueForClientX = useCallback((clientX: number) => {
-        if (!trackElRef.current) {
-            return null;
-        }
+    const getValueForClientX = useCallback(
+        (clientX: number) => {
+            if (!trackElRef.current) {
+                return null;
+            }
 
-        const trackDims = getBoundingClientRect(trackElRef.current);
-        return interpolator.getValueForClientX(clientX, trackDims, min, max);
-    },
-    [interpolator, max, min]);
+            const trackDims = getBoundingClientRect(trackElRef.current);
+            return interpolator.getValueForClientX(clientX, trackDims, min, max);
+        },
+        [interpolator, max, min],
+    );
 
     const getPercentageForValue = useCallback(
         (val: number) => interpolator.getPercentageForValue(val, min, max),
@@ -323,9 +325,7 @@ export function useRanger({
             value,
             key: `segments${i}`,
             getSegmentProps: ({ style = {}, ...rest } = {}) => {
-                const left = getPercentageForValue(
-                    sortedValues[i - 1] ? sortedValues[i - 1] : min,
-                );
+                const left = getPercentageForValue(sortedValues[i - 1] || min);
                 const width = getPercentageForValue(value) - left;
                 return {
                     style: {

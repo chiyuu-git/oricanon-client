@@ -12,9 +12,8 @@ export const ProjectColorMap = {
     [ProjectName.lls]: '#19b1f6',
     [ProjectName.lln]: '#f8b656',
     [ProjectName.llss]: '#da57d8',
-    [ProjectName.rest]: '#19737d'
+    [ProjectName.rest]: '#19737d',
 } as const;
-
 
 export const romaColorMap = {
     // ll
@@ -94,7 +93,7 @@ export const romaColorMap = {
     lanzhu: '#f69992',
     akina: '#f69992',
     // rest
-    gjy: '#19737d'
+    gjy: '#19737d',
 };
 
 export type KeyofRomaColorMap = keyof typeof romaColorMap

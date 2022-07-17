@@ -111,7 +111,7 @@ export function reqRecordTypeWeekly<Type extends Category>(
 export function reqMemberInfoMapOfCategory<Type extends Category>(
     type: Type,
 ): Promise<MemberInfoMap<Type>> {
-    return enhanceFetch('/api/member_info/member_info_map', { type });
+    return enhanceFetch('/api/member_info/member_info_map_of_category', { type });
 }
 
 interface QueryMemberList {
@@ -125,11 +125,11 @@ type ResMemberList<T extends QueryMemberList> = T extends { category: infer R; }
         : never
     : never;
 
-export function reqMemberList<T extends QueryMemberList>({
+export function reqProjectMemberListOfCategory<T extends QueryMemberList>({
     projectName,
     category,
 }: T): Promise<ResMemberList<T>> {
-    return enhanceFetch('/api/member_info/project_member_info_of_category', {
+    return enhanceFetch('/api/member_info/project_member_list_of_category', {
         projectName,
         category,
     });

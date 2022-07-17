@@ -3,7 +3,7 @@ import * as echarts from 'echarts';
 import { GRID_MARGIN_TOP, H1_FONT_SIZE, H3_FONT_SIZE, TITLE_MARGIN_TOP } from '@src/constant/echarts-toolbox';
 import { shadeRGBColor } from '@src/utils/color';
 
-const GroupedBar = () => {
+function GroupedBar() {
     const bar = useRef(null);
     useEffect(() => {
         const seriesList = Array.from({ length: 5 }).map(() => ({
@@ -85,6 +85,6 @@ const GroupedBar = () => {
             GroupedBar
         </div>
     );
-};
+}
 
 export default GroupedBar;

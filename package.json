@@ -37,7 +37,7 @@
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime": "^7.18.6",
-    "@chiyu-git/eslint-config-react": "^1.0.9",
+    "@chiyu-git/eslint-config-react": "^1.0.10",
     "@chiyu-git/stylelint-config-basic": "^1.0.3",
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
@@ -64,6 +64,7 @@
   },
   "dependencies": {
     "animejs": "^3.2.1",
+    "antd": "^4.21.6",
     "canvas2image": "^1.0.5",
     "chroma-js": "^2.4.2",
     "core-js": "^3.23.3",

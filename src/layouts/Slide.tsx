@@ -1,17 +1,11 @@
 import React, { useState, createContext } from 'react';
 
-export const ConnectionContext = createContext({});
-
-const Slide = () => {
-    const [context, setContext] = useState(null);
-
+function Slide() {
     return (
-        <ConnectionContext.Provider value = {{ context, setContext }}>
-            <section className = 'candidate_box'>
-                <div className = 'candidate_body' />
-            </section>
-        </ConnectionContext.Provider>
+        <section className = 'candidate_box'>
+            <div className = 'candidate_body' />
+        </section>
     );
-};
+}
 
 export default Slide;

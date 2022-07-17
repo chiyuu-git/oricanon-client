@@ -28,7 +28,7 @@ interface PieDataItem {
     projectName: ProjectName;
 }
 
-const NestPie: FC<NestPipeProps> = (props) => {
+const NestPie: FC<NestPipeProps> = function (props) {
     const {
         memberInfoMap,
         projectInfoList,
@@ -73,12 +73,17 @@ const NestPie: FC<NestPipeProps> = (props) => {
     // 处理外环的 pie
     const memberPie: PieDataItem[] = [...memberInfoList]
         .sort((a, b) => {
-            // 企划内部内先排一个序，才能和内圆吻合
-            const aProjectName = memberInfoMap[a.romaName].projectName;
-            const bProjectName = memberInfoMap[b.romaName].projectName;
+            try {
+                // 企划内部内先排一个序，才能和内圆吻合
+                const aProjectName = memberInfoMap[a.romaName].projectName;
+                const bProjectName = memberInfoMap[b.romaName].projectName;
 
-            if (aProjectName === bProjectName) {
-                return b.weekIncrement - a.weekIncrement;
+                if (aProjectName === bProjectName) {
+                    return b.weekIncrement - a.weekIncrement;
+                }
+            }
+            catch {
+                console.log('a, b:', a, b);
             }
             return 1;
         })

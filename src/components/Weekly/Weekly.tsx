@@ -114,7 +114,7 @@ const SEIYUU_WEEKLY_INFO_LIST = {
     ],
 } as const;
 
-const Weekly = () => {
+function Weekly() {
     const [weeklyContext, dispatchWeeklyContext] = useReducer(weeklyContextReducer, initWeeklyContext);
     const weeklyWrap = useRef<HTMLDivElement>(null);
 
@@ -224,6 +224,6 @@ const Weekly = () => {
             </div>
         </WeeklyContext.Provider>
     );
-};
+}
 
 export default Weekly;

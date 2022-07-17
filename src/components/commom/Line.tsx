@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { Category, ProjectName } from '@common/root';
-import { reqMemberList, reqRelativeIncrementOfTypeInRange, reqWeekIncrementOfProjectInRange } from '@src/api';
+import { reqProjectMemberListOfCategory, reqWeekIncrementOfProjectInRange } from '@src/api';
 import { charaRichMap, KeyofRomaColorMap, PROJECT_AVERAGE_STR, PROJECT_MEDIAN_STR, romaColorMap } from '@src/constant';
 import { CharaRecordType, PersonRecordType } from '@common/record';
 
@@ -25,7 +25,7 @@ interface ProjectMemberLineProps {
     activeRomaName: string;
     mainColor: string;
 }
-const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeRomaName, mainColor }) => {
+const ProjectMemberLine: FC<ProjectMemberLineProps> = function ({ activeRomaName, mainColor }) {
     const lineRace = useRef(null);
     useEffect(() => {
         async function getRecordOfTypeInRange() {
@@ -38,11 +38,11 @@ const ProjectMemberLine: FC<ProjectMemberLineProps> = ({ activeRomaName, mainCol
                 '2021-12-31',
             );
 
-            const memberCategory = await reqMemberList({
+            const memberCategory = await reqProjectMemberListOfCategory({
                 projectName: ProjectName.llss,
                 category: Category.chara,
             });
-            const activeIndex = memberCategory.findIndex((charaInfo => charaInfo.romaName === activeRomaName))
+            const activeIndex = memberCategory.findIndex(((charaInfo) => charaInfo.romaName === activeRomaName));
             // 处理企划平均值的 category info
             memberCategory.unshift({
                 name: PROJECT_AVERAGE_STR,

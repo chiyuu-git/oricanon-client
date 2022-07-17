@@ -20,7 +20,7 @@ const DEFAULT_INTERVAL = 300;
 const activeIndex = 4;
 const projectColor = ProjectColorMap.llss;
 
-const Annual: FC<unknown> = (props) => {
+const Annual: FC<unknown> = function (props) {
     const animationControllerRef = useRef<AnimeControllerHandle>(null);
     const [dimensionRankList, setDimensionRankList] = useState<CharaMemberIncrementInfo[][] | null>(null);
     const [activeMemberInfo, setActiveMemberInfo] = useState<CharaMemberIncrementInfo | null>(null);
